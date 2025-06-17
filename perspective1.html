@@ -1,169 +1,170 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perspectief 1 – EV’s als primaire oplossing</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perspectief 1 – EV’s als primaire oplossing</title>
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- D3 ➜ Plotly -->
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <!-- D3 vóór Plotly (Plotly 2.32 bevat helpers niet meer) -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 
-  <!-- Favicon & Inter font -->
-  <link rel="icon" href="images/favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Favicon + Fonts -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    body { font-family: 'Inter', sans-serif; background: #f3f4f6; }
-    .container { max-width: 1000px; }
-    .section-title { border-bottom: 2px solid #3b82f6; padding-bottom: .5rem; margin-bottom: 1.5rem; }
-    .card { background: #fff; border-radius: .75rem; box-shadow: 0 4px 6px rgba(0,0,0,.12); padding: 1.5rem; }
-    .plot-container { background: #fff; border-radius: .75rem; box-shadow: 0 2px 4px rgba(0,0,0,.06); padding: 1rem; min-height: 440px; }
-    .nav-link { padding: .75rem 1.25rem; border-radius: .5rem; transition: background .3s; }
-    .nav-link:hover { background: #e0f2fe; }
-    .nav-link.active { background: #bfdbfe; font-weight: 600; }
-  </style>
+    <style>
+        body{font-family:'Inter',sans-serif;background:#f3f4f6}
+        .container{max-width:1000px}
+        .section-title{border-bottom:2px solid #3b82f6;padding-bottom:.5rem;margin-bottom:1.5rem}
+        .card{background:#fff;border-radius:.75rem;box-shadow:0 4px 6px rgba(0,0,0,.1);padding:1.5rem}
+        .plot-container{background:#fff;border-radius:.75rem;box-shadow:0 2px 4px rgba(0,0,0,.05);padding:1rem;min-height:400px}
+        .nav-link{padding:.75rem 1.25rem;border-radius:.5rem;transition:background .3s}
+        .nav-link:hover{background:#e0f2fe}
+        .nav-link.active{background:#bfdbfe;font-weight:600}
+    </style>
 </head>
 <body class="antialiased text-gray-800">
 <div class="container mx-auto p-6 lg:p-10 bg-white rounded-lg shadow-lg my-8 md:my-12">
 
-  <!-- Navigation -->
-  <nav class="mb-8 p-4 bg-blue-700 text-white rounded-lg shadow-md flex flex-wrap justify-center gap-4">
-    <a href="index.html"        class="nav-link">Introductie</a>
-    <a href="dataset.html"      class="nav-link">Dataset &amp;&nbsp;Voorbewerking</a>
-    <a href="perspective1.html" class="nav-link active">Perspectief 1</a>
-    <a href="perspective2.html" class="nav-link">Perspectief 2</a>
-    <a href="reflection.html"   class="nav-link">Reflectie &amp;&nbsp;Werkverdeling</a>
-    <a href="results.html"      class="nav-link">Resultaten &amp;&nbsp;Conclusie</a>
-  </nav>
+    <!-- Nav -->
+    <nav class="mb-8 p-4 bg-blue-700 text-white rounded-lg shadow-md flex flex-wrap justify-center gap-4">
+        <a href="index.html"        class="nav-link">Introductie</a>
+        <a href="dataset.html"      class="nav-link">Dataset&nbsp;&amp;&nbsp;Voorbewerking</a>
+        <a href="perspective1.html" class="nav-link active">Perspectief 1</a>
+        <a href="perspective2.html" class="nav-link">Perspectief 2</a>
+        <a href="reflection.html"   class="nav-link">Reflectie&nbsp;&amp;&nbsp;Werkverdeling</a>
+        <a href="results.html" class="nav-link">Resultaten & Conclusie</a>
+    </nav>
 
-  <!-- Content -->
-  <section class="mb-10 card">
-    <h2 class="text-3xl font-semibold text-gray-800 section-title">Perspectief 1: EV’s als primaire oplossing voor schonere lucht</h2>
+    <!-- Content -->
+    <section class="mb-10 card">
+        <h2 class="text-3xl font-semibold text-gray-800 section-title">
+            Perspectief 1: EV’s als primaire oplossing voor schonere lucht
+        </h2>
 
-    <p class="mb-6">We onderzoeken of een stijgend EV‑aandeel gepaard gaat met dalende CO₂‑uitstoot van nieuwe auto’s.</p>
+        <p class="mb-6">
+            Dit perspectief benadrukt de directe voordelen van de groeiende EV-adoptie voor de luchtkwaliteit:
+            leidt een stijgend EV-aandeel tot lagere CO₂-uitstoot van nieuwe auto’s?
+        </p>
 
-    <!-- Line chart -->
-    <h3 class="text-2xl font-medium text-gray-700 mb-3">Visualisatie 1.1 – EV‑aandeel per land (2010‑2023)</h3>
-    <div id="evShareLineChart" class="plot-container"></div>
+        <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">
+            Visualisatie 1.1 – EV-aandeel per land (2010-2023)
+        </h3>
+        <div id="evShareLineChart" class="plot-container"></div>
 
-    <!-- Scatter -->
-    <h3 class="text-2xl font-medium text-gray-700 mt-10 mb-3">Visualisatie 1.2 – CO₂‑uitstoot vs EV‑aandeel (slider)</h3>
-    <div id="co2EvScatter" class="plot-container"></div>
-  </section>
+        <h3 class="text-2xl font-medium text-gray-700 mt-10 mb-3">
+            Visualisatie 1.2 – CO₂-uitstoot vs EV-aandeel (slider)
+        </h3>
+        <div id="co2EvScatter" class="plot-container"></div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-gray-200">
-    <p>&copy; 2025 Groep 12 – InfoVis Project.</p>
-    <p class="mt-1"><a href="https://github.com/TygoHonig/InfoVisualization2025" class="text-blue-600 hover:underline">Broncode op GitHub</a></p>
-  </footer>
+    <!-- Footer -->
+    <footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-gray-200">
+        <p>&copy; 2025 Groep 12 – InfoVis Project.</p>
+        <p class="mt-1">
+            <a href="https://github.com/TygoHonig/InfoVisualization2025" target="_blank"
+               class="text-blue-600 hover:underline">Broncode op GitHub</a>
+        </p>
+    </footer>
 </div>
 
-<!-- =================  JS  ================= -->
 <script>
+/* ----------  PAD NAAR CSV’s  ---------- */
+/* Relatief pad werkt lokaal én op Pages */
 const carsCSV = 'data/cars_by_fuel.csv';
 const co2CSV  = 'data/co2_new_cars.csv';
 
-const countryLabels = { NL: 'Nederland', DE: 'Duitsland', NO: 'Noorwegen', PL: 'Polen', FR: 'Frankrijk', ES: 'Spanje' };
-const focusCodes = Object.keys(countryLabels);
+/* Land-codes ➜ leesbare namen  */
+const code2name = {NL:'Nederland', DE:'Duitsland', NO:'Noorwegen',
+                   PL:'Polen',     FR:'Frankrijk', ES:'Spanje'};
 
-/* ----------  Helper : custom Plotly theme  ---------- */
-Plotly.registerTemplate('evTheme', {
-  layout: {
-    font:  { family: 'Inter, sans-serif', size: 14, color: '#334155' },
-    paper_bgcolor: '#ffffff',
-    plot_bgcolor: '#ffffff',
-    colorway: ['#2563eb','#f97316','#16a34a','#dc2626','#9333ea','#7c3aed'],
-    legend: { orientation: 'v', bgcolor: 'rgba(0,0,0,0)', x: 1.02, y: 1 },
-    hoverlabel: { bgcolor: '#ffffff', bordercolor: '#94a3b8', font: { color: '#0f172a' } },
-    xaxis: { gridcolor: '#e2e8f0', zerolinecolor: '#cbd5e1' },
-    yaxis: { gridcolor: '#e2e8f0', zerolinecolor: '#cbd5e1' }
-  }
-});
-
-/* ----------  Data load ---------- */
+/* 1. Data inladen en prepareren */
 Promise.all([d3.csv(carsCSV), d3.csv(co2CSV)])
-.then(([cars, co2]) => {
-  // ─── Pivot & merge ──────────────────────────────────────────────────
-  const dict = {};
-  cars.forEach(r => {
-    const key = `${r.geo}-${r.TIME_PERIOD}`;
-    if(!dict[key]) dict[key] = { geo: r.geo, year: +r.TIME_PERIOD, elc: 0, total: 0 };
-    if(r.mot_nrg === 'ELC')   dict[key].elc   = +r.OBS_VALUE;
-    if(r.mot_nrg === 'TOTAL') dict[key].total = +r.OBS_VALUE;
-  });
-  co2.forEach(r => {
-    const key = `${r.geo}-${r.TIME_PERIOD}`;
-    if(dict[key]) dict[key].co2 = +r.OBS_VALUE;
-  });
+.then(([carsRaw, co2Raw]) => {
 
-  const data = Object.values(dict)
-    .filter(d => d.total && d.co2 !== undefined)
-    .map(d => ({ ...d, evShare: d.elc / d.total * 100 }));
+    /* -- 1a. Bereken EV-aandeel per land/jaar -- */
+    const tmp = {};                     // key = "geo-year"
+    carsRaw.forEach(r => {
+        const key = ${r.geo}-${r.TIME_PERIOD};
+        if(!tmp[key]) tmp[key]={geo:r.geo,year:+r.TIME_PERIOD,elc:0,total:0};
+        if(r.mot_nrg==='ELC')   tmp[key].elc   = +r.OBS_VALUE;
+        if(r.mot_nrg==='TOTAL') tmp[key].total = +r.OBS_VALUE;
+    });
 
-  const focus = data.filter(d => focusCodes.includes(d.geo));
+    /* -- 1b. Voeg CO₂ toe -- */
+    co2Raw.forEach(r=>{
+        const key=${r.geo}-${r.TIME_PERIOD};
+        if(tmp[key]) tmp[key].co2 = +r.OBS_VALUE;
+    });
 
-  /* ----------  LINE CHART  ---------- */
-  const lineTraces = focusCodes.map(code => {
-    const serie = focus.filter(d => d.geo === code).sort((a,b) => a.year - b.year);
-    return {
-      x: serie.map(d => d.year),
-      y: serie.map(d => d.evShare),
-      mode: 'lines+markers',
-      line: { width: 3, shape: 'spline' },
-      marker: { size: 6 },
-      name: countryLabels[code]
-    };
-  });
+    /* -- 1c. Eind-array bouwen -- */
+    const all = Object.values(tmp)
+                .filter(d=>d.total>0 && d.co2!==undefined)
+                .map(d=>({...d, evShare:d.elc/d.total*100}));
 
-  Plotly.newPlot('evShareLineChart', lineTraces, {
-    template: 'evTheme',
-    title: { text: 'EV‑aandeel in geselecteerde landen', x: 0.02, xanchor: 'left' },
-    xaxis: { title: 'Jaar', dtick: 1 },
-    yaxis: { title: 'EV‑aandeel (%)', ticksuffix: '%' },
-    margin: { t: 50, r: 110, b: 60, l: 60 }
-  }, { responsive: true });
+    const focusCodes = ['NL','DE','NO','PL','FR','ES'];
+    const focusData  = all.filter(d=>focusCodes.includes(d.geo));
 
-  /* ----------  SCATTER  ---------- */
-  const years = [...new Set(focus.map(d => d.year))].sort((a,b) => a - b);
-  const frames = years.map(year => {
-    const yr = focus.filter(d => d.year === year);
-    return {
-      name: String(year),
-      data: [{
-        x: yr.map(d => d.evShare),
-        y: yr.map(d => d.co2),
-        text: yr.map(d => countryLabels[d.geo]),
-        mode: 'markers',
-        marker: {
-          size: 10,
-          color: yr.map(d => d.evShare),
-          colorscale: 'Blues',
-          cmin: 0, cmax: 25,
-          line: { width: 1, color: '#0f172a' }
-        },
-        hovertemplate: '%{text}<br><b>EV</b>: %{x:.2f}%<br><b>CO₂</b>: %{y:.1f} g/km<extra></extra>'
-      }]
-    };
-  });
+    /* ----------  Visualisatie 1.1 – Lijn ---------- */
+    const lineTraces = focusCodes.map(code=>{
+        const serie=focusData.filter(d=>d.geo===code).sort((a,b)=>a.year-b.year);
+        return{
+            x:serie.map(d=>d.year),
+            y:serie.map(d=>d.evShare),
+            mode:'lines+markers',
+            name:code2name[code]||code,
+            hovertemplate:'%{x}: %{y:.2f}%<extra>'+(code2name[code]||code)+'</extra>'
+        };
+    });
 
-  Plotly.newPlot('co2EvScatter', frames[0].data, {
-    template: 'evTheme',
-    title: { text: `CO₂‑uitstoot vs EV‑aandeel (${years[0]})`, x: 0.02, xanchor: 'left' },
-    xaxis: { title: 'EV‑aandeel (%)', ticksuffix: '%' },
-    yaxis: { title: 'Gem. CO₂ (g/km)' },
-    margin: { t: 60, r: 20, b: 70, l: 60 },
-    sliders: [{
-      steps: years.map(y => ({ label: y, method: 'animate', args: [[String(y)], { frame: { duration: 400, redraw: false }, mode: 'immediate' }] })),
-      pad: { t: 30 },
-      currentvalue: { prefix: 'Jaar: ', font: { size: 16 } }
-    }],
-    coloraxis: { colorscale: 'Blues', cmin: 0, cmax: 25 }
-  }, { responsive: true }).then(() => Plotly.addFrames('co2EvScatter', frames));
-});
+    Plotly.newPlot('evShareLineChart', lineTraces,{
+        title:'EV-aandeel in geselecteerde landen',
+        xaxis:{title:'Jaar',dtick:2},
+        yaxis:{title:'EV-aandeel (%)',ticksuffix:'%'},
+        margin:{t:60,r:20,b:40,l:60},
+        hovermode:'closest'
+    },{responsive:true});
+
+    /* ----------  Visualisatie 1.2 – Scatter + slider ---------- */
+    const years=[...new Set(focusData.map(d=>d.year))].sort((a,b)=>a-b);
+    const frames=years.map(yr=>{
+        const yrData=focusData.filter(d=>d.year===yr);
+        return{
+            name:String(yr),
+            data:[{
+                x:yrData.map(d=>d.evShare),
+                y:yrData.map(d=>d.co2),
+                text:yrData.map(d=>code2name[d.geo]||d.geo),
+                mode:'markers',
+                marker:{size:9,color:'#3b82f6',line:{width:1,color:'#1e40af'}},
+                hovertemplate:'%{text}<br>EV: %{x:.2f}%<br>CO₂: %{y:.1f} g/km<extra></extra>'
+            }]
+        };
+    });
+
+    Plotly.newPlot('co2EvScatter', frames[0].data,{
+        title:CO₂-uitstoot vs EV-aandeel (${years[0]}),
+        xaxis:{title:'EV-aandeel (%)',ticksuffix:'%'},
+        yaxis:{title:'Gem. CO₂ (g/km)'},
+        margin:{t:80,r:20,b:70,l:60},
+        sliders:[{
+            steps:years.map(yr=>({
+                label:String(yr),
+                method:'animate',
+                args:[[String(yr)],
+                      {mode:'immediate',frame:{duration:400,redraw:false},
+                       transition:{duration:300}}]
+            })),
+            pad:{t:30},
+            currentvalue:{prefix:'Jaar: ',font:{size:16}}
+        }]
+    },{responsive:true}).then(()=>Plotly.addFrames('co2EvScatter',frames));
+})
+.catch(err=>console.error('Data-load error:',err));
 </script>
 </body>
 </html>
