@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perspectief 2: Beperkte impact EV-adoptie</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Plotly.js CDN for interactive visualizations -->
+    <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        .container {
+            max-width: 1000px;
+        }
+        .section-title {
+            border-bottom: 2px solid #3b82f6; /* Blue border for titles */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            padding: 1.5rem;
+        }
+        .plot-container {
+            border-radius: 0.75rem;
+            overflow: hidden; /* Ensure rounded corners for plots */
+            background-color: #ffffff;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            /* Ensure the plot container takes full width but has a defined height */
+            width: 100%;
+            min-height: 400px; /* Minimum height for smaller screens */
+        }
+        .nav-link {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .nav-link:hover {
+            background-color: #e0f2fe; /* Light blue on hover */
+        }
+        .nav-link.active {
+            background-color: #bfdbfe; /* Stronger blue for active link */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+    <div class="container mx-auto p-6 lg:p-10 bg-white rounded-lg shadow-lg my-8 md:my-12">
+
+        <!-- Navigation Bar -->
+        <nav class="mb-8 p-4 bg-blue-700 text-white rounded-lg shadow-md flex flex-wrap justify-center gap-4">
+            <a href="index.html" class="nav-link">Introductie</a>
+            <a href="dataset.html" class="nav-link">Dataset & Voorbewerking</a>
+            <a href="perspective1.html" class="nav-link">Perspectief 1</a>
+            <a href="perspective2.html" class="nav-link active">Perspectief 2</a>
+            <a href="reflection.html" class="nav-link">Reflectie & Werkverdeling</a>
+        </nav>
+
+        <!-- Perspective 2 Section -->
+        <section class="mb-10 card">
+            <h2 class="text-3xl font-semibold text-gray-800 section-title">Perspectief 2: Beperkte impact van EV-adoptie</h2>
+            <p class="mb-4">
+                Dit perspectief stelt dat de voordelen van EV-adoptie voor de stedelijke luchtkwaliteit en CO2-reductie minder significant zijn dan vaak wordt aangenomen. Argumenten hiervoor zijn onder andere de invloed van andere vervuilingsbronnen (industrie, verwarming), de variatie in EV-modellen en adoptiesnelheden per land, en de milieu-impact van de gehele levenscyclus van accu's en de winning van grondstoffen. De volgende visualisaties werpen licht op deze nuancering.
+            </p>
+
+            <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">Visualisatie 2.1: Evolutie CO2-uitstoot per land</h3>
+            <div id="co2EvolutionLineChart" class="plot-container w-full h-[400px] md:h-[500px]"></div>
+            <p class="mt-4 text-sm text-gray-600">
+                <span class="font-semibold">Figuur 2.1:</span> Deze lijngrafiek toont de evolutie van de gemiddelde CO2-uitstoot per kilometer van nieuwe personenauto's voor verschillende landen over de tijd. Hoewel een algemene daling zichtbaar kan zijn, kunnen er ook periodes van stagnatie of zelfs lichte stijgingen optreden, of verschillen in reductiesnelheid tussen landen. Dit illustreert dat de impact van de voertuigenvloot op CO2-uitstoot complexer is dan alleen EV-adoptie. Externe factoren zoals brandstofefficiëntie van niet-elektrische auto's en veranderende rijgedrag spelen ook een rol.
+            </p>
+
+            <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">Visualisatie 2.2: Spreiding CO2-uitstoot en EV-aandeel per land</h3>
+            <div id="co2EvBoxPlot" class="plot-container w-full h-[400px] md:h-[500px]"></div>
+            <p class="mt-4 text-sm text-gray-600">
+                <span class="font-semibold">Figuur 2.2:</span> Dit boxplot toont de spreiding van de CO2-uitstoot voor verschillende EV-aandeel groepen (bijvoorbeeld laag, midden, hoog aandeel). Als de boxplots significant overlappen, suggereert dit dat het EV-aandeel mogelijk niet de enige of meest dominante factor is die de CO2-uitstoot bepaalt, wat het tweede perspectief ondersteunt. Er kunnen andere factoren zijn die de variatie in CO2-uitstoot verklaren.
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-gray-200">
+            <p>&copy; 2025 Groep 12 - InfoVis Project. Alle rechten voorbehouden.</p>
+            <p class="mt-1">
+                <a href="https://github.com/uw-github-gebruikersnaam/uw-repository-naam" target="_blank" class="text-blue-600 hover:underline">Bekijk de broncode op GitHub</a>
+                (Vervang 'uw-github-gebruikersnaam/uw-repository-naam' door uw eigen repository link)
+            </p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+    <script>
+        // Functie om willekeurige float tussen min en max te genereren
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        // Mock data genereren
+        const countries = ['Nederland', 'Duitsland', 'Noorwegen', 'Polen', 'Frankrijk', 'Spanje'];
+        const years = Array.from({ length: 14 }, (_, i) => 2010 + i); // 2010-2023
+
+        let data = [];
+        countries.forEach(country => {
+            let evShare = 0.05; // Start met een kleine EV-aandeel
+            let co2Emissions = getRandomArbitrary(140, 160); // Start met hogere CO2
+
+            years.forEach(year => {
+                // EV Share simulatie: sneller groei in Noorwegen, gestage groei elders
+                if (country === 'Noorwegen') {
+                    evShare += getRandomArbitrary(1.5, 4.0); // Snelle groei
+                } else {
+                    evShare += getRandomArbitrary(0.1, 1.0); // Gestage groei
+                }
+                evShare = Math.min(evShare, 25); // Max 25% EV aandeel
+
+                // CO2 emissies simulatie: lager bij hoger EV-aandeel, maar met variatie
+                let co2ReductionFactor = evShare * getRandomArbitrary(0.5, 1.5) / 100; // Hoe groter EV aandeel, hoe meer reductie
+                co2Emissions -= co2ReductionFactor * getRandomArbitrary(0.5, 2.0);
+                co2Emissions = Math.max(co2Emissions, 15); // Min 15 g/km CO2
+
+                // Voeg wat willekeurige ruis toe
+                co2Emissions += getRandomArbitrary(-2, 2);
+                co2Emissions = Math.max(co2Emissions, 14.5); // Zorg dat het niet onder min valt
+
+                data.push({
+                    country: country,
+                    year: year,
+                    evShare: parseFloat(evShare.toFixed(2)),
+                    co2Emissions: parseFloat(co2Emissions.toFixed(2))
+                });
+            });
+        });
+
+        // Visualisatie 2.1: Evolutie CO2-uitstoot per land
+        function plotCo2EvolutionLineChart() {
+            let traces = countries.map(country => {
+                let countryData = data.filter(d => d.country === country);
+                return {
+                    x: countryData.map(d => d.year),
+                    y: countryData.map(d => d.co2Emissions),
+                    mode: 'lines+markers',
+                    name: country,
+                    hovertemplate: `Land: %{fullData.name}<br>Jaar: %{x}<br>CO2-uitstoot: %{y:.2f} g/km<extra></extra>`
+                };
+            });
+
+            let layout = {
+                title: 'Evolutie van de gemiddelde CO2-uitstoot per land (2010-2023)',
+                xaxis: {
+                    title: 'Jaar',
+                    tickmode: 'linear',
+                    dtick: 2
+                },
+                yaxis: {
+                    title: 'Gemiddelde CO2-uitstoot (g/km)',
+                    rangemode: 'tozero',
+                    autorange: true
+                },
+                hovermode: 'closest',
+                responsive: true,
+                margin: {t:50, r:20, b:40, l:40}
+            };
+
+            Plotly.newPlot('co2EvolutionLineChart', traces, layout);
+        }
+
+        // Visualisatie 2.2: Spreiding CO2-uitstoot en EV-aandeel per land (simulatie met boxplot)
+        function plotCo2EvBoxPlot() {
+            // Groepeer data in EV-aandeel categorieën: laag (<5%), midden (5-15%), hoog (>15%)
+            let lowEv = data.filter(d => d.evShare < 5);
+            let midEv = data.filter(d => d.evShare >= 5 && d.evShare < 15);
+            let highEv = data.filter(d => d.evShare >= 15);
+
+            let traces = [
+                {
+                    y: lowEv.map(d => d.co2Emissions),
+                    name: 'Laag EV-aandeel (<5%)',
+                    type: 'box',
+                    boxpoints: 'all',
+                    marker: { color: 'rgb(255,165,0)' }, // Oranje
+                    jitter: 0.3,
+                    pointpos: -1.8,
+                    hovertemplate: `EV-aandeel: Laag<br>CO2-uitstoot: %{y:.2f} g/km<extra></extra>`
+                },
+                {
+                    y: midEv.map(d => d.co2Emissions),
+                    name: 'Midden EV-aandeel (5-15%)',
+                    type: 'box',
+                    boxpoints: 'all',
+                    marker: { color: 'rgb(100,149,237)' }, // Korenbloem blauw
+                    jitter: 0.3,
+                    pointpos: -1.8,
+                    hovertemplate: `EV-aandeel: Midden<br>CO2-uitstoot: %{y:.2f} g/km<extra></extra>`
+                },
+                {
+                    y: highEv.map(d => d.co2Emissions),
+                    name: 'Hoog EV-aandeel (>15%)',
+                    type: 'box',
+                    boxpoints: 'all',
+                    marker: { color: 'rgb(50,205,50)' }, // LimeGroen
+                    jitter: 0.3,
+                    pointpos: -1.8,
+                    hovertemplate: `EV-aandeel: Hoog<br>CO2-uitstoot: %{y:.2f} g/km<extra></extra>`
+                }
+            ];
+
+            let layout = {
+                title: 'CO2-uitstoot Spreiding per EV-aandeel Categorie',
+                yaxis: {
+                    title: 'Gemiddelde CO2-uitstoot (g/km)',
+                    rangemode: 'tozero',
+                    autorange: true
+                },
+                hovermode: 'closest',
+                responsive: true,
+                margin: {t:50, r:20, b:40, l:40},
+                boxmode: 'group'
+            };
+
+            Plotly.newPlot('co2EvBoxPlot', traces, layout);
+        }
+
+        // Zorg ervoor dat de grafieken worden geplot nadat de DOM volledig is geladen
+        window.onload = function() {
+            plotCo2EvolutionLineChart();
+            plotCo2EvBoxPlot();
+
+            // Voeg event listeners toe voor responsiveness
+            window.addEventListener('resize', () => {
+                Plotly.relayout('co2EvolutionLineChart', { width: document.getElementById('co2EvolutionLineChart').clientWidth, height: document.getElementById('co2EvolutionLineChart').clientHeight });
+                Plotly.relayout('co2EvBoxPlot', { width: document.getElementById('co2EvBoxPlot').clientWidth, height: document.getElementById('co2EvBoxPlot').clientHeight });
+            });
+        };
+    </script>
+</body>
+</html>
