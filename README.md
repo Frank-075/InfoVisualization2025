@@ -14,7 +14,7 @@ Elektrische voertuigen (EV’s) worden vaak gezien als de oplossing om de luchtk
 - Dataset cleaning scripts  
 - Authors
 - 
-# Auteurs
+## Auteurs
 - Tygo Honig 
 - Frank Villano
 - Olivier Brouwer
