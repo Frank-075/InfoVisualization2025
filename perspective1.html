@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perspectief 1: EV's als primaire oplossing</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Plotly.js CDN for interactive visualizations -->
+    <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        .container {
+            max-width: 1000px;
+        }
+        .section-title {
+            border-bottom: 2px solid #3b82f6; /* Blue border for titles */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            padding: 1.5rem;
+        }
+        .plot-container {
+            border-radius: 0.75rem;
+            overflow: hidden; /* Ensure rounded corners for plots */
+            background-color: #ffffff;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            /* Ensure the plot container takes full width but has a defined height */
+            width: 100%;
+            min-height: 400px; /* Minimum height for smaller screens */
+        }
+        .nav-link {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .nav-link:hover {
+            background-color: #e0f2fe; /* Light blue on hover */
+        }
+        .nav-link.active {
+            background-color: #bfdbfe; /* Stronger blue for active link */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+    <div class="container mx-auto p-6 lg:p-10 bg-white rounded-lg shadow-lg my-8 md:my-12">
+
+        <!-- Navigation Bar -->
+        <nav class="mb-8 p-4 bg-blue-700 text-white rounded-lg shadow-md flex flex-wrap justify-center gap-4">
+            <a href="index.html" class="nav-link">Introductie</a>
+            <a href="dataset.html" class="nav-link">Dataset & Voorbewerking</a>
+            <a href="perspective1.html" class="nav-link active">Perspectief 1</a>
+            <a href="perspective2.html" class="nav-link">Perspectief 2</a>
+            <a href="reflection.html" class="nav-link">Reflectie & Werkverdeling</a>
+        </nav>
+
+        <!-- Perspective 1 Section -->
+        <section class="mb-10 card">
+            <h2 class="text-3xl font-semibold text-gray-800 section-title">Perspectief 1: EV's als primaire oplossing voor schonere lucht</h2>
+            <p class="mb-4">
+                Dit perspectief benadrukt de directe voordelen van de toenemende adoptie van elektrische voertuigen voor het milieu. De argumentatie is dat een groeiend aandeel EV's onvermijdelijk leidt tot een vermindering van de uitstoot van schadelijke stoffen, waaronder CO2, wat resulteert in een verbeterde luchtkwaliteit. We visualiseren deze trend door het EV-aandeel en de CO2-uitstoot over tijd te vergelijken in verschillende Europese landen.
+            </p>
+
+            <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">Visualisatie 1.1: EV-aandeel per land over tijd</h3>
+            <div id="evShareLineChart" class="plot-container w-full h-[400px] md:h-[500px]"></div>
+            <p class="mt-4 text-sm text-gray-600">
+                <span class="font-semibold">Figuur 1.1:</span> Deze lijngrafiek toont de ontwikkeling van het EV-aandeel (percentage elektrische voertuigen van het totale wagenpark) in geselecteerde Europese landen van 2010 tot 2023. De grafiek illustreert een algemene stijgende trend, met name in landen als Noorwegen, wat de snelle adoptie van EV's benadrukt. Landen met een lagere initiële adoptie laten ook een gestage groei zien. Dit ondersteunt het argument dat EV's een steeds groter deel van het wagenpark uitmaken.
+            </p>
+
+            <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">Visualisatie 1.2: CO2-uitstoot vs. EV-aandeel per Jaar</h3>
+            <div id="co2EvScatter" class="plot-container w-full h-[400px] md:h-[500px]"></div>
+            <p class="mt-4 text-sm text-gray-600">
+                <span class="font-semibold">Figuur 1.2:</span> Dit scatterplot visualiseert de relatie tussen het EV-aandeel en de gemiddelde CO2-uitstoot per kilometer van nieuwe personenauto's per land. Gebruik de slider onderaan de grafiek om de data per jaar te bekijken van 2010 tot 2023. Een neerwaartse trend, waarbij een hoger EV-aandeel correleert met een lagere CO2-uitstoot, zou het argument ondersteunen dat EV's direct bijdragen aan een schoner wagenpark. De spreiding van de punten kan echter ook de complexiteit van deze relatie aantonen, met uitzonderingen en variaties tussen landen, die over de jaren heen duidelijker worden.
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-gray-200">
+            <p>&copy; 2025 Groep 12 - InfoVis Project. Alle rechten voorbehouden.</p>
+            <p class="mt-1">
+                <a href="https://github.com/uw-github-gebruikersnaam/uw-repository-naam" target="_blank" class="text-blue-600 hover:underline">Bekijk de broncode op GitHub</a>
+                (Vervang 'uw-github-gebruikersnaam/uw-repository-naam' door uw eigen repository link)
+            </p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+    <script>
+        // Functie om willekeurige float tussen min en max te genereren
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        // Mock data genereren
+        const countries = ['Nederland', 'Duitsland', 'Noorwegen', 'Polen', 'Frankrijk', 'Spanje'];
+        const years = Array.from({ length: 14 }, (_, i) => 2010 + i); // 2010-2023
+
+        let data = [];
+        countries.forEach(country => {
+            let evShare = 0.05; // Start met een kleine EV-aandeel
+            let co2Emissions = getRandomArbitrary(140, 160); // Start met hogere CO2
+
+            years.forEach(year => {
+                // EV Share simulatie: sneller groei in Noorwegen, gestage groei elders
+                if (country === 'Noorwegen') {
+                    evShare += getRandomArbitrary(1.5, 4.0); // Snelle groei
+                } else {
+                    evShare += getRandomArbitrary(0.1, 1.0); // Gestage groei
+                }
+                evShare = Math.min(evShare, 25); // Max 25% EV aandeel
+
+                // CO2 emissies simulatie: lager bij hoger EV-aandeel, maar met variatie
+                let co2ReductionFactor = evShare * getRandomArbitrary(0.5, 1.5) / 100; // Hoe groter EV aandeel, hoe meer reductie
+                co2Emissions -= co2ReductionFactor * getRandomArbitrary(0.5, 2.0);
+                co2Emissions = Math.max(co2Emissions, 15); // Min 15 g/km CO2
+
+                // Voeg wat willekeurige ruis toe
+                co2Emissions += getRandomArbitrary(-2, 2);
+                co2Emissions = Math.max(co2Emissions, 14.5); // Zorg dat het niet onder min valt
+
+                data.push({
+                    country: country,
+                    year: year,
+                    evShare: parseFloat(evShare.toFixed(2)),
+                    co2Emissions: parseFloat(co2Emissions.toFixed(2))
+                });
+            });
+        });
+
+        // Visualisatie 1.1: EV-aandeel per land over tijd
+        function plotEvShareLineChart() {
+            let traces = countries.map(country => {
+                let countryData = data.filter(d => d.country === country);
+                return {
+                    x: countryData.map(d => d.year),
+                    y: countryData.map(d => d.evShare),
+                    mode: 'lines+markers',
+                    name: country,
+                    hovertemplate: `Land: %{fullData.name}<br>Jaar: %{x}<br>EV-aandeel: %{y:.2f}%<extra></extra>`
+                };
+            });
+
+            let layout = {
+                title: 'EV-aandeel in Europese landen (2010-2023)',
+                xaxis: {
+                    title: 'Jaar',
+                    tickmode: 'linear',
+                    dtick: 2 // Show ticks every 2 years
+                },
+                yaxis: {
+                    title: 'EV-aandeel (%)',
+                    rangemode: 'tozero',
+                    ticksuffix: '%'
+                },
+                hovermode: 'closest',
+                responsive: true,
+                margin: {t:50, r:20, b:40, l:40}
+            };
+
+            Plotly.newPlot('evShareLineChart', traces, layout);
+        }
+
+        // Visualisatie 1.2: CO2-uitstoot vs. EV-aandeel met slider
+        function plotCo2EvScatterInteractive() {
+            let allTraces = [];
+            years.forEach((year, i) => {
+                let yearData = data.filter(d => d.year === year);
+                allTraces.push({
+                    x: yearData.map(d => d.evShare),
+                    y: yearData.map(d => d.co2Emissions),
+                    mode: 'markers',
+                    type: 'scatter',
+                    name: String(year), // Naam voor animatie/slider
+                    visible: (year === years[0]), // Alleen het eerste jaar is initieel zichtbaar
+                    marker: {
+                        size: 8,
+                        color: 'rgba(59, 130, 246, 0.7)', // Consistent blauwe kleur
+                        line: {
+                            color: 'rgba(59, 130, 246, 1.0)',
+                            width: 1
+                        }
+                    },
+                    text: yearData.map(d => `Land: ${d.country}`),
+                    hovertemplate: `Land: %{text}<br>EV-aandeel: %{x:.2f}%<br>CO2-uitstoot: %{y:.2f} g/km<extra></extra>`
+                });
+            });
+
+            let sliderSteps = [];
+            for (let i = 0; i < years.length; i++) {
+                let visibility = Array.from({length: years.length}, (_, k) => k === i); // Maak alleen het huidige jaar zichtbaar
+                sliderSteps.push({
+                    method: 'update',
+                    label: years[i].toString(),
+                    args: [{'visible': visibility}, {'title': `CO2-uitstoot vs. EV-aandeel in ${years[i]}`}]
+                });
+            }
+
+            let layout = {
+                title: `CO2-uitstoot vs. EV-aandeel in ${years[0]}`, // Initiële titel
+                xaxis: {
+                    title: 'EV-aandeel (%)',
+                    ticksuffix: '%'
+                },
+                yaxis: {
+                    title: 'Gemiddelde CO2-uitstoot (g/km)',
+                    rangemode: 'tozero',
+                    autorange: true
+                },
+                sliders: [{
+                    steps: sliderSteps,
+                    active: 0,
+                    pad: {t: 50},
+                    currentvalue: {
+                        prefix: "Jaar: ",
+                        xanchor: 'right',
+                        font: {color: '#333', size: 16}
+                    },
+                    len: 0.9, // Lengte van de slider
+                    x: 0.05,  // X-positie van de slider
+                }],
+                responsive: true,
+                margin: {t:100, r:20, b:60, l:40} // Verhoogde bovenmarge voor slider
+            };
+
+            Plotly.newPlot('co2EvScatter', allTraces, layout);
+        }
+
+
+        // Zorg ervoor dat de grafieken worden geplot nadat de DOM volledig is geladen
+        window.onload = function() {
+            plotEvShareLineChart();
+            plotCo2EvScatterInteractive(); // Roep de nieuwe interactieve functie aan
+
+            // Voeg event listeners toe voor responsiveness
+            window.addEventListener('resize', () => {
+                Plotly.relayout('evShareLineChart', { width: document.getElementById('evShareLineChart').clientWidth, height: document.getElementById('evShareLineChart').clientHeight });
+                Plotly.relayout('co2EvScatter', { width: document.getElementById('co2EvScatter').clientWidth, height: document.getElementById('co2EvScatter').clientHeight });
+            });
+        };
+    </script>
+</body>
+</html>
