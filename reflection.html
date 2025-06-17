@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflectie en Werkverdeling</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        .container {
+            max-width: 1000px;
+        }
+        .section-title {
+            border-bottom: 2px solid #3b82f6; /* Blue border for titles */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            padding: 1.5rem;
+        }
+        .nav-link {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .nav-link:hover {
+            background-color: #e0f2fe; /* Light blue on hover */
+        }
+        .nav-link.active {
+            background-color: #bfdbfe; /* Stronger blue for active link */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+    <div class="container mx-auto p-6 lg:p-10 bg-white rounded-lg shadow-lg my-8 md:my-12">
+
+        <!-- Navigation Bar -->
+        <nav class="mb-8 p-4 bg-blue-700 text-white rounded-lg shadow-md flex flex-wrap justify-center gap-4">
+            <a href="index.html" class="nav-link">Introductie</a>
+            <a href="dataset.html" class="nav-link">Dataset & Voorbewerking</a>
+            <a href="perspective1.html" class="nav-link">Perspectief 1</a>
+            <a href="perspective2.html" class="nav-link">Perspectief 2</a>
+            <a href="reflection.html" class="nav-link active">Reflectie & Werkverdeling</a>
+        </nav>
+
+        <!-- Reflection Section -->
+        <section class="mb-10 card">
+            <h2 class="text-3xl font-semibold text-gray-800 section-title">Reflectie</h2>
+            <p class="mb-4">
+                Het creëren van dit dataverhaal was een iteratief proces, waarbij feedback van onze TA en medestudenten cruciaal was. De initiële concepten voor visualisaties waren soms te complex of misten een duidelijke boodschap. Door de feedback hebben we geleerd om visualisaties te vereenvoudigen en te focussen op de kernboodschap die we wilden overbrengen voor elk perspectief.
+            </p>
+            <p class="mb-4">
+                Specifiek hebben we de volgende verbeteringen doorgevoerd:
+            </p>
+            <ul class="list-disc list-inside mb-4 pl-4 text-gray-700">
+                <li><strong>Duidelijkheid van argumenten:</strong> De structuur van de argumenten is aangescherpt om een directere link met de gepresenteerde data te leggen. Dit voorkomt 'nonsense arguments' (AF1) en 'poorly supported arguments' (AF2).</li>
+                <li><strong>Visualisatieontwerp:</strong> De keuze van grafiektypes en de visuele codering (kleuren, assen) zijn geoptimaliseerd voor leesbaarheid en interpretatie, vermijdend 'ineffective visual encodings' (VF1) en 'confusing visualization design' (VF3). Interactieve elementen zijn toegevoegd om de 'meaningful interactive visualization' (VF4) te vergroten.</li>
+                <li><strong>Verhalende flow:</strong> Er is veel aandacht besteed aan de overgang tussen secties en paragrafen, zodat het verhaal soepel loopt en de 'bad flow between sentences' (RF3) en 'bad structure' (RF4) wordt vermeden. De figuren zijn nu self-contained met duidelijke captions (RF2).</li>
+            </ul>
+            <p class="mb-4">
+                Zelfreflectie: We hebben ons gerealiseerd hoe belangrijk het is om een balans te vinden tussen een 'author-driven' en 'reader-driven' verhaal. Hoewel we de lezer willen sturen met onze argumenten, is het essentieel om voldoende interactie en detail te bieden zodat zij zelf de data kunnen verkennen en hun eigen inzichten kunnen vormen. Dit evenwicht is een constante uitdaging, maar draagt bij aan een rijkere gebruikerservaring.
+            </p>
+        </section>
+
+        <!-- Work Distribution Section -->
+        <section class="mb-10 card">
+            <h2 class="text-3xl font-semibold text-gray-800 section-title">Werkverdeling</h2>
+            <p class="mb-4">
+                Ons team heeft de taken evenwichtig verdeeld om dit project te realiseren. Hieronder een overzicht van de verantwoordelijkheden:
+            </p>
+            <ul class="list-disc list-inside mb-4 pl-4 text-gray-700">
+                <li><strong>Leonard Bus:</strong> Data-acquisitie en -opschoning (Dataset 1 & 2), Initiële data-analyse en berekening EV-aandeel, Opzet van de HTML-structuur en integratie van Tailwind CSS.</li>
+                <li><strong>Tygo Honig:</strong> Conceptontwikkeling en uitwerking van Perspectief 1 (argumenten en tekst), Ontwerp en implementatie van Visualisatie 1.1 en 1.2 (Plotly.js), Algemene tekstredactie.</li>
+                <li><strong>Frank Villano:</strong> Conceptontwikkeling en uitwerking van Perspectief 2 (argumenten en tekst), Ontwerp en implementatie van Visualisatie 2.1 en 2.2 (Plotly.js), Coördinatie tussen teamleden en GitHub Pages deployment.</li>
+                <li><strong>Olivier Brouwer:</strong> Introductie- en reflectiesecties schrijven, Controle op consistentie en leesbaarheid van de gehele story, Verzamelen en verwerken van peer feedback.</li>
+            </ul>
+            <p class="mb-4">
+                We hebben wekelijks bijeenkomsten gehad om de voortgang te bespreken, knelpunten op te lossen en elkaars werk te reviewen. Dit heeft gezorgd voor een coherente en kwalitatieve output.
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-gray-200">
+            <p>&copy; 2025 Groep 12 - InfoVis Project. Alle rechten voorbehouden.</p>
+            <p class="mt-1">
+                <a href="https://github.com/uw-github-gebruikersnaam/uw-repository-naam" target="_blank" class="text-blue-600 hover:underline">Bekijk de broncode op GitHub</a>
+                (Vervang 'uw-github-gebruikersnaam/uw-repository-naam' door uw eigen repository link)
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
