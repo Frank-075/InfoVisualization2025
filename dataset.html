@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset en Voorbewerking</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        .container {
+            max-width: 1000px;
+        }
+        .section-title {
+            border-bottom: 2px solid #3b82f6; /* Blue border for titles */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            padding: 1.5rem;
+        }
+        .nav-link {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .nav-link:hover {
+            background-color: #e0f2fe; /* Light blue on hover */
+        }
+        .nav-link.active {
+            background-color: #bfdbfe; /* Stronger blue for active link */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+    <div class="container mx-auto p-6 lg:p-10 bg-white rounded-lg shadow-lg my-8 md:my-12">
+
+        <!-- Navigation Bar -->
+        <nav class="mb-8 p-4 bg-blue-700 text-white rounded-lg shadow-md flex flex-wrap justify-center gap-4">
+            <a href="index.html" class="nav-link">Introductie</a>
+            <a href="dataset.html" class="nav-link active">Dataset & Voorbewerking</a>
+            <a href="perspective1.html" class="nav-link">Perspectief 1</a>
+            <a href="perspective2.html" class="nav-link">Perspectief 2</a>
+            <a href="reflection.html" class="nav-link">Reflectie & Werkverdeling</a>
+        </nav>
+
+        <!-- Dataset and Preprocessing Section -->
+        <section class="mb-10 card">
+            <h2 class="text-3xl font-semibold text-gray-800 section-title">Dataset en Voorbewerking</h2>
+            <p class="mb-4">
+                Voor dit project hebben we twee datasets van Eurostat gebruikt die cruciale informatie bieden over de evolutie van het Europese wagenpark en de bijbehorende emissies.
+            </p>
+
+            <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">Dataset 1: Personenauto's per soort motor energie</h3>
+            <p class="mb-2">
+                <strong>Bron:</strong> <a href="https://ec.europa.eu/eurostat/databrowser/view/road_eqs_carpda/bookmark/table?lang=en&bookmarkId=2070d006-232c-4f6d-8c79-aebdeafb37c1" target="_blank" class="text-blue-600 hover:underline">Eurostat - Passenger cars, by type of motor energy (road_eqs_carpda)</a>
+            </p>
+            <p class="mb-4">
+                Deze tabel rapporteert het totale aantal personenauto's in omloop per lidstaat, opgesplitst naar soort aandrijving (elektrisch, benzine, diesel, hybride, etc.) en jaar. Voor dit project focussen we op de categorieën "ELC" (volledig elektrisch) en "TOTAL" (totaal wagenpark) om het jaargemiddelde aandeel EV's per land te bepalen.
+            </p>
+            <ul class="list-disc list-inside mb-4 pl-4 text-gray-700">
+                <li><strong>OBS_VALUE (aantal voertuigen):</strong> Gebruikt samen met 'mot_nrg' (ELC vs. TOTAL) om het jaarlijkse EV-aandeel per land te berekenen.</li>
+                <li><strong>Statistieken:</strong> Gemiddeld EV-aandeel (alle landen/jaartallen): $0.75\%$ ($\sigma \approx 2.19\%$), Maximaal waargenomen EV-aandeel: $23.85\%$.</li>
+                <li><strong>Statistieken:</strong> Gemiddeld totaal aantal personenauto's per land-jaar: $6.1~mln$ ($\sigma \approx 7.4~mln$), Minimum: $17.600$ voertuigen, Maximum: $48.9~mln$ voertuigen.</li>
+            </ul>
+
+            <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">Dataset 2: Gemiddelde CO2-uitstoot per km van nieuwe personenauto's</h3>
+            <p class="mb-2">
+                <strong>Bron:</strong> <a href="https://ec.europa.eu/eurostat/databrowser/view/sdg_13_31/default/table?lang=en&category=cli.cli_gge" target="_blank" class="text-blue-600 hover:underline">Eurostat - Average CO2 emissions per km from new passenger cars (sdg_13_31)</a>
+            </p>
+            <p class="mb-4">
+                Deze Eurostat-indicator (SDG 13.31) bevat de gemiddelde CO2-uitstoot in gram per kilometer van nieuw geregistreerde personenauto's per EU-lidstaat en jaar. De variabele OBS_VALUE (g/km) fungeert als proxy voor de uitstootintensiteit van het wagenpark en vormt onze afhankelijke variabele.
+            </p>
+            <ul class="list-disc list-inside mb-4 pl-4 text-gray-700">
+                <li><strong>OBS_VALUE (g/km):</strong> Gemiddelde CO2-emissie per gereden kilometer van nieuw geregistreerde personenauto's.</li>
+                <li><strong>Statistieken:</strong> Gemiddelde: $126.5~g/km$ ($\sigma \approx 22.4$), Minimum: $14.5~g/km$, Maximum: $161.2~g/km$.</li>
+            </ul>
+
+            <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">Voorbewerking</h3>
+            <p class="mb-4">
+                De ruwe datasets zijn gedownload en samengevoegd op basis van land en jaar. Voor Dataset 1 is het EV-aandeel berekend door het aantal elektrische auto's te delen door het totale aantal personenauto's per land en jaar. Ontbrekende waarden zijn behandeld door interpolatie waar passend, en anders zijn rijen met incomplete data verwijderd om de consistentie te waarborgen. Deze gecombineerde en opgeschoonde dataset vormt de basis voor onze visualisaties.
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-gray-200">
+            <p>&copy; 2025 Groep 12 - InfoVis Project. Alle rechten voorbehouden.</p>
+            <p class="mt-1">
+                <a href="https://github.com/uw-github-gebruikersnaam/uw-repository-naam" target="_blank" class="text-blue-600 hover:underline">Bekijk de broncode op GitHub</a>
+                (Vervang 'uw-github-gebruikersnaam/uw-repository-naam' door uw eigen repository link)
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
