@@ -5,7 +5,7 @@ Elektrische voertuigen (EV’s) worden vaak gezien als de oplossing om de luchtk
 
 # Inhoudsopgave
 # Auteurs
-Tygo Honig 
-Frank Villano
-Olivier Brouwer
-Leonard Bus
+- Tygo Honig 
+- Frank Villano
+- Olivier Brouwer
+- Leonard Bus
