@@ -8,7 +8,8 @@
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Plotly -->
+    <!-- D3 + Plotly -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 
     <!-- Favicon + Fonts -->
@@ -46,8 +47,8 @@
 
         <p class="mb-6">
             Volgens dit perspectief is de bijdrage van EV’s aan de daling van CO₂-uitstoot minder doorslaggevend
-            dan vaak wordt aangenomen. De visualisaties hieronder tonen (1) hoe de uitstoottendens per land
-            niet uniform daalt en (2) hoeveel overlap er is tussen landen met weinig en juist veel EV’s.
+            dan vaak wordt aangenomen. De visualisaties tonen (1) hoe de uitstoottendens per land niet uniform daalt
+            en (2) hoeveel overlap er is tussen landen met weinig en juist veel EV’s.
         </p>
 
         <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">
@@ -67,7 +68,7 @@
         <p class="mt-1">
             <a href="https://github.com/TygoHonig/InfoVisualization2025"
                target="_blank" class="text-blue-600 hover:underline">
-               Broncode op GitHub
+               Broncode op&nbsp;GitHub
             </a>
         </p>
     </footer>
@@ -75,24 +76,23 @@
 
 <script>
 /* ----------  CSV-paden  ---------- */
-const carsCSV = '/InfoVisualization2025/data/cars_by_fuel.csv';
-const co2CSV  = '/InfoVisualization2025/data/co2_new_cars.csv';
+const carsCSV = 'data/cars_by_fuel.csv';
+const co2CSV  = 'data/co2_new_cars.csv';
 
-/* Map EU-alpha-2 ➜ landnaam (voor tooltips) */
+/* ISO-code → naam */
 const code2name = {NL:'Nederland', DE:'Duitsland', NO:'Noorwegen',
                    PL:'Polen',     FR:'Frankrijk', ES:'Spanje'};
 
-/* Focus - zelfde zes landen als Perspectief 1 */
 const focusCodes = Object.keys(code2name);
 
 /* Data inladen */
-Promise.all([Plotly.d3.csv(carsCSV), Plotly.d3.csv(co2CSV)])
+Promise.all([d3.csv(carsCSV), d3.csv(co2CSV)])
 .then(([carsRaw, co2Raw]) => {
 
-    /* Bereken EV-aandeel & merge met CO₂ */
-    const tmp = {};
+    /* Merge + EV-share */
+    const tmp={};
     carsRaw.forEach(r=>{
-        const key = `${r.geo}-${r.TIME_PERIOD}`;
+        const key=`${r.geo}-${r.TIME_PERIOD}`;
         if(!tmp[key]) tmp[key]={geo:r.geo,year:+r.TIME_PERIOD,elc:0,total:0};
         if(r.mot_nrg==='ELC')   tmp[key].elc   = +r.OBS_VALUE;
         if(r.mot_nrg==='TOTAL') tmp[key].total = +r.OBS_VALUE;
@@ -101,18 +101,19 @@ Promise.all([Plotly.d3.csv(carsCSV), Plotly.d3.csv(co2CSV)])
         const key=`${r.geo}-${r.TIME_PERIOD}`;
         if(tmp[key]) tmp[key].co2 = +r.OBS_VALUE;
     });
+
     const all=Object.values(tmp)
               .filter(d=>d.total>0 && d.co2!==undefined)
-              .map(d=>({...d,evShare:d.elc/d.total*100}));
+              .map(d=>({...d, evShare:d.elc/d.total*100}));
 
     const focus=all.filter(d=>focusCodes.includes(d.geo));
 
-    /* ----------  Visualisatie 2.1 – Line  ---------- */
+    /* ----------  Vis 2.1 – Lijn ---------- */
     const lineTraces = focusCodes.map(code=>{
-        const series=focus.filter(d=>d.geo===code).sort((a,b)=>a.year-b.year);
+        const serie=focus.filter(d=>d.geo===code).sort((a,b)=>a.year-b.year);
         return{
-            x:series.map(d=>d.year),
-            y:series.map(d=>d.co2),
+            x:serie.map(d=>d.year),
+            y:serie.map(d=>d.co2),
             mode:'lines+markers',
             name:code2name[code]||code,
             hovertemplate:'%{x}: %{y:.1f} g/km<extra>'+ (code2name[code]||code) +'</extra>'
@@ -127,10 +128,8 @@ Promise.all([Plotly.d3.csv(carsCSV), Plotly.d3.csv(co2CSV)])
         hovermode:'closest'
     },{responsive:true});
 
-    /* ----------  Visualisatie 2.2 – Box plot  ---------- */
-
-    /* Categorie per record: <5%, 5-15 %, >15 % */
-    const cats = {Low:[], Mid:[], High:[]};
+    /* ----------  Vis 2.2 – Box ---------- */
+    const cats={Low:[],Mid:[],High:[]};
     focus.forEach(d=>{
         if(d.evShare<5)        cats.Low.push(d);
         else if(d.evShare<15)  cats.Mid.push(d);
@@ -138,9 +137,9 @@ Promise.all([Plotly.d3.csv(carsCSV), Plotly.d3.csv(co2CSV)])
     });
 
     const boxTraces=[
-        {name:'Laag (<5 %)',   data:cats.Low,  color:'#f97316'},
-        {name:'Midden (5-15 %)',data:cats.Mid, color:'#60a5fa'},
-        {name:'Hoog (>15 %)',  data:cats.High, color:'#22c55e'}
+        {name:'Laag (<5 %)',    data:cats.Low,  color:'#f97316'},
+        {name:'Midden (5-15 %)',data:cats.Mid,  color:'#60a5fa'},
+        {name:'Hoog (>15 %)',   data:cats.High, color:'#22c55e'}
     ].map(cat=>({
         y:cat.data.map(d=>d.co2),
         name:cat.name,
@@ -156,7 +155,8 @@ Promise.all([Plotly.d3.csv(carsCSV), Plotly.d3.csv(co2CSV)])
         margin:{t:60,r:20,b:40,l:60},
         boxmode:'group'
     },{responsive:true});
-});
+})
+.catch(err=>console.error('Data-load error:',err));
 </script>
 </body>
 </html>
