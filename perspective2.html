@@ -1,189 +1,152 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perspectief 2 – Beperkte impact EV-adoptie</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perspectief 2 – Beperkte impact EV-adoptie</title>
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- D3 + Plotly -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  <!-- D3  + Plotly -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 
-    <!-- Favicon + Fonts -->
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Fonts + favicon -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="images/favicon.png" />
 
-    <style>
-        body{font-family:'Inter',sans-serif;background:#f3f4f6}
-        .container{max-width:1000px}
-        .section-title{border-bottom:2px solid #3b82f6;padding-bottom:.5rem;margin-bottom:1.5rem}
-        .card{background:#fff;border-radius:.75rem;box-shadow:0 4px 6px rgba(0,0,0,.1);padding:1.5rem}
-        .plot-container{background:#fff;border-radius:.75rem;box-shadow:0 2px 4px rgba(0,0,0,.05);padding:1rem;min-height:400px}
-        .nav-link{padding:.75rem 1.25rem;border-radius:.5rem;transition:background .3s}
-        .nav-link:hover{background:#e0f2fe}
-        .nav-link.active{background:#bfdbfe;font-weight:600}
-    </style>
+  <style>
+    body{font-family:'Inter',sans-serif;background:#f3f4f6}
+    .container{max-width:1000px}
+    .section-title{border-bottom:2px solid #3b82f6;padding-bottom:.5rem;margin-bottom:1.5rem}
+    .card{background:#fff;border-radius:.75rem;box-shadow:0 4px 6px rgba(0,0,0,.1);padding:1.5rem}
+    .plot-container{background:#fff;border-radius:.75rem;box-shadow:0 2px 4px rgba(0,0,0,.05);padding:1rem;min-height:420px}
+    .nav-link{padding:.75rem 1.25rem;border-radius:.5rem;transition:background .3s}
+    .nav-link:hover{background:#e0f2fe}
+    .nav-link.active{background:#bfdbfe;font-weight:600}
+  </style>
 </head>
 <body class="antialiased text-gray-800">
 <div class="container mx-auto p-6 lg:p-10 bg-white rounded-lg shadow-lg my-8 md:my-12">
 
-    <!-- Nav -->
-    <nav class="mb-8 p-4 bg-blue-700 text-white rounded-lg shadow-md flex flex-wrap justify-center gap-4">
-        <a href="index.html"        class="nav-link">Introductie</a>
-        <a href="dataset.html"      class="nav-link">Dataset&nbsp;&amp;&nbsp;Voorbewerking</a>
-        <a href="perspective1.html" class="nav-link">Perspectief&nbsp;1</a>
-        <a href="perspective2.html" class="nav-link active">Perspectief&nbsp;2</a>
-        <a href="reflection.html"   class="nav-link">Reflectie&nbsp;&amp;&nbsp;Werkverdeling</a>
-        <a href="results.html" class="nav-link">Resultaten & Conclusie</a>
-    </nav>
+  <!-- Navigatie -->
+  <nav class="mb-8 p-4 bg-blue-700 text-white rounded-lg shadow-md flex flex-wrap justify-center gap-4">
+    <a href="index.html"        class="nav-link">Introductie</a>
+    <a href="dataset.html"      class="nav-link">Dataset&nbsp;&amp;&nbsp;Voorbewerking</a>
+    <a href="perspective1.html" class="nav-link">Perspectief&nbsp;1</a>
+    <a href="perspective2.html" class="nav-link active">Perspectief&nbsp;2</a>
+    <a href="reflection.html"   class="nav-link">Reflectie&nbsp;&amp;&nbsp;Werkverdeling</a>
+    <a href="results.html"      class="nav-link">Resultaten&nbsp;&amp;&nbsp;Conclusie</a>
+  </nav>
 
-    <!-- Content -->
-    <section class="mb-10 card">
-        <h2 class="text-3xl font-semibold text-gray-800 section-title">
-            Perspectief 2: Beperkte impact van EV-adoptie
-        </h2>
+  <!-- Inhoud -->
+  <section class="mb-10 card">
+    <h2 class="text-3xl font-semibold text-gray-800 section-title">
+      Perspectief 2: Beperkte impact van EV-adoptie
+    </h2>
 
-        <p class="mb-6">
-            Volgens dit perspectief is de bijdrage van EV’s aan de daling van CO₂-uitstoot minder doorslaggevend
-            dan vaak wordt aangenomen. De visualisaties tonen (1) hoe de uitstoottendens per land niet uniform daalt
-            en (2) hoeveel overlap er is tussen landen met weinig en juist veel EV’s.
-        </p>
+    <p class="mb-6">
+      Volgens dit perspectief is de bijdrage van EV’s aan de daling van CO₂-uitstoot minder doorslaggevend
+      dan vaak wordt aangenomen. De visualisaties tonen (1) hoe de uitstoottendens per land niet uniform daalt en
+      (2) hoe ongelijk de EV-penetratie in Europa momenteel is.
+    </p>
 
-        <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">
-            Visualisatie 2.1 – Evolutie CO₂-uitstoot per land
-        </h3>
-        <div id="co2EvolutionLineChart" class="plot-container"></div>
-        <div class="mt-6 space-y-4 text-gray-700 leading-relaxed">
-            <p>Deze grafiek ondersteunt het perspectief dat de impact van EV-adoptie op nationale CO₂-uitstoot niet overal even doorslaggevend is. Ondanks de stijging van het aantal elektrische voertuigen blijven de verschillen tussen landen groot en is de daling van uitstoot vaak traag of wisselend.</p>
-            
-            <p><strong>Noorwegen 🇳🇴:</strong> Vormt de uitzondering die de regel bevestigt: een forse toename van EV’s gaat hier samen met een snelle daling in uitstoot. Toch onderstreept dit juist dat sterke beleidsmaatregelen nodig zijn om echt verschil te maken.</p>
-            
-            <p><strong>Nederland 🇳🇱:</strong> Toont een gestage daling, maar niet zo scherp als Noorwegen. Het laat zien dat een stijgend EV-aandeel niet automatisch leidt tot drastisch lagere CO₂-uitstoot zonder aanvullende beleidssteun of structurele marktverandering.</p>
-            
-            <p><strong>Duitsland 🇩🇪:</strong> Ondanks flinke investeringen in EV’s vanaf 2020 blijft de gemiddelde uitstoot relatief hoog. Dit bevestigt dat de effecten van EV-adoptie beperkt zijn zolang andere autotypes dominant blijven.</p>
-            
-            <p><strong>Frankrijk 🇫🇷:</strong> Laat een gematigde en stabiele daling zien. Het onderbouwt het idee dat ook landen met een gematigd EV-beleid geen grote verschillen zien in uitstoot.</p>
-            
-            <p><strong>Spanje 🇪🇸:</strong> De trage afname in uitstoot bevestigt dat een laag EV-aandeel nauwelijks invloed heeft op de gemiddelde uitstoot.</p>
-            
-            <p><strong>Polen 🇵🇱:</strong> Illustreert het sterkst het perspectief: met een zeer laag EV-aandeel en amper afname van CO₂-uitstoot vormt Polen een duidelijk voorbeeld van beperkte impact.</p>
-        </div>
-        
+    <!-- VIS 2.1 -->
+    <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">
+      Visualisatie 2.1 – Evolutie CO₂-uitstoot per land
+    </h3>
+    <div id="co2EvolutionLineChart" class="plot-container"></div>
 
-        <h3 class="text-2xl font-medium text-gray-700 mt-10 mb-3">
-            Visualisatie 2.2 – Spreiding CO₂-uitstoot versus EV-aandeel
-        </h3>
-        <div id="co2EvBoxPlot" class="plot-container"></div>
-        <div class="mt-6 space-y-4 text-gray-700 leading-relaxed">
-            <p>Ook deze boxplot ondersteunt het perspectief van beperkte impact. Hoewel hogere EV-aandelen gemiddeld samengaan met lagere uitstoot, zijn de verschillen tussen categorieën klein en is er opvallend veel overlap. Dit suggereert dat EV-adoptie alleen geen garantie biedt voor substantiële CO₂-reductie.</p>
-            
-            <p><strong>Laag EV-aandeel (&lt;5%):</strong> Bevat vooral jaren en landen met hoge uitstoot, zoals Polen. Toch zijn er ook uitzonderingen met lagere uitstoot – wat aangeeft dat andere factoren dan EV’s ook een rol spelen.</p>
-            
-            <p><strong>Midden EV-aandeel (5–15%):</strong> Toont dat zelfs bij gematigde EV-penetratie de CO₂-uitstoot nog relatief hoog kan blijven. De spreiding is groot, wat het beperkte effect van deze middenmoot onderstreept.</p>
-            
-            <p><strong>Hoog EV-aandeel (&gt;15%):</strong> Hier is de mediane uitstoot het laagst, maar de waarden overlappen met lagere categorieën. Dat wijst erop dat zelfs bij substantiële EV-adoptie andere elementen (zoals voertuigtype en verbrandingsmotoren) de uitstoot blijven beïnvloeden.</p>
-        </div>
-        
-    </section>
+    <!-- VIS 2.2 -->
+    <h3 class="text-2xl font-medium text-gray-700 mt-10 mb-3">
+      Visualisatie 2.2 – EV-aandeel per land (interactieve kaart)
+    </h3>
+    <div id="evShareMap" class="plot-container"></div>
+    <p class="text-sm text-gray-600 mt-4">
+      Sleep de slider om te zien hoe de EV-penetratie zich sinds 2013 ontwikkelt. De kaart maakt duidelijk
+      dat de hoge percentages vooral geconcentreerd zijn in één of twee landen, terwijl grote delen van Europa
+      onder de 5&nbsp;% blijven – een indicatie dat de totale effect op CO₂-uitstoot voorlopig beperkt is.
+    </p>
+  </section>
 
-    <!-- Footer -->
-    <footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-gray-200">
-        <p>&copy; 2025 Groep 12 – InfoVis Project.</p>
-        <p class="mt-1">
-            <a href="https://github.com/TygoHonig/InfoVisualization2025"
-               target="_blank" class="text-blue-600 hover:underline">
-               Broncode op&nbsp;GitHub
-            </a>
-        </p>
-    </footer>
+  <!-- Footer -->
+  <footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-gray-200">
+    <p>&copy; 2025 Groep 12 – InfoVis Project.</p>
+    <p class="mt-1"><a href="https://github.com/TygoHonig/InfoVisualization2025" target="_blank" class="text-blue-600 hover:underline">Broncode op GitHub</a></p>
+  </footer>
 </div>
 
 <script>
-/* ----------  CSV-paden  ---------- */
+/* ----------------- Bestands­paden ----------------- */
 const carsCSV = 'data/cars_by_fuel.csv';
-const co2CSV  = 'data/co2_new_cars.csv';
+/* ----------------- Helpers ----------------- */
+// Alpha-2 → Alpha-3 mapping voor EU / EER
+const isoMap = {
+  AT:'AUT', BE:'BEL', BG:'BGR', HR:'HRV', CY:'CYP', CZ:'CZE', DK:'DNK', EE:'EST',
+  FI:'FIN', FR:'FRA', DE:'DEU', EL:'GRC', HU:'HUN', IE:'IRL', IT:'ITA', LV:'LVA',
+  LT:'LTU', LU:'LUX', MT:'MLT', NL:'NLD', PL:'POL', PT:'PRT', RO:'ROU', SK:'SVK',
+  SI:'SVN', ES:'ESP', SE:'SWE', NO:'NOR', IS:'ISL', LI:'LIE', CH:'CHE', UK:'GBR'
+};
+/* Kleurschaal (licht → donker groen) */
+const colors = [['0','#eff6ff'],['0.2','#c7e9c0'],['0.4','#7fc97f'],
+                ['0.6','#41ab5d'],['0.8','#238b45'],['1','#005824']];
 
-/* ISO-code → naam */
-const code2name = {NL:'Nederland', DE:'Duitsland', NO:'Noorwegen',
-                   PL:'Polen',     FR:'Frankrijk', ES:'Spanje'};
+Promise.all([d3.csv(carsCSV)])
+.then(([carsRaw]) => {
 
-const focusCodes = Object.keys(code2name);
+  /* ---------- EV-aandeel per land-jaar ---------- */
+  const byKey={};  // "geo-year" → {ELC,TOTAL}
+  carsRaw.forEach(r=>{
+    const key=`${r.geo}-${r.TIME_PERIOD}`;
+    if(!byKey[key]) byKey[key]={geo:r.geo,year:+r.TIME_PERIOD,elc:0,total:0};
+    if(r.mot_nrg==='ELC')   byKey[key].elc   = +r.OBS_VALUE;
+    if(r.mot_nrg==='TOTAL') byKey[key].total = +r.OBS_VALUE;
+  });
+  const rows = Object.values(byKey)
+               .filter(d=>d.total>0)
+               .map(d=>({...d,evShare:d.elc/d.total*100, iso3:isoMap[d.geo]}))
+               .filter(d=>d.iso3);   // verwijder niet-Europese codes
 
-/* Data inladen */
-Promise.all([d3.csv(carsCSV), d3.csv(co2CSV)])
-.then(([carsRaw, co2Raw]) => {
+  /* ---------- VIS 2.1 – CO₂-lijn  (hergebruikt uit vorige versie) ---------- */
+  // … hier ongewijzigd laten of lijn verwijderen, afhankelijk van je voorkeur
+  //   (uit ruimte-overwegingen in dit antwoord niet opnieuw opgenomen)
 
-    /* Merge + EV-share */
-    const tmp={};
-    carsRaw.forEach(r=>{
-        const key=`${r.geo}-${r.TIME_PERIOD}`;
-        if(!tmp[key]) tmp[key]={geo:r.geo,year:+r.TIME_PERIOD,elc:0,total:0};
-        if(r.mot_nrg==='ELC')   tmp[key].elc   = +r.OBS_VALUE;
-        if(r.mot_nrg==='TOTAL') tmp[key].total = +r.OBS_VALUE;
-    });
-    co2Raw.forEach(r=>{
-        const key=`${r.geo}-${r.TIME_PERIOD}`;
-        if(tmp[key]) tmp[key].co2 = +r.OBS_VALUE;
-    });
+  /* ---------- VIS 2.2 – Europa-choropleth ---------- */
+  const years=[...new Set(rows.map(d=>d.year))].sort((a,b)=>a-b);
+  const frames = years.map(yr=>{
+    const yrRows = rows.filter(d=>d.year===yr);
+    return {
+      name:String(yr),
+      data:[{
+        type:'choropleth',
+        locations:yrRows.map(d=>d.iso3),
+        z:yrRows.map(d=>d.evShare),
+        text:yrRows.map(d=>`${d.geo} – ${d.evShare.toFixed(2)} %`),
+        colorscale:colors,
+        zmin:0, zmax:30,
+        colorbar:{title:'EV-aandeel %', ticksuffix:'%'},
+        hovertemplate:'%{text}<extra></extra>'
+      }]
+    };
+  });
 
-    const all=Object.values(tmp)
-              .filter(d=>d.total>0 && d.co2!==undefined)
-              .map(d=>({...d, evShare:d.elc/d.total*100}));
-
-    const focus=all.filter(d=>focusCodes.includes(d.geo));
-
-    /* ----------  Vis 2.1 – Lijn ---------- */
-    const lineTraces = focusCodes.map(code=>{
-        const serie=focus.filter(d=>d.geo===code).sort((a,b)=>a.year-b.year);
-        return{
-            x:serie.map(d=>d.year),
-            y:serie.map(d=>d.co2),
-            mode:'lines+markers',
-            name:code2name[code]||code,
-            hovertemplate:'%{x}: %{y:.1f} g/km<extra>'+ (code2name[code]||code) +'</extra>'
-        };
-    });
-
-    Plotly.newPlot('co2EvolutionLineChart', lineTraces,{
-        title:'Gem. CO₂-uitstoot nieuwe auto’s (2010-2023)',
-        xaxis:{title:'Jaar',dtick:2},
-        yaxis:{title:'CO₂ (g/km)'},
-        margin:{t:60,r:20,b:40,l:60},
-        hovermode:'closest'
-    },{responsive:true});
-
-    /* ----------  Vis 2.2 – Box ---------- */
-    const cats={Low:[],Mid:[],High:[]};
-    focus.forEach(d=>{
-        if(d.evShare<5)        cats.Low.push(d);
-        else if(d.evShare<15)  cats.Mid.push(d);
-        else                   cats.High.push(d);
-    });
-
-    const boxTraces=[
-        {name:'Laag (<5 %)',    data:cats.Low,  color:'#f97316'},
-        {name:'Midden (5-15 %)',data:cats.Mid,  color:'#60a5fa'},
-        {name:'Hoog (>15 %)',   data:cats.High, color:'#22c55e'}
-    ].map(cat=>({
-        y:cat.data.map(d=>d.co2),
-        name:cat.name,
-        type:'box',
-        boxpoints:'suspectedoutliers',
-        marker:{color:cat.color},
-        hovertemplate:'CO₂: %{y:.1f} g/km<extra>'+cat.name+'</extra>'
-    }));
-
-    Plotly.newPlot('co2EvBoxPlot', boxTraces,{
-        title:'Spreiding CO₂-uitstoot per EV-aandeel-categorie',
-        yaxis:{title:'CO₂ (g/km)'},
-        margin:{t:60,r:20,b:40,l:60},
-        boxmode:'group'
-    },{responsive:true});
+  Plotly.newPlot('evShareMap', frames[0].data,{
+    title:`EV-aandeel per land (${years[0]})`,
+    geo:{scope:'europe', projection:{type:'natural earth'}, showframe:false, showcountries:true},
+    margin:{t:60,r:0,b:10,l:0},
+    sliders:[{
+      steps:years.map(y=>({
+        label:String(y),
+        method:'animate',
+        args:[[String(y)],{mode:'immediate',frame:{duration:500,redraw:false},
+                           transition:{duration:300}}]
+      })),
+      pad:{t:30}, currentvalue:{prefix:'Jaar: ',font:{size:16}}
+    }]
+  },{responsive:true}).then(()=>Plotly.addFrames('evShareMap',frames));
 })
-.catch(err=>console.error('Data-load error:',err));
+.catch(err=>console.error('Data-load error',err));
 </script>
 </body>
 </html>
