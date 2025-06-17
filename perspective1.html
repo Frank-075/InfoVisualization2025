@@ -89,7 +89,7 @@ Promise.all([d3.csv(carsCSV), d3.csv(co2CSV)])
     /* -- 1a. Bereken EV-aandeel per land/jaar -- */
     const tmp = {};                     // key = "geo-year"
     carsRaw.forEach(r => {
-        const key = ${r.geo}-${r.TIME_PERIOD};
+        const key = `${r.geo}-${r.TIME_PERIOD}`;
         if(!tmp[key]) tmp[key]={geo:r.geo,year:+r.TIME_PERIOD,elc:0,total:0};
         if(r.mot_nrg==='ELC')   tmp[key].elc   = +r.OBS_VALUE;
         if(r.mot_nrg==='TOTAL') tmp[key].total = +r.OBS_VALUE;
@@ -97,7 +97,7 @@ Promise.all([d3.csv(carsCSV), d3.csv(co2CSV)])
 
     /* -- 1b. Voeg CO₂ toe -- */
     co2Raw.forEach(r=>{
-        const key=${r.geo}-${r.TIME_PERIOD};
+        const key=`${r.geo}-${r.TIME_PERIOD}`;
         if(tmp[key]) tmp[key].co2 = +r.OBS_VALUE;
     });
 
@@ -147,7 +147,7 @@ Promise.all([d3.csv(carsCSV), d3.csv(co2CSV)])
     });
 
     Plotly.newPlot('co2EvScatter', frames[0].data,{
-        title:CO₂-uitstoot vs EV-aandeel (${years[0]}),
+        title:`CO₂-uitstoot vs EV-aandeel (${years[0]})`,
         xaxis:{title:'EV-aandeel (%)',ticksuffix:'%'},
         yaxis:{title:'Gem. CO₂ (g/km)'},
         margin:{t:80,r:20,b:70,l:60},
