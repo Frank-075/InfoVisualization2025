@@ -8,7 +8,8 @@
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Plotly -->
+    <!-- D3 vóór Plotly (Plotly 2.32 bevat helpers niet meer) -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 
     <!-- Favicon + Fonts -->
@@ -45,8 +46,8 @@
         </h2>
 
         <p class="mb-6">
-            Dit perspectief benadrukt de directe voordelen van de groeiende EV-adoptie voor de luchtkwaliteit.
-            We onderzoeken of een stijgend EV-aandeel samenvalt met lagere CO₂-uitstoot van nieuwe auto’s.
+            Dit perspectief benadrukt de directe voordelen van de groeiende EV-adoptie voor de luchtkwaliteit:
+            leidt een stijgend EV-aandeel tot lagere CO₂-uitstoot van nieuwe auto’s?
         </p>
 
         <h3 class="text-2xl font-medium text-gray-700 mt-6 mb-3">
@@ -72,99 +73,97 @@
 
 <script>
 /* ----------  PAD NAAR CSV’s  ---------- */
-const carsCSV = '/InfoVisualization2025/data/cars_by_fuel.csv';
-const co2CSV  = '/InfoVisualization2025/data/co2_new_cars.csv';
+/* Relatief pad werkt lokaal én op Pages */
+const carsCSV = 'data/cars_by_fuel.csv';
+const co2CSV  = 'data/co2_new_cars.csv';
 
 /* Land-codes ➜ leesbare namen  */
 const code2name = {NL:'Nederland', DE:'Duitsland', NO:'Noorwegen',
                    PL:'Polen',     FR:'Frankrijk', ES:'Spanje'};
 
 /* 1. Data inladen en prepareren */
-Promise.all([Plotly.d3.csv(carsCSV), Plotly.d3.csv(co2CSV)])
+Promise.all([d3.csv(carsCSV), d3.csv(co2CSV)])
 .then(([carsRaw, co2Raw]) => {
 
     /* -- 1a. Bereken EV-aandeel per land/jaar -- */
-    const tmp = {};   // key = "geo-year"
+    const tmp = {};                     // key = "geo-year"
     carsRaw.forEach(r => {
         const key = `${r.geo}-${r.TIME_PERIOD}`;
-        if (!tmp[key]) tmp[key] = {geo:r.geo, year:+r.TIME_PERIOD, elc:0, total:0};
-        if (r.mot_nrg === 'ELC')   tmp[key].elc   = +r.OBS_VALUE;
-        if (r.mot_nrg === 'TOTAL') tmp[key].total = +r.OBS_VALUE;
+        if(!tmp[key]) tmp[key]={geo:r.geo,year:+r.TIME_PERIOD,elc:0,total:0};
+        if(r.mot_nrg==='ELC')   tmp[key].elc   = +r.OBS_VALUE;
+        if(r.mot_nrg==='TOTAL') tmp[key].total = +r.OBS_VALUE;
     });
 
     /* -- 1b. Voeg CO₂ toe -- */
-    co2Raw.forEach(r => {
-        const key = `${r.geo}-${r.TIME_PERIOD}`;
-        if (tmp[key]) tmp[key].co2 = +r.OBS_VALUE;
+    co2Raw.forEach(r=>{
+        const key=`${r.geo}-${r.TIME_PERIOD}`;
+        if(tmp[key]) tmp[key].co2 = +r.OBS_VALUE;
     });
 
-    /* -- 1c. Maak eind-array en filter incomplete records -- */
+    /* -- 1c. Eind-array bouwen -- */
     const all = Object.values(tmp)
-               .filter(d => d.total > 0 && d.co2 !== undefined)
-               .map(d => ({...d, evShare: d.elc / d.total * 100}));
+                .filter(d=>d.total>0 && d.co2!==undefined)
+                .map(d=>({...d, evShare:d.elc/d.total*100}));
 
-    /* Selecteer zes landen uit de opdracht */
     const focusCodes = ['NL','DE','NO','PL','FR','ES'];
-    const focusData  = all.filter(d => focusCodes.includes(d.geo));
+    const focusData  = all.filter(d=>focusCodes.includes(d.geo));
 
-    /* ----------  Visualisatie 1.1 (Lijn)  ---------- */
-    const lineTraces = focusCodes.map(code => {
-        const series = focusData.filter(d => d.geo === code)
-                                .sort((a,b)=>a.year-b.year);
-        return {
-            x: series.map(d => d.year),
-            y: series.map(d => d.evShare),
+    /* ----------  Visualisatie 1.1 – Lijn ---------- */
+    const lineTraces = focusCodes.map(code=>{
+        const serie=focusData.filter(d=>d.geo===code).sort((a,b)=>a.year-b.year);
+        return{
+            x:serie.map(d=>d.year),
+            y:serie.map(d=>d.evShare),
             mode:'lines+markers',
-            name: code2name[code] || code,
-            hovertemplate: '%{x}: %{y:.2f}%<extra>'+ (code2name[code]||code) +'</extra>'
+            name:code2name[code]||code,
+            hovertemplate:'%{x}: %{y:.2f}%<extra>'+(code2name[code]||code)+'</extra>'
         };
     });
 
-    Plotly.newPlot('evShareLineChart', lineTraces, {
+    Plotly.newPlot('evShareLineChart', lineTraces,{
         title:'EV-aandeel in geselecteerde landen',
-        xaxis:{title:'Jaar', dtick:2},
-        yaxis:{title:'EV-aandeel (%)', ticksuffix:'%'},
+        xaxis:{title:'Jaar',dtick:2},
+        yaxis:{title:'EV-aandeel (%)',ticksuffix:'%'},
         margin:{t:60,r:20,b:40,l:60},
         hovermode:'closest'
-    }, {responsive:true});
+    },{responsive:true});
 
-    /* ----------  Visualisatie 1.2 (Scatter + slider)  ---------- */
-    const years = [...new Set(focusData.map(d => d.year))].sort((a,b)=>a-b);
-    const frames = years.map(yr => {
-        const yrData = focusData.filter(d => d.year === yr);
-        return {
+    /* ----------  Visualisatie 1.2 – Scatter + slider ---------- */
+    const years=[...new Set(focusData.map(d=>d.year))].sort((a,b)=>a-b);
+    const frames=years.map(yr=>{
+        const yrData=focusData.filter(d=>d.year===yr);
+        return{
             name:String(yr),
             data:[{
-                x: yrData.map(d => d.evShare),
-                y: yrData.map(d => d.co2),
-                text: yrData.map(d => code2name[d.geo] || d.geo),
+                x:yrData.map(d=>d.evShare),
+                y:yrData.map(d=>d.co2),
+                text:yrData.map(d=>code2name[d.geo]||d.geo),
                 mode:'markers',
-                marker:{size:9, color:'#3b82f6', line:{width:1, color:'#1e40af'}},
+                marker:{size:9,color:'#3b82f6',line:{width:1,color:'#1e40af'}},
                 hovertemplate:'%{text}<br>EV: %{x:.2f}%<br>CO₂: %{y:.1f} g/km<extra></extra>'
             }]
         };
     });
 
-    /* Start-frame = eerste jaar */
-    Plotly.newPlot('co2EvScatter', frames[0].data, {
+    Plotly.newPlot('co2EvScatter', frames[0].data,{
         title:`CO₂-uitstoot vs EV-aandeel (${years[0]})`,
-        xaxis:{title:'EV-aandeel (%)', ticksuffix:'%'},
+        xaxis:{title:'EV-aandeel (%)',ticksuffix:'%'},
         yaxis:{title:'Gem. CO₂ (g/km)'},
         margin:{t:80,r:20,b:70,l:60},
         sliders:[{
-            steps: years.map((yr,i)=>({
+            steps:years.map(yr=>({
                 label:String(yr),
                 method:'animate',
                 args:[[String(yr)],
-                      {mode:'immediate',frame:{duration:400, redraw:false},
-                       transition:{duration:300}}],
+                      {mode:'immediate',frame:{duration:400,redraw:false},
+                       transition:{duration:300}}]
             })),
-            active:0,
             pad:{t:30},
-            currentvalue:{prefix:'Jaar: ', font:{size:16}}
+            currentvalue:{prefix:'Jaar: ',font:{size:16}}
         }]
-    }, {responsive:true}).then(() => Plotly.addFrames('co2EvScatter', frames));
-});
+    },{responsive:true}).then(()=>Plotly.addFrames('co2EvScatter',frames));
+})
+.catch(err=>console.error('Data-load error:',err));
 </script>
 </body>
 </html>
