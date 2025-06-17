@@ -1,4 +1,4 @@
-![alt text](https://github.com/Frank-075/InfoVisualization2025/blob/main/cars.jpg)
+![alt text](https://github.com/TygoHonig/InfoVisualization2025/blob/main/images/cars.jpg)
 **[Klik hier om de data story te bekijken](https://tygohonig.github.io/InfoVisualization2025/)**
 
 # De correlatie tussen de opgang van elektrische auto’s en de luchtkwaliteit in Europa. 
