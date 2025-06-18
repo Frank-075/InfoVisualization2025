@@ -10,7 +10,7 @@ repository:
   branch: main
 
 execute:
-  execute_notebooks: "off"   # we runnen notebooks niet automatisch
+  execute_notebooks: force   # we runnen notebooks niet automatisch
 
 # Optioneel wat Sphinx-extensies
 sphinx:
