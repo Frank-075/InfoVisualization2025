@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -175,7 +175,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    <no title>
+                    De Grote Elektrische Paradox
                 </a>
             </li>
         </ul>
@@ -183,7 +183,12 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Perspectief 1 – EV’s als primaire oplossing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="perspective2.html">Perspectief 2 – Beperkte impact van EV‑adoptie</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reflection.html">Reflectie &amp; Werkverdeling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Resultaten &amp; Conclusie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Dataset &amp; Voorbewerking</a></li>
+
+
+
+
+
 </ul>
 
     </div>
@@ -355,38 +360,37 @@ We gebruiken twee visualisaties:</p>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 
-# relatieve paden vanuit docs/
-cars = pd.read_csv(&#39;../data/cars_by_fuel.csv&#39;)
-co2  = pd.read_csv(&#39;../data/co2_new_cars.csv&#39;)
+<span class="c1"># relatieve paden vanuit docs/</span>
+<span class="n">cars</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/cars_by_fuel.csv&#39;</span><span class="p">)</span>
+<span class="n">co2</span>  <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/co2_new_cars.csv&#39;</span><span class="p">)</span>
 
-# ---------- Voorbewerking ----------
-tmp = {}                       # key = geo-year
-for _, r in cars.iterrows():
-    key = f&quot;{r.geo}-{r.TIME_PERIOD}&quot;
-    tmp.setdefault(key, {&#39;geo&#39;: r.geo, &#39;year&#39;: int(r.TIME_PERIOD),
-                         &#39;elc&#39;: 0, &#39;total&#39;: 0})
-    if r.mot_nrg == &#39;ELC&#39;:
-        tmp[key][&#39;elc&#39;] = r.OBS_VALUE
-    elif r.mot_nrg == &#39;TOTAL&#39;:
-        tmp[key][&#39;total&#39;] = r.OBS_VALUE
+<span class="c1"># ---------- Voorbewerking ----------</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="p">{}</span>                       <span class="c1"># key = geo-year</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">cars</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">geo</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">TIME_PERIOD</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">tmp</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;geo&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">geo</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">TIME_PERIOD</span><span class="p">),</span>
+                         <span class="s1">&#39;elc&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;total&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">mot_nrg</span> <span class="o">==</span> <span class="s1">&#39;ELC&#39;</span><span class="p">:</span>
+        <span class="n">tmp</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;elc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">OBS_VALUE</span>
+    <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">mot_nrg</span> <span class="o">==</span> <span class="s1">&#39;TOTAL&#39;</span><span class="p">:</span>
+        <span class="n">tmp</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">OBS_VALUE</span>
 
-for _, r in co2.iterrows():
-    key = f&quot;{r.geo}-{r.TIME_PERIOD}&quot;
-    if key in tmp:
-        tmp[key][&#39;co2&#39;] = r.OBS_VALUE
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">co2</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">geo</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">TIME_PERIOD</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+        <span class="n">tmp</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;co2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">OBS_VALUE</span>
 
-df = (pd.DataFrame(tmp.values())
-        .dropna(subset=[&#39;co2&#39;])
-        .assign(evShare=lambda d: d.elc / d.total * 100))
+<span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;co2&#39;</span><span class="p">])</span>
+        <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">evShare</span><span class="o">=</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">elc</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
 
-focus = df[df.geo.isin([&#39;NL&#39;, &#39;DE&#39;, &#39;NO&#39;, &#39;PL&#39;, &#39;FR&#39;, &#39;ES&#39;])]  # zes landen
-code2name = dict(NL=&#39;Nederland&#39;, DE=&#39;Duitsland&#39;, NO=&#39;Noorwegen&#39;,
-                 PL=&#39;Polen&#39;,     FR=&#39;Frankrijk&#39;, ES=&#39;Spanje&#39;)
+<span class="n">focus</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;NL&#39;</span><span class="p">,</span> <span class="s1">&#39;DE&#39;</span><span class="p">,</span> <span class="s1">&#39;NO&#39;</span><span class="p">,</span> <span class="s1">&#39;PL&#39;</span><span class="p">,</span> <span class="s1">&#39;FR&#39;</span><span class="p">,</span> <span class="s1">&#39;ES&#39;</span><span class="p">])]</span>  <span class="c1"># zes landen</span>
+<span class="n">code2name</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">NL</span><span class="o">=</span><span class="s1">&#39;Nederland&#39;</span><span class="p">,</span> <span class="n">DE</span><span class="o">=</span><span class="s1">&#39;Duitsland&#39;</span><span class="p">,</span> <span class="n">NO</span><span class="o">=</span><span class="s1">&#39;Noorwegen&#39;</span><span class="p">,</span>
+                 <span class="n">PL</span><span class="o">=</span><span class="s1">&#39;Polen&#39;</span><span class="p">,</span>     <span class="n">FR</span><span class="o">=</span><span class="s1">&#39;Frankrijk&#39;</span><span class="p">,</span> <span class="n">ES</span><span class="o">=</span><span class="s1">&#39;Spanje&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -395,18 +399,19 @@ code2name = dict(NL=&#39;Nederland&#39;, DE=&#39;Duitsland&#39;, NO=&#39;Noorweg
 <h2>Visualisatie 1.1 – EV‑aandeel per land (2010‑2023)<a class="headerlink" href="#visualisatie-1-1-evaandeel-per-land-20102023" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
-fig_line = px.line(
-    focus.replace({&#39;geo&#39;: code2name}),
-    x=&#39;year&#39;, y=&#39;evShare&#39;, color=&#39;geo&#39;,
-    title=&#39;EV‑aandeel in geselecteerde landen&#39;,
-    labels=dict(year=&#39;Jaar&#39;, evShare=&#39;EV‑aandeel (%)&#39;, geo=&#39;Land&#39;)
-)
-fig_line.update_traces(mode=&#39;lines+markers&#39;)
-fig_line.update_yaxes(ticksuffix=&#39;%&#39;)
-fig_line.show()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_line</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="n">focus</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;geo&#39;</span><span class="p">:</span> <span class="n">code2name</span><span class="p">}),</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;evShare&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;geo&#39;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;EV‑aandeel in geselecteerde landen&#39;</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="s1">&#39;Jaar&#39;</span><span class="p">,</span> <span class="n">evShare</span><span class="o">=</span><span class="s1">&#39;EV‑aandeel (%)&#39;</span><span class="p">,</span> <span class="n">geo</span><span class="o">=</span><span class="s1">&#39;Land&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">fig_line</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+markers&#39;</span><span class="p">)</span>
+<span class="n">fig_line</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">ticksuffix</span><span class="o">=</span><span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="n">fig_line</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <p><strong>Interpretatie</strong><br />
@@ -416,41 +421,42 @@ Noorwegen springt eruit met het hoogste EV‑aandeel, terwijl Polen en Spanje ac
 <h2>Visualisatie 1.2 – CO₂‑uitstoot vs. EV‑aandeel (slider)<a class="headerlink" href="#visualisatie-1-2-co2uitstoot-vs-evaandeel-slider" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
-frames = []
-for yr, grp in focus.groupby(&#39;year&#39;):
-    frames.append(go.Frame(
-        name=str(yr),
-        data=[go.Scatter(
-            x=grp.evShare,
-            y=grp.co2,
-            mode=&#39;markers&#39;,
-            text=grp.geo.map(code2name),
-            marker=dict(size=10, color=&#39;#3b82f6&#39;, line=dict(width=1, color=&#39;#1e40af&#39;)),
-            hovertemplate=&#39;%{text}&lt;br&gt;EV: %{x:.2f}%&lt;br&gt;CO₂: %{y:.1f} g/km&lt;extra&gt;&lt;/extra&gt;&#39;
-        )]
-    ))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">yr</span><span class="p">,</span> <span class="n">grp</span> <span class="ow">in</span> <span class="n">focus</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">):</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">yr</span><span class="p">),</span>
+        <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">grp</span><span class="o">.</span><span class="n">evShare</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">grp</span><span class="o">.</span><span class="n">co2</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;markers&#39;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="n">grp</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">code2name</span><span class="p">),</span>
+            <span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#3b82f6&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#1e40af&#39;</span><span class="p">)),</span>
+            <span class="n">hovertemplate</span><span class="o">=</span><span class="s1">&#39;%</span><span class="si">{text}</span><span class="s1">&lt;br&gt;EV: %</span><span class="si">{x:.2f}</span><span class="s1">%&lt;br&gt;CO₂: %</span><span class="si">{y:.1f}</span><span class="s1"> g/km&lt;extra&gt;&lt;/extra&gt;&#39;</span>
+        <span class="p">)]</span>
+    <span class="p">))</span>
 
-layout = go.Layout(
-    title=f&#39;CO₂‑uitstoot vs. EV‑aandeel ({frames[0].name})&#39;,
-    xaxis=dict(title=&#39;EV‑aandeel (%)&#39;, ticksuffix=&#39;%&#39;),
-    yaxis=dict(title=&#39;Gem. CO₂ (g/km)&#39;),
-    sliders=[dict(
-        steps=[dict(method=&#39;animate&#39;,
-                    label=f.name,
-                    args=[[f.name],
-                          dict(mode=&#39;immediate&#39;,
-                               frame=dict(duration=400, redraw=False),
-                               transition=dict(duration=300))])
-               for f in frames],
-        currentvalue=dict(prefix=&#39;Jaar: &#39;)
-    )]
-)
+<span class="n">layout</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;CO₂‑uitstoot vs. EV‑aandeel (</span><span class="si">{</span><span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span>
+    <span class="n">xaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;EV‑aandeel (%)&#39;</span><span class="p">,</span> <span class="n">ticksuffix</span><span class="o">=</span><span class="s1">&#39;%&#39;</span><span class="p">),</span>
+    <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Gem. CO₂ (g/km)&#39;</span><span class="p">),</span>
+    <span class="n">sliders</span><span class="o">=</span><span class="p">[</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="n">steps</span><span class="o">=</span><span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;animate&#39;</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">args</span><span class="o">=</span><span class="p">[[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">],</span>
+                          <span class="nb">dict</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;immediate&#39;</span><span class="p">,</span>
+                               <span class="n">frame</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">redraw</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                               <span class="n">transition</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">300</span><span class="p">))])</span>
+               <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">],</span>
+        <span class="n">currentvalue</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;Jaar: &#39;</span><span class="p">)</span>
+    <span class="p">)]</span>
+<span class="p">)</span>
 
-fig_scatter = go.Figure(data=frames[0].data, frames=frames, layout=layout)
-fig_scatter.show()
+<span class="n">fig_scatter</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="n">frames</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
+<span class="n">fig_scatter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <p>Ook hier zien we een <strong>negatieve correlatie</strong>: landen met een groter EV‑aandeel hebben doorgaans lagere gemiddelde CO₂‑uitstoot per kilometer.</p>

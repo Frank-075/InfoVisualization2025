@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -175,7 +175,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    <no title>
+                    De Grote Elektrische Paradox
                 </a>
             </li>
         </ul>
@@ -183,7 +183,12 @@
 <li class="toctree-l1"><a class="reference internal" href="perspective1.html">Perspectief 1 – EV’s als primaire oplossing</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Perspectief 2 – Beperkte impact van EV‑adoptie</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reflection.html">Reflectie &amp; Werkverdeling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Resultaten &amp; Conclusie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Dataset &amp; Voorbewerking</a></li>
+
+
+
+
+
 </ul>
 
     </div>
@@ -357,36 +362,35 @@ van nieuw geregistreerde auto’s.</p>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 
-cars = pd.read_csv(&#39;../data/cars_by_fuel.csv&#39;)
-co2  = pd.read_csv(&#39;../data/co2_new_cars.csv&#39;)
+<span class="n">cars</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/cars_by_fuel.csv&#39;</span><span class="p">)</span>
+<span class="n">co2</span>  <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/co2_new_cars.csv&#39;</span><span class="p">)</span>
 
-# --- merge &amp; EV‑share ---
-tmp = {}
-for _, r in cars.iterrows():
-    key = f&quot;{r.geo}-{r.TIME_PERIOD}&quot;
-    tmp.setdefault(key, {&#39;geo&#39;: r.geo, &#39;year&#39;: int(r.TIME_PERIOD),
-                         &#39;elc&#39;: 0, &#39;total&#39;: 0})
-    if r.mot_nrg == &#39;ELC&#39;:
-        tmp[key][&#39;elc&#39;] = r.OBS_VALUE
-    elif r.mot_nrg == &#39;TOTAL&#39;:
-        tmp[key][&#39;total&#39;] = r.OBS_VALUE
+<span class="c1"># --- merge &amp; EV‑share ---</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">cars</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">geo</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">TIME_PERIOD</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">tmp</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;geo&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">geo</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">TIME_PERIOD</span><span class="p">),</span>
+                         <span class="s1">&#39;elc&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;total&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">mot_nrg</span> <span class="o">==</span> <span class="s1">&#39;ELC&#39;</span><span class="p">:</span>
+        <span class="n">tmp</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;elc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">OBS_VALUE</span>
+    <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">mot_nrg</span> <span class="o">==</span> <span class="s1">&#39;TOTAL&#39;</span><span class="p">:</span>
+        <span class="n">tmp</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">OBS_VALUE</span>
 
-for _, r in co2.iterrows():
-    key = f&quot;{r.geo}-{r.TIME_PERIOD}&quot;
-    if key in tmp:
-        tmp[key][&#39;co2&#39;] = r.OBS_VALUE
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">co2</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">geo</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">TIME_PERIOD</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+        <span class="n">tmp</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;co2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">OBS_VALUE</span>
 
-df = (pd.DataFrame(tmp.values())
-        .dropna(subset=[&#39;co2&#39;])
-        .assign(evShare=lambda d: d.elc / d.total * 100))
+<span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;co2&#39;</span><span class="p">])</span>
+        <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">evShare</span><span class="o">=</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">elc</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
 
-focus_codes = [&#39;NL&#39;,&#39;DE&#39;,&#39;NO&#39;,&#39;PL&#39;,&#39;FR&#39;,&#39;ES&#39;]
-focus = df[df.geo.isin(focus_codes)]
+<span class="n">focus_codes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NL&#39;</span><span class="p">,</span><span class="s1">&#39;DE&#39;</span><span class="p">,</span><span class="s1">&#39;NO&#39;</span><span class="p">,</span><span class="s1">&#39;PL&#39;</span><span class="p">,</span><span class="s1">&#39;FR&#39;</span><span class="p">,</span><span class="s1">&#39;ES&#39;</span><span class="p">]</span>
+<span class="n">focus</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">focus_codes</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -395,14 +399,15 @@ focus = df[df.geo.isin(focus_codes)]
 <h2>Visualisatie 2.1 – Evolutie CO₂‑uitstoot per land<a class="headerlink" href="#visualisatie-2-1-evolutie-co2uitstoot-per-land" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
-fig_line = px.line(focus, x=&#39;year&#39;, y=&#39;co2&#39;, color=&#39;geo&#39;,
-                   title=&#39;Gem. CO₂‑uitstoot nieuwe auto’s (2013‑2023)&#39;,
-                   labels=dict(year=&#39;Jaar&#39;, co2=&#39;CO₂ (g/km)&#39;, geo=&#39;Land&#39;))
-fig_line.update_traces(mode=&#39;lines+markers&#39;)
-fig_line.show()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_line</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">focus</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;co2&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;geo&#39;</span><span class="p">,</span>
+                   <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Gem. CO₂‑uitstoot nieuwe auto’s (2013‑2023)&#39;</span><span class="p">,</span>
+                   <span class="n">labels</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="s1">&#39;Jaar&#39;</span><span class="p">,</span> <span class="n">co2</span><span class="o">=</span><span class="s1">&#39;CO₂ (g/km)&#39;</span><span class="p">,</span> <span class="n">geo</span><span class="o">=</span><span class="s1">&#39;Land&#39;</span><span class="p">))</span>
+<span class="n">fig_line</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+markers&#39;</span><span class="p">)</span>
+<span class="n">fig_line</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <p>Opvallend is dat alleen Noorwegen een <strong>scherpe</strong> daling laat zien; andere landen tonen een gematigder of wisselend patroon.</p>
@@ -411,47 +416,48 @@ fig_line.show()
 <h2>Visualisatie 2.2 – EV‑aandeel per land (choropleth met slider)<a class="headerlink" href="#visualisatie-2-2-evaandeel-per-land-choropleth-met-slider" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
-iso_map = {&#39;AT&#39;:&#39;AUT&#39;,&#39;BE&#39;:&#39;BEL&#39;,&#39;BG&#39;:&#39;BGR&#39;,&#39;HR&#39;:&#39;HRV&#39;,&#39;CY&#39;:&#39;CYP&#39;,&#39;CZ&#39;:&#39;CZE&#39;,&#39;DK&#39;:&#39;DNK&#39;,&#39;EE&#39;:&#39;EST&#39;,
-           &#39;FI&#39;:&#39;FIN&#39;,&#39;FR&#39;:&#39;FRA&#39;,&#39;DE&#39;:&#39;DEU&#39;,&#39;EL&#39;:&#39;GRC&#39;,&#39;HU&#39;:&#39;HUN&#39;,&#39;IE&#39;:&#39;IRL&#39;,&#39;IT&#39;:&#39;ITA&#39;,&#39;LV&#39;:&#39;LVA&#39;,
-           &#39;LT&#39;:&#39;LTU&#39;,&#39;LU&#39;:&#39;LUX&#39;,&#39;MT&#39;:&#39;MLT&#39;,&#39;NL&#39;:&#39;NLD&#39;,&#39;PL&#39;:&#39;POL&#39;,&#39;PT&#39;:&#39;PRT&#39;,&#39;RO&#39;:&#39;ROU&#39;,&#39;SK&#39;:&#39;SVK&#39;,
-           &#39;SI&#39;:&#39;SVN&#39;,&#39;ES&#39;:&#39;ESP&#39;,&#39;SE&#39;:&#39;SWE&#39;,&#39;NO&#39;:&#39;NOR&#39;,&#39;IS&#39;:&#39;ISL&#39;,&#39;CH&#39;:&#39;CHE&#39;,&#39;UK&#39;:&#39;GBR&#39;}
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iso_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;AT&#39;</span><span class="p">:</span><span class="s1">&#39;AUT&#39;</span><span class="p">,</span><span class="s1">&#39;BE&#39;</span><span class="p">:</span><span class="s1">&#39;BEL&#39;</span><span class="p">,</span><span class="s1">&#39;BG&#39;</span><span class="p">:</span><span class="s1">&#39;BGR&#39;</span><span class="p">,</span><span class="s1">&#39;HR&#39;</span><span class="p">:</span><span class="s1">&#39;HRV&#39;</span><span class="p">,</span><span class="s1">&#39;CY&#39;</span><span class="p">:</span><span class="s1">&#39;CYP&#39;</span><span class="p">,</span><span class="s1">&#39;CZ&#39;</span><span class="p">:</span><span class="s1">&#39;CZE&#39;</span><span class="p">,</span><span class="s1">&#39;DK&#39;</span><span class="p">:</span><span class="s1">&#39;DNK&#39;</span><span class="p">,</span><span class="s1">&#39;EE&#39;</span><span class="p">:</span><span class="s1">&#39;EST&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;FI&#39;</span><span class="p">:</span><span class="s1">&#39;FIN&#39;</span><span class="p">,</span><span class="s1">&#39;FR&#39;</span><span class="p">:</span><span class="s1">&#39;FRA&#39;</span><span class="p">,</span><span class="s1">&#39;DE&#39;</span><span class="p">:</span><span class="s1">&#39;DEU&#39;</span><span class="p">,</span><span class="s1">&#39;EL&#39;</span><span class="p">:</span><span class="s1">&#39;GRC&#39;</span><span class="p">,</span><span class="s1">&#39;HU&#39;</span><span class="p">:</span><span class="s1">&#39;HUN&#39;</span><span class="p">,</span><span class="s1">&#39;IE&#39;</span><span class="p">:</span><span class="s1">&#39;IRL&#39;</span><span class="p">,</span><span class="s1">&#39;IT&#39;</span><span class="p">:</span><span class="s1">&#39;ITA&#39;</span><span class="p">,</span><span class="s1">&#39;LV&#39;</span><span class="p">:</span><span class="s1">&#39;LVA&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;LT&#39;</span><span class="p">:</span><span class="s1">&#39;LTU&#39;</span><span class="p">,</span><span class="s1">&#39;LU&#39;</span><span class="p">:</span><span class="s1">&#39;LUX&#39;</span><span class="p">,</span><span class="s1">&#39;MT&#39;</span><span class="p">:</span><span class="s1">&#39;MLT&#39;</span><span class="p">,</span><span class="s1">&#39;NL&#39;</span><span class="p">:</span><span class="s1">&#39;NLD&#39;</span><span class="p">,</span><span class="s1">&#39;PL&#39;</span><span class="p">:</span><span class="s1">&#39;POL&#39;</span><span class="p">,</span><span class="s1">&#39;PT&#39;</span><span class="p">:</span><span class="s1">&#39;PRT&#39;</span><span class="p">,</span><span class="s1">&#39;RO&#39;</span><span class="p">:</span><span class="s1">&#39;ROU&#39;</span><span class="p">,</span><span class="s1">&#39;SK&#39;</span><span class="p">:</span><span class="s1">&#39;SVK&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;SI&#39;</span><span class="p">:</span><span class="s1">&#39;SVN&#39;</span><span class="p">,</span><span class="s1">&#39;ES&#39;</span><span class="p">:</span><span class="s1">&#39;ESP&#39;</span><span class="p">,</span><span class="s1">&#39;SE&#39;</span><span class="p">:</span><span class="s1">&#39;SWE&#39;</span><span class="p">,</span><span class="s1">&#39;NO&#39;</span><span class="p">:</span><span class="s1">&#39;NOR&#39;</span><span class="p">,</span><span class="s1">&#39;IS&#39;</span><span class="p">:</span><span class="s1">&#39;ISL&#39;</span><span class="p">,</span><span class="s1">&#39;CH&#39;</span><span class="p">:</span><span class="s1">&#39;CHE&#39;</span><span class="p">,</span><span class="s1">&#39;UK&#39;</span><span class="p">:</span><span class="s1">&#39;GBR&#39;</span><span class="p">}</span>
 
-df[&#39;iso3&#39;] = df.geo.map(iso_map)
-rows = df.dropna(subset=[&#39;iso3&#39;])
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;iso3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">iso_map</span><span class="p">)</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;iso3&#39;</span><span class="p">])</span>
 
-years = sorted(rows.year.unique())
-zmax = rows.evShare.quantile(0.98)
+<span class="n">years</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rows</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">zmax</span> <span class="o">=</span> <span class="n">rows</span><span class="o">.</span><span class="n">evShare</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.98</span><span class="p">)</span>
 
-frames = []
-for yr in years:
-    sub = rows[rows.year == yr]
-    frames.append(go.Frame(name=str(yr),
-                           data=[go.Choropleth(locations=sub.iso3,
-                                               z=sub.evShare,
-                                               text=sub.geo,
-                                               colorscale=&#39;Viridis&#39;,
-                                               zmin=0, zmax=zmax,
-                                               hovertemplate=&#39;%{text}: %{z:.2f}%&lt;extra&gt;&lt;/extra&gt;&#39;)]))
+<span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">yr</span> <span class="ow">in</span> <span class="n">years</span><span class="p">:</span>
+    <span class="n">sub</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="n">rows</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="n">yr</span><span class="p">]</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">yr</span><span class="p">),</span>
+                           <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">go</span><span class="o">.</span><span class="n">Choropleth</span><span class="p">(</span><span class="n">locations</span><span class="o">=</span><span class="n">sub</span><span class="o">.</span><span class="n">iso3</span><span class="p">,</span>
+                                               <span class="n">z</span><span class="o">=</span><span class="n">sub</span><span class="o">.</span><span class="n">evShare</span><span class="p">,</span>
+                                               <span class="n">text</span><span class="o">=</span><span class="n">sub</span><span class="o">.</span><span class="n">geo</span><span class="p">,</span>
+                                               <span class="n">colorscale</span><span class="o">=</span><span class="s1">&#39;Viridis&#39;</span><span class="p">,</span>
+                                               <span class="n">zmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">zmax</span><span class="o">=</span><span class="n">zmax</span><span class="p">,</span>
+                                               <span class="n">hovertemplate</span><span class="o">=</span><span class="s1">&#39;%</span><span class="si">{text}</span><span class="s1">: %</span><span class="si">{z:.2f}</span><span class="s1">%&lt;extra&gt;&lt;/extra&gt;&#39;</span><span class="p">)]))</span>
 
-fig_map = go.Figure(
-    data=frames[0].data,
-    frames=frames,
-    layout=go.Layout(
-        title=f&#39;EV‑aandeel per land ({years[0]})&#39;,
-        geo=dict(scope=&#39;europe&#39;, projection_type=&#39;natural earth&#39;,
-                 showframe=False, showcountries=True),
-        sliders=[dict(steps=[dict(method=&#39;animate&#39;, label=str(y),
-                                  args=[[str(y)], dict(mode=&#39;immediate&#39;,
-                                                       frame=dict(duration=500, redraw=False),
-                                                       transition=dict(duration=300))])
-                            for y in years],
-                      currentvalue=dict(prefix=&#39;Jaar: &#39;),
-                      pad=dict(t=30))]
-    ))
-fig_map.show()
+<span class="n">fig_map</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+    <span class="n">frames</span><span class="o">=</span><span class="n">frames</span><span class="p">,</span>
+    <span class="n">layout</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;EV‑aandeel per land (</span><span class="si">{</span><span class="n">years</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span>
+        <span class="n">geo</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s1">&#39;europe&#39;</span><span class="p">,</span> <span class="n">projection_type</span><span class="o">=</span><span class="s1">&#39;natural earth&#39;</span><span class="p">,</span>
+                 <span class="n">showframe</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showcountries</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">sliders</span><span class="o">=</span><span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;animate&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">),</span>
+                                  <span class="n">args</span><span class="o">=</span><span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)],</span> <span class="nb">dict</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;immediate&#39;</span><span class="p">,</span>
+                                                       <span class="n">frame</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">redraw</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                                                       <span class="n">transition</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">300</span><span class="p">))])</span>
+                            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">years</span><span class="p">],</span>
+                      <span class="n">currentvalue</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;Jaar: &#39;</span><span class="p">),</span>
+                      <span class="n">pad</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="mi">30</span><span class="p">))]</span>
+    <span class="p">))</span>
+<span class="n">fig_map</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <p>De kaart laat zien dat de <strong>hoge EV‑penetratie</strong> vrijwel exclusief is voor Noorwegen (en in mindere mate Nederland), terwijl een groot deel van Europa onder de 5 % blijft. Dat verklaart waarom de totale CO₂‑daling in vis. 2.1 beperkt is.</p>
