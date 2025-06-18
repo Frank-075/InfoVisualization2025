@@ -1,0 +1,18 @@
+# -- Basis­instellingen -------------------------------------------------
+title: "De Grote Elektrische Paradox"
+author: "Groep 12 – InfoVis 2025"
+logo: ../images/favicon.png     # mag je weglaten als je geen logo hebt
+
+# -- Bouwinstellingen --------------------------------------------------
+repository:
+  url: https://github.com/TygoHonig/InfoVisualization2025
+  path_to_book: docs
+  branch: main
+
+execute:
+  execute_notebooks: "off"   # we runnen notebooks niet automatisch
+
+# Optioneel wat Sphinx-extensies
+sphinx:
+  extra_extensions:
+    - sphinx.ext.autosectionlabel

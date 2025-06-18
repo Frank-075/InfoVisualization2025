@@ -1,0 +1,9 @@
+format: jb-book
+root: intro
+
+chapters:
+  - file: dataset
+  - file: perspective1
+  - file: perspective2
+  - file: reflection
+  - file: conclusion

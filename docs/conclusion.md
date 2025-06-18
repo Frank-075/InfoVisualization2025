@@ -1,3 +1,9 @@
+# Dataset & Voorbewerking
+# Perspectief 1 – EV als oplossing
+# Perspectief 2 – Beperkte impact
+# Reflectie
+# Conclusie
+
 # Resultaten & Conclusie
 
 ## Resultaten
@@ -33,16 +39,6 @@ Een effectieve strategie vraagt ook vergroening van de energiemix, modal‑shift
 
 ---
 
-## Werkverdeling
-
-| Teamlid | Bijdrage |
-|---------|----------|
-| Student 1 | Intro, conclusie, projectmanagement |
-| Student 2 | Data – preprocessing, *Dataset*‑hoofdstuk |
-| Student 3 | Notebook *Perspectief 1* & tekst |
-| Student 4 | Notebook *Perspectief 2*, reflectie |
-
----
 
 *© 2025 Groep 12 – InfoVis Project*  
 Broncode: <https://github.com/TygoHonig/InfoVisualization2025>
