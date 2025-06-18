@@ -16,3 +16,11 @@ execute:
 sphinx:
   extra_extensions:
     - sphinx.ext.autosectionlabel
+# ------------------ Presentatie ------------------
+html:
+  show_toggle_button: false   # geen 'show/hide code' knop
+  copybutton: true            # laat wel copy-icoontje bij code-output
+
+sphinx:
+  config:
+    nb_hide_code: true        # verberg álle cel-inputs
