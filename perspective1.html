@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Perspectief 2 – Beperkte impact van EV‑adoptie" href="perspective2.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="dataset.html" />
+    <link rel="prev" title="Dataset en Voorbewerking" href="dataset.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -180,6 +180,7 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset en Voorbewerking</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Perspectief 1 – EV’s als primaire oplossing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="perspective2.html">Perspectief 2 – Beperkte impact van EV‑adoptie</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reflection.html">Reflectie &amp; Werkverdeling</a></li>
@@ -356,11 +357,13 @@ document.write(`
 We gebruiken twee visualisaties:</p>
 <ol class="arabic simple">
 <li><p><strong>Lijngrafiek</strong> – EV‑aandeel per land (2010‑2023)</p></li>
-<li><p><strong>Scatter + slider</strong> – EV‑aandeel vs. CO₂‑uitstoot per land/jaar</p></li>
+<li><p><strong>Scatter + slider</strong> – EV‑aandeel vs CO₂‑uitstoot per land/jaar</p></li>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.io</span> <span class="k">as</span> <span class="nn">pio</span>
+<span class="n">pio</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;iframe_connected&quot;</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 
@@ -412,7 +415,15 @@ We gebruiken twee visualisaties:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-</div>
+<div class="output text_html"><iframe
+    scrolling="no"
+    width="100%"
+    height="545px"
+    src="iframe_figures/figure_2.html"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
 </div>
 <p><strong>Interpretatie</strong><br />
 Noorwegen springt eruit met het hoogste EV‑aandeel, terwijl Polen en Spanje achterblijven. Beleidskeuzes en laadinfrastructuur blijken bepalend.</p>
@@ -457,7 +468,15 @@ Noorwegen springt eruit met het hoogste EV‑aandeel, terwijl Polen en Spanje ac
 </div>
 </div>
 <div class="cell_output docutils container">
-</div>
+<div class="output text_html"><iframe
+    scrolling="no"
+    width="100%"
+    height="545px"
+    src="iframe_figures/figure_3.html"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
 </div>
 <p>Ook hier zien we een <strong>negatieve correlatie</strong>: landen met een groter EV‑aandeel hebben doorgaans lagere gemiddelde CO₂‑uitstoot per kilometer.</p>
 </section>
@@ -499,7 +518,7 @@ Noorwegen springt eruit met het hoogste EV‑aandeel, terwijl Polen en Spanje ac
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Dataset en Voorbewerking</p>
       </div>
     </a>
     <a class="right-next"
@@ -543,7 +562,7 @@ Noorwegen springt eruit met het hoogste EV‑aandeel, terwijl Polen en Spanje ac
   <div class="footer-item">
     
 <p class="component-author">
-By Groep 12 – InfoVis 2025
+By Groep 12  –  InfoVis 2025
 </p>
 
   </div>
@@ -553,7 +572,7 @@ By Groep 12 – InfoVis 2025
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>

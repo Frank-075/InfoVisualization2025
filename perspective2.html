@@ -180,6 +180,7 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset en Voorbewerking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="perspective1.html">Perspectief 1 – EV’s als primaire oplossing</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Perspectief 2 – Beperkte impact van EV‑adoptie</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reflection.html">Reflectie &amp; Werkverdeling</a></li>
@@ -362,7 +363,10 @@ van nieuw geregistreerde auto’s.</p>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.io</span> <span class="k">as</span> <span class="nn">pio</span>
+<span class="n">pio</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;iframe_connected&quot;</span> 
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 
@@ -408,7 +412,15 @@ van nieuw geregistreerde auto’s.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-</div>
+<div class="output text_html"><iframe
+    scrolling="no"
+    width="100%"
+    height="545px"
+    src="iframe_figures/figure_2.html"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
 </div>
 <p>Opvallend is dat alleen Noorwegen een <strong>scherpe</strong> daling laat zien; andere landen tonen een gematigder of wisselend patroon.</p>
 </section>
@@ -458,7 +470,15 @@ van nieuw geregistreerde auto’s.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-</div>
+<div class="output text_html"><iframe
+    scrolling="no"
+    width="100%"
+    height="545px"
+    src="iframe_figures/figure_3.html"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
 </div>
 <p>De kaart laat zien dat de <strong>hoge EV‑penetratie</strong> vrijwel exclusief is voor Noorwegen (en in mindere mate Nederland), terwijl een groot deel van Europa onder de 5 % blijft. Dat verklaart waarom de totale CO₂‑daling in vis. 2.1 beperkt is.</p>
 </section>
@@ -544,7 +564,7 @@ van nieuw geregistreerde auto’s.</p>
   <div class="footer-item">
     
 <p class="component-author">
-By Groep 12 – InfoVis 2025
+By Groep 12  –  InfoVis 2025
 </p>
 
   </div>
@@ -554,7 +574,7 @@ By Groep 12 – InfoVis 2025
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; De Grote Elektrische Paradox</title>
+    <title>Dataset en Voorbewerking &#8212; De Grote Elektrische Paradox</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Perspectief 1 – EV’s als primaire oplossing" href="perspective1.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="intro.html" />
+    <link rel="prev" title="De Grote Elektrische Paradox" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -175,15 +175,21 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    <no title>
+                    De Grote Elektrische Paradox
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Dataset en Voorbewerking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="perspective1.html">Perspectief 1 – EV’s als primaire oplossing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="perspective2.html">Perspectief 2 – Beperkte impact van EV‑adoptie</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reflection.html">Reflectie &amp; Werkverdeling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Resultaten &amp; Conclusie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Dataset &amp; Voorbewerking</a></li>
+
+
+
+
+
 </ul>
 
     </div>
@@ -322,7 +328,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Dataset en Voorbewerking</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -331,9 +337,11 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-1-personenautos-per-soort-motor-energie">Dataset 1 · Personenauto’s per soort motor-energie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-2-gemiddelde-co2-uitstoot-nieuwe-autos">Dataset 2 · Gemiddelde CO₂-uitstoot (nieuwe auto’s)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#voorbewerking">Voorbewerking</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -344,7 +352,45 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  
+  <section class="tex2jax_ignore mathjax_ignore" id="dataset-en-voorbewerking">
+<h1>Dataset en Voorbewerking<a class="headerlink" href="#dataset-en-voorbewerking" title="Link to this heading">#</a></h1>
+<p>Voor dit project combineren we twee <strong>Eurostat-datasets</strong> die samen inzicht geven in de ontwikkeling van het Europese wagenpark én de bijbehorende emissies.<br />
+Beide ruwe tabellen zijn als CSV in deze repository opgenomen zodat alle visualisaties volledig <em>self-contained</em> draaien – zonder externe API-calls.</p>
+<hr class="docutils" />
+<section id="dataset-1-personenautos-per-soort-motor-energie">
+<h2>Dataset 1 · Personenauto’s per soort motor-energie<a class="headerlink" href="#dataset-1-personenautos-per-soort-motor-energie" title="Link to this heading">#</a></h2>
+<p><strong>Lokale CSV</strong> → <a class="reference download internal" download="" href="_downloads/52ae713496eee727f24b655327d37a92/cars_by_fuel.csv"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">data/cars_by_fuel.csv</span></code></span></a></p>
+<p><em>(Originele bron: <a class="reference external" href="https://ec.europa.eu/eurostat/databrowser/view/road_eqs_carpda">https://ec.europa.eu/eurostat/databrowser/view/road_eqs_carpda</a>)</em></p>
+<ul class="simple">
+<li><p><strong>Inhoud</strong> – aantal personenauto’s per land/jaar opgesplitst naar brandstoftype.</p></li>
+<li><p><strong>Gebruik</strong> – we nemen kolommen <code class="docutils literal notranslate"><span class="pre">ELC</span></code> (volledig elektrisch) en <code class="docutils literal notranslate"><span class="pre">TOTAL</span></code> om het <strong>EV-aandeel</strong> te berekenen.</p></li>
+<li><p><strong>Snelstatistiek</strong> – Gem. EV-aandeel ≈ 0,75 % (σ ≈ 2,2 %), maximum ≈ 23,9 %.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="dataset-2-gemiddelde-co2-uitstoot-nieuwe-autos">
+<h2>Dataset 2 · Gemiddelde CO₂-uitstoot (nieuwe auto’s)<a class="headerlink" href="#dataset-2-gemiddelde-co2-uitstoot-nieuwe-autos" title="Link to this heading">#</a></h2>
+<p><strong>Lokale CSV</strong> → <a class="reference download internal" download="" href="_downloads/cd3f0e1c0cac49baf46f40b4f697841b/co2_new_cars.csv"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">data/co2_new_cars.csv</span></code></span></a></p>
+<p><em>(Originele bron: <a class="reference external" href="https://ec.europa.eu/eurostat/databrowser/view/sdg_13_31">https://ec.europa.eu/eurostat/databrowser/view/sdg_13_31</a>)</em></p>
+<ul class="simple">
+<li><p><strong>Inhoud</strong> – gemiddelde CO₂-uitstoot (g/km) van nieuw geregistreerde personenauto’s per land en jaar.</p></li>
+<li><p><strong>Gebruik</strong> – fungeert als afhankelijke variabele in onze correlatie-analyse.</p></li>
+<li><p><strong>Snelstatistiek</strong> – Gem. 126,5 g/km (σ ≈ 22,4), minimum 14,5 g/km, maximum 161,2 g/km.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="voorbewerking">
+<h2>Voorbewerking<a class="headerlink" href="#voorbewerking" title="Link to this heading">#</a></h2>
+<p>Beide CSV’s zijn samengevoegd op <code class="docutils literal notranslate"><span class="pre">geo</span></code> (ISO-landcode) en <code class="docutils literal notranslate"><span class="pre">TIME_PERIOD</span></code> (jaar).<br />
+Voor elk land-jaar berekenden we het <strong>EV-aandeel</strong> als</p>
+<p>[
+\text{EV-aandeel} = \frac{\text{ELC}}{\text{TOTAL}}\times100%
+]</p>
+<p>Rijen met ontbrekende waarden vormden minder dan 2 % en zijn verwijderd, zodat interpolatie niet nodig was.<br />
+Het resulterende bestand <strong><code class="docutils literal notranslate"><span class="pre">data/ev_airquality_ready.csv</span></code></strong> vormt de basis voor alle visualisaties in dit Jupyter Book.</p>
+</section>
+</section>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -381,7 +427,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">De Grote Elektrische Paradox</p>
       </div>
     </a>
     <a class="right-next"
@@ -408,9 +454,11 @@ document.write(`
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-1-personenautos-per-soort-motor-energie">Dataset 1 · Personenauto’s per soort motor-energie</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-2-gemiddelde-co2-uitstoot-nieuwe-autos">Dataset 2 · Gemiddelde CO₂-uitstoot (nieuwe auto’s)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#voorbewerking">Voorbewerking</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
@@ -424,7 +472,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By Groep 12 – InfoVis 2025
+By Groep 12  –  InfoVis 2025
 </p>
 
   </div>
@@ -434,7 +482,7 @@ By Groep 12 – InfoVis 2025
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>
