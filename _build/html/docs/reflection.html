@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -59,6 +59,7 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/reflection';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -391,14 +392,7 @@ document.write(`
 <h1>Reflectie &amp; Werkverdeling<a class="headerlink" href="#reflectie-werkverdeling" title="Link to this heading">#</a></h1>
 <section id="reflectie">
 <h2>Reflectie<a class="headerlink" href="#reflectie" title="Link to this heading">#</a></h2>
-<p>Tijdens het bouwen van deze data‑story hebben we iteratief gewerkt: eerst de ruwe Eurostat‐tabellen analyseren, vervolgens prototypes van visualisaties maken en daar feedback op vragen tijdens de <em>M3 peer‑review</em>. Enkele inzichten:</p>
-<ul class="simple">
-<li><p><strong>Datakeuze</strong> – Het samenvoegen van twee complementaire datasets leverde een helder narratief op, maar vergde strikte filtering (bv. <code class="docutils literal notranslate"><span class="pre">ELC</span></code> vs <code class="docutils literal notranslate"><span class="pre">TOTAL</span></code>) om het EV‑aandeel robuust te berekenen.</p></li>
-<li><p><strong>Visualisatie‑evolutie</strong> – In de eerste versie gebruikten we een eenvoudige lijngrafiek voor het EV‑aandeel. Peer‑feedback wees ons op het ontbreken van context (totaal wagenpark). We hebben daarom gestapelde lijnen getest, maar uiteindelijk gekozen voor aparte lijnen per land om trends duidelijker te vergelijken.</p></li>
-<li><p><strong>Kritische balans</strong> – Door twee tegengestelde perspectieven te tonen voorkomen we een “wij‑verkopen‑EV’s‑dus‑alles‑goed” narratief. De kaart (Perspectief 2) maakte voor ons visueel duidelijk hoe ongelijk de EV‑penetratie in Europa verdeeld is.</p></li>
-<li><p><strong>Technische leerpunten</strong> – Plotly‑Python bleek vrijwel één‑op‑één uitwisselbaar met de oorspronkelijke JS‑code, maar het embedden in Jupyter Book vereiste expliciet <code class="docutils literal notranslate"><span class="pre">fig.show()</span></code> zodat de HTML ↔ Plotly‑JSON wordt opgenomen in de build.</p></li>
-<li><p><strong>Samenwerking</strong> – Wekelijkse sync‑calls (30 min) en een gedeelde Notion‑bord hielpen om taken inzichtelijk te houden. Pull‑requests zijn minimaal twee keer gereviewd voor merge.</p></li>
-</ul>
+<p>Hier komt de reflectie</p>
 </section>
 <section id="werkverdeling">
 <h2>Werkverdeling<a class="headerlink" href="#werkverdeling" title="Link to this heading">#</a></h2>

@@ -59,6 +59,7 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/perspective1';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -433,12 +434,12 @@ We gebruiken twee visualisaties:</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
-<span class="c1"># relatieve paden vanuit docs/</span>
+
 <span class="n">cars</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/cars_by_fuel.csv&#39;</span><span class="p">)</span>
 <span class="n">co2</span>  <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/co2_new_cars.csv&#39;</span><span class="p">)</span>
 
-<span class="c1"># ---------- Voorbewerking ----------</span>
-<span class="n">tmp</span> <span class="o">=</span> <span class="p">{}</span>                       <span class="c1"># key = geo-year</span>
+
+<span class="n">tmp</span> <span class="o">=</span> <span class="p">{}</span>                     
 <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">cars</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
     <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">geo</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">TIME_PERIOD</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">tmp</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;geo&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">geo</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">TIME_PERIOD</span><span class="p">),</span>
@@ -457,7 +458,7 @@ We gebruiken twee visualisaties:</p>
         <span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;co2&#39;</span><span class="p">])</span>
         <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">evShare</span><span class="o">=</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">elc</span> <span class="o">/</span> <span class="n">d</span><span class="o">.</span><span class="n">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
 
-<span class="n">focus</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;NL&#39;</span><span class="p">,</span> <span class="s1">&#39;DE&#39;</span><span class="p">,</span> <span class="s1">&#39;NO&#39;</span><span class="p">,</span> <span class="s1">&#39;PL&#39;</span><span class="p">,</span> <span class="s1">&#39;FR&#39;</span><span class="p">,</span> <span class="s1">&#39;ES&#39;</span><span class="p">])]</span>  <span class="c1"># zes landen</span>
+<span class="n">focus</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;NL&#39;</span><span class="p">,</span> <span class="s1">&#39;DE&#39;</span><span class="p">,</span> <span class="s1">&#39;NO&#39;</span><span class="p">,</span> <span class="s1">&#39;PL&#39;</span><span class="p">,</span> <span class="s1">&#39;FR&#39;</span><span class="p">,</span> <span class="s1">&#39;ES&#39;</span><span class="p">])]</span> 
 <span class="n">code2name</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">NL</span><span class="o">=</span><span class="s1">&#39;Nederland&#39;</span><span class="p">,</span> <span class="n">DE</span><span class="o">=</span><span class="s1">&#39;Duitsland&#39;</span><span class="p">,</span> <span class="n">NO</span><span class="o">=</span><span class="s1">&#39;Noorwegen&#39;</span><span class="p">,</span>
                  <span class="n">PL</span><span class="o">=</span><span class="s1">&#39;Polen&#39;</span><span class="p">,</span>     <span class="n">FR</span><span class="o">=</span><span class="s1">&#39;Frankrijk&#39;</span><span class="p">,</span> <span class="n">ES</span><span class="o">=</span><span class="s1">&#39;Spanje&#39;</span><span class="p">)</span>
 </pre></div>
