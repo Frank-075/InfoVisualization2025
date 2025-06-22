@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -58,7 +58,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/perspective1';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -393,11 +393,24 @@ We gebruiken twee visualisaties:</p>
 <span class="p">)</span>
 <span class="n">fig_line</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+markers&#39;</span><span class="p">)</span>
 <span class="n">fig_line</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">ticksuffix</span><span class="o">=</span><span class="s1">&#39;%&#39;</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">fig_line</span><span class="p">)</span>
+
+<span class="c1"># Show the interactive plot</span>
+<span class="n">fig_line</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Also create a static version for better compatibility</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">fig_line</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;temp_line_plot.png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Static image saved successfully&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not save static image: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Static image saved successfully
+</pre></div>
+</div>
 </div>
 </div>
 <p><strong>Interpretatie</strong><br />
@@ -438,11 +451,24 @@ Noorwegen springt eruit met het hoogste EV‑aandeel, terwijl Polen en Spanje ac
 <span class="p">)</span>
 
 <span class="n">fig_scatter</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="n">frames</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">fig_scatter</span><span class="p">)</span>
+
+<span class="c1"># Show the interactive plot</span>
+<span class="n">fig_scatter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Also create a static version for better compatibility</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">fig_scatter</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;temp_scatter_plot.png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Static image saved successfully&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not save static image: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">pass</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Static image saved successfully
+</pre></div>
+</div>
 </div>
 </div>
 <p>Ook hier zien we een <strong>negatieve correlatie</strong>: landen met een groter EV‑aandeel hebben doorgaans lagere gemiddelde CO₂‑uitstoot per kilometer.</p>

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -58,7 +58,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/perspective2';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -395,10 +395,46 @@ van nieuw geregistreerde auto’s.</p>
 <div class="cell_output docutils container">
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create static version for better compatibility</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">fig_line</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;temp_line_plot2.png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Static image saved successfully&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not save static image: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Static image saved successfully
+</pre></div>
+</div>
+</div>
+</div>
 <p>Opvallend is dat alleen Noorwegen een <strong>scherpe</strong> daling laat zien; andere landen tonen een gematigder of wisselend patroon.</p>
 </section>
 <section id="visualisatie-2-2-evaandeel-per-land-choropleth-met-slider">
 <h2>Visualisatie 2.2 – EV‑aandeel per land (choropleth met slider)<a class="headerlink" href="#visualisatie-2-2-evaandeel-per-land-choropleth-met-slider" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create static version for better compatibility</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">fig_map</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;temp_map_plot.png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Static map image saved successfully&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not save static map image: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Could not save static map image: name &#39;fig_map&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iso_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;AT&#39;</span><span class="p">:</span><span class="s1">&#39;AUT&#39;</span><span class="p">,</span><span class="s1">&#39;BE&#39;</span><span class="p">:</span><span class="s1">&#39;BEL&#39;</span><span class="p">,</span><span class="s1">&#39;BG&#39;</span><span class="p">:</span><span class="s1">&#39;BGR&#39;</span><span class="p">,</span><span class="s1">&#39;HR&#39;</span><span class="p">:</span><span class="s1">&#39;HRV&#39;</span><span class="p">,</span><span class="s1">&#39;CY&#39;</span><span class="p">:</span><span class="s1">&#39;CYP&#39;</span><span class="p">,</span><span class="s1">&#39;CZ&#39;</span><span class="p">:</span><span class="s1">&#39;CZE&#39;</span><span class="p">,</span><span class="s1">&#39;DK&#39;</span><span class="p">:</span><span class="s1">&#39;DNK&#39;</span><span class="p">,</span><span class="s1">&#39;EE&#39;</span><span class="p">:</span><span class="s1">&#39;EST&#39;</span><span class="p">,</span>
