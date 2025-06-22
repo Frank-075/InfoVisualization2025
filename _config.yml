@@ -33,15 +33,22 @@ launch_buttons:
   colab_url: "https://colab.research.google.com"
   jupyterhub_url: ""
 
+parse:
+  myst_enable_extensions:
+    - colon_fence
+    - dollarmath
+    - linkify
+    - substitution
+    - html_admonition
+    - html_image
+
 sphinx:
   extra_extensions:
-    # This is to work around the bug of no syntax highlighting
     - "IPython.sphinxext.ipython_console_highlighting"
   config:
-    html_js_files:
-      # This is for plotly to work
-      - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
-    # Add plotly support
     html_theme_options:
       use_download_button: true
       use_fullscreen_button: true
+    # Allow raw HTML in notebooks
+    nbsphinx_allow_errors: true
+    nb_output_stderr: "show"

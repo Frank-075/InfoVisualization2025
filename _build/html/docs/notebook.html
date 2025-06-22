@@ -58,10 +58,12 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/notebook';</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/plotly_renderer.js?v=11527fb4"></script>
     <link rel="icon" href="../_static/favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Perspectief 1 – EV’s als primaire oplossing" href="perspective1.html" />
+    <link rel="prev" title="Dataset en Voorbewerking" href="dataset.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -100,8 +102,8 @@
          class="form-control"
          name="q"
          id="search-input"
-         placeholder="Search this book..."
-         aria-label="Search this book..."
+         placeholder="Search..."
+         aria-label="Search..."
          autocomplete="off"
          autocorrect="off"
          autocapitalize="off"
@@ -123,8 +125,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -173,15 +173,15 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="intro.html">
-                    De Grote Elektrische Paradox
-                </a>
-            </li>
-        </ul>
-        
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset en Voorbewerking</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Example Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perspective1.html">Perspectief 1 – EV’s als primaire oplossing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perspective2.html">Perspectief 2 – Beperkte impact van EV‑adoptie</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reflection.html">Reflectie &amp; Werkverdeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Resultaten &amp; Conclusie</a></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -221,84 +221,6 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-launch-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
-    <i class="fas fa-rocket"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://colab.research.google.com/github/TygoHonig/InfoVisualization2025.git/blob/main/docs/docs/notebook.ipynb" target="_blank"
-   class="btn btn-sm dropdown-item"
-   title="Launch on Colab"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  
-    <img alt="Colab logo" src="../_static/images/logo_colab.png">
-  </span>
-<span class="btn__text-container">Colab</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/TygoHonig/InfoVisualization2025.git" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/TygoHonig/InfoVisualization2025.git/issues/new?title=Issue%20on%20page%20%2Fdocs/notebook.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -614,10 +536,10 @@ For more information, check <a class="reference external" href="https://jupyterb
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x1753796d3f0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x1777297f0&gt;
 </pre></div>
 </div>
-<img alt="../_images/be892434d5008a7717eb090e28ac2c7dfc94e3e5ab02fd3142052ca0eccb256f.png" src="../_images/be892434d5008a7717eb090e28ac2c7dfc94e3e5ab02fd3142052ca0eccb256f.png" />
+<img alt="../_images/141e3aa2bcf6e40d66ec9d82a56fb96c2b28519f0f9aea617f519c3023bbc57b.png" src="../_images/141e3aa2bcf6e40d66ec9d82a56fb96c2b28519f0f9aea617f519c3023bbc57b.png" />
 </div>
 </div>
 </section>
@@ -653,6 +575,24 @@ For more information, check <a class="reference external" href="https://jupyterb
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="dataset.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Dataset en Voorbewerking</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="perspective1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Perspectief 1 – EV’s als primaire oplossing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -685,7 +625,7 @@ For more information, check <a class="reference external" href="https://jupyterb
   <div class="footer-item">
     
 <p class="component-author">
-By Groep C5
+By Groep CS
 </p>
 
   </div>

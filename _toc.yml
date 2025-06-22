@@ -4,8 +4,9 @@
 format: jb-book
 root: docs/intro
 chapters:
-  - file: dataset
-  - file: perspective1
-  - file: perspective2
-  - file: reflection
-  - file: conclusion
+  - file: docs/dataset
+  - file: docs/notebook
+  - file: docs/perspective1
+  - file: docs/perspective2
+  - file: docs/reflection
+  - file: docs/conclusion
