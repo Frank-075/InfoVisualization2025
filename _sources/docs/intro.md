@@ -7,9 +7,9 @@ _Elektrische voertuigen & luchtkwaliteit in Europa_
 ## Introductie
 Elektrische voertuigen … *(tekst blijft gelijk)* …
 
-```{admonition} Perspectief 1 – EV’s als primaire oplossing
+```{admonition} Perspectief 1 – EV's als primaire oplossing
 :class: tip
-Een snel stijgend aandeel elektrische auto’s **vermindert** de totale CO₂-uitstoot …
+Een snel stijgend aandeel elektrische auto's **vermindert** de totale CO₂-uitstoot …
 ```
 
 ```{admonition} Perspectief 2 – Beperkte impact van EV-adoptie
@@ -23,12 +23,11 @@ De voordelen van EV-adoptie zijn **ongelijk verdeeld** …
 
 | Hoofdstuk | Inhoud |
 |-----------|--------|
-| **[{doc}`dataset`]** | Beschrijving van de Eurostat-datasets & preprocessing-stappen |
-| **[{doc}`perspective1`]** | Visualisaties & argumenten voor Perspectief 1 |
-| **[{doc}`perspective2`]** | Visualisaties & argumenten voor Perspectief 2 |
-| **[{doc}`reflection`]**   | Reflectie & werkverdeling |
-| **[{doc}`conclusion`]**   | Conclusie & Resultaten |
-| **[{doc}`notebook`]**   | test |
+| **[Dataset & Data](dataset.md)** | Beschrijving van de Eurostat-datasets & preprocessing-stappen |
+| **[Hoofdnotebook](notebook.ipynb)** | Volledige data-analyse en visualisaties |
+| **[Perspectief 1: EV-adoptie werkt](perspective1.ipynb)** | Visualisaties & argumenten voor Perspectief 1 |
+| **[Perspectief 2: Beperkte impact](perspective2.ipynb)** | Visualisaties & argumenten voor Perspectief 2 |
+| **[Reflectie](reflection.md)** | Reflectie & werkverdeling |
+| **[Conclusie](conclusion.md)** | Conclusie & Resultaten |
 
-
-> Gebruik de links hierboven of de zijbalk om verder te gaan.
+> Gebruik de links hierboven of de zijbalk om door het project te navigeren.
