@@ -5,9 +5,9 @@ _Elektrische voertuigen & luchtkwaliteit in Europa_
 ```
 
 ## Introductie
-De overgang naar elektrische mobiliteit wordt wereldwijd gezien als een cruciale stap in de strijd tegen klimaatverandering en luchtvervuiling in stedelijke gebieden. Europese steden staan vooraan in deze transitie, maar de resultaten variëren aanzienlijk tussen verschillende stedelijke contexten. Deze data story onderzoekt de complexe relatie tussen de adoptie van elektrische voertuigen (EV's) en de verbetering van stedelijke luchtkwaliteit in Europa.
+De overgang naar elektrische mobiliteit wordt wereldwijd gezien als een cruciale stap in de strijd tegen klimaatverandering en luchtvervuiling in stedelijke gebieden. Europese steden spelen een belangrijke rol in deze overgang, maar de resultaten verschillen sterk per stad. Deze data story onderzoekt hoe het gebruik van elektrische auto’s samenhangt met schonere lucht in Europese steden.
 Luchtkwaliteit in stedelijke gebieden wordt voornamelijk bepaald door uitstoot van stikstofdioxide (NO₂) en fijnstof (PM2.5), waarbij wegverkeer traditioneel een van de grootste bronnen vormt (Woodward et al., 2021). De introductie van batterij-elektrische voertuigen (BEV's) en plug-in hybrides (PHEV's) belooft deze uitstoot significant te verminderen, maar de werkelijke impact hangt af van verschillende factoren zoals lokaal beleid, energiebronnen, en de snelheid van adoptie (Koengkan et al., 2022).
-Deze studie presenteert verschillende perspectieven op de effectiviteit van elektrische mobiliteit als oplossing voor stedelijke luchtkwaliteitsproblemen. Door data van meerdere Europese steden te analyseren, bieden we inzicht in zowel de successen als de uitdagingen van deze transitie.
+Dit project presenteert verschillende perspectieven op de effectiviteit van elektrische mobiliteit als oplossing voor stedelijke luchtkwaliteitsproblemen. Door data van meerdere Europese steden te analyseren worden zowel de successen als de uitdagingen van deze transitie weergegeven.
 
 ```{admonition} Perspectief 1 – EV's als primaire oplossing
 :class: tip
