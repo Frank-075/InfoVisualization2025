@@ -5,10 +5,9 @@ _Elektrische voertuigen & luchtkwaliteit in Europa_
 ```
 
 ## Introductie
-Steeds meer mensen stappen over op elektrische auto’s. Deze ontwikkeling wordt wereldwijd gezien als een belangrijke manier om klimaatverandering tegen te gaan en de luchtkwaliteit in steden te verbeteren. Vooral in Europa proberen steden voorop te lopen in deze overgang. Toch zijn de resultaten lang niet overal hetzelfde.
-In deze data story wordt er onderzocht of het gebruik van elektrische auto’s samenhangt met schonere lucht in Europese steden.
-Luchtvervuiling in steden wordt vooral veroorzaakt door stikstofdioxide (NO₂) en fijnstof (PM2.5), waarbij auto’s en ander verkeer een belangrijke rol spelen (Woodward et al., 2021). Elektrische auto’s, zoals batterij-elektrische voertuigen (BEV’s) en plug-in hybrides (PHEV’s), kunnen deze uitstoot flink verminderen. Maar hoe groot die verbetering is, hangt af van verschillende factoren, zoals het lokale beleid, de bron van de elektriciteit en hoe snel mensen overstappen (Koengkan et al., 2022).
-In dit project analyseren we data van meerdere Europese steden om te laten zien waar elektrische mobiliteit echt werkt, en waar nog uitdagingen liggen. Zo krijg je een beter beeld van wat er nodig is om onze steden schoner en gezonder te maken.
+De overgang naar elektrische mobiliteit wordt wereldwijd gezien als een cruciale stap in de strijd tegen klimaatverandering en luchtvervuiling in stedelijke gebieden. Europese steden spelen een belangrijke rol in deze overgang, maar de resultaten verschillen sterk per stad. Deze data story onderzoekt hoe het gebruik van elektrische auto’s samenhangt met schonere lucht in Europese steden.
+Luchtkwaliteit in stedelijke gebieden wordt voornamelijk bepaald door uitstoot van stikstofdioxide (NO₂) en fijnstof (PM2.5), waarbij wegverkeer traditioneel een van de grootste bronnen vormt (Woodward et al., 2021). De introductie van batterij-elektrische voertuigen (BEV's) en plug-in hybrides (PHEV's) belooft deze uitstoot significant te verminderen, maar de werkelijke impact hangt af van verschillende factoren zoals lokaal beleid, energiebronnen, en de snelheid van adoptie (Koengkan et al., 2022).
+Dit project presenteert verschillende perspectieven op de effectiviteit van elektrische mobiliteit als oplossing voor stedelijke luchtkwaliteitsproblemen. Door data van meerdere Europese steden te analyseren worden zowel de successen als de uitdagingen van deze transitie weergegeven.
 
 ```{admonition} Perspectief 1 – EV's als primaire oplossing
 :class: tip
