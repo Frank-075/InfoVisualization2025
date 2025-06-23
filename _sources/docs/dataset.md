@@ -35,7 +35,7 @@ Beide CSV’s zijn samengevoegd op `geo` (ISO-landcode) en `TIME_PERIOD` (jaar).
 Voor elk land-jaar berekenden we het **EV-aandeel** als  
 
 \[
-\text{EV-aandeel} = \frac{\text{ELC}}{\text{TOTAL}}\times100\%
+\text{EV-aandeel} = \frac{\text{ELC}}{\text{TOTAL}} \times 100\%
 \]
 
 Rijen met ontbrekende waarden vormden minder dan 2 % en zijn verwijderd, zodat interpolatie niet nodig was.  
