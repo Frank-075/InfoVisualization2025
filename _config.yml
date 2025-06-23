@@ -1,5 +1,5 @@
 title: EV paradox # Change this to your book title.
-author: Groep CS # Change this to your name (or your team/organization name).
+author: Groep C5 # Change this to your name (or your team/organization name).
 copyright: "2025"
 logo: images/favicon.png
 
@@ -26,6 +26,7 @@ html:
   favicon: images/favicon.png
   use_issues_button: true
   use_repository_button: true
+  show_toggle_button: true
 
 # Add launch buttons
 launch_buttons:
