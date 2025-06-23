@@ -6,7 +6,7 @@ _Elektrische voertuigen & luchtkwaliteit in Europa_
 
 ## Introductie
 Steeds meer mensen stappen over op elektrische auto’s. Deze ontwikkeling wordt wereldwijd gezien als een belangrijke manier om klimaatverandering tegen te gaan en de luchtkwaliteit in steden te verbeteren. Vooral in Europa proberen steden voorop te lopen in deze overgang. Toch zijn de resultaten lang niet overal hetzelfde.
-In deze data story onderzoeken we hoe het gebruik van elektrische auto’s samenhangt met schonere lucht in Europese steden.
+In deze data story wordt er onderzocht of het gebruik van elektrische auto’s samenhangt met schonere lucht in Europese steden.
 Luchtvervuiling in steden wordt vooral veroorzaakt door stikstofdioxide (NO₂) en fijnstof (PM2.5), waarbij auto’s en ander verkeer een belangrijke rol spelen (Woodward et al., 2021). Elektrische auto’s, zoals batterij-elektrische voertuigen (BEV’s) en plug-in hybrides (PHEV’s), kunnen deze uitstoot flink verminderen. Maar hoe groot die verbetering is, hangt af van verschillende factoren, zoals het lokale beleid, de bron van de elektriciteit en hoe snel mensen overstappen (Koengkan et al., 2022).
 In dit project analyseren we data van meerdere Europese steden om te laten zien waar elektrische mobiliteit echt werkt, en waar nog uitdagingen liggen. Zo krijg je een beter beeld van wat er nodig is om onze steden schoner en gezonder te maken.
 
