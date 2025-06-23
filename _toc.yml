@@ -5,7 +5,6 @@ format: jb-book
 root: docs/intro
 chapters:
   - file: docs/dataset
-  - file: docs/notebook
   - file: docs/perspective1
   - file: docs/perspective2
   - file: docs/reflection
