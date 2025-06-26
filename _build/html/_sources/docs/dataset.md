@@ -32,9 +32,9 @@ Beide _ruwe_ tabellen staan als CSV in deze repository, zodat alle visualisaties
 1. **Merge** – de twee CSV’s zijn samengevoegd op `geo` (ISO‑landcode) en `TIME_PERIOD` (jaar).  
 2. **Berekening EV‑aandeel**  
 
-   \[
-   \text{EV‑aandeel} = \frac{\text{ELC}}{\text{TOTAL}} \times 100\%
-   \]
+$$
+\text{EV-aandeel} = \frac{\text{ELC}}{\text{TOTAL}} \times 100\%
+$$
 
 3. **Opschoning** – minder dan 2 % van de regels had missende waarden; die zijn verwijderd (geen interpolatie nodig).  
 4. **Kolom‑rename** – voor gebruiksgemak hernoemden we `TIME_PERIOD` → `year` en `OBS_VALUE` → `CO2_g_km`.  
