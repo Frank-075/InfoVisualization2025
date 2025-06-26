@@ -53,3 +53,4 @@ sphinx:
     # Allow raw HTML in notebooks
     nbsphinx_allow_errors: true
     nb_output_stderr: "show"
+  
