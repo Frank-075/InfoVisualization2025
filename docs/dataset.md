@@ -34,9 +34,9 @@ Beide ruwe tabellen zijn als CSV in deze repository opgenomen zodat alle visuali
 Beide CSV’s zijn samengevoegd op `geo` (ISO-landcode) en `TIME_PERIOD` (jaar).  
 Voor elk land-jaar berekenden we het **EV-aandeel** als  
 
-\[
+$$
 \text{EV-aandeel} = \frac{\text{ELC}}{\text{TOTAL}} \times 100\%
-\]
+$$
 
 Rijen met ontbrekende waarden vormden minder dan 2 % en zijn verwijderd, zodat interpolatie niet nodig was.  
 Het resulterende bestand **`data/ev_airquality_ready.csv`** vormt de basis voor alle visualisaties in dit Jupyter Book.
