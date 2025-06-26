@@ -27,6 +27,8 @@ html:
   use_issues_button: true
   use_repository_button: true
   show_toggle_button: true
+  extra_css:
+    - custom.css
 
 # Add launch buttons
 launch_buttons:
@@ -53,4 +55,5 @@ sphinx:
     # Allow raw HTML in notebooks
     nbsphinx_allow_errors: true
     nb_output_stderr: "show"
+    html_static_path: ['_static']
   
