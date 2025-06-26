@@ -5,7 +5,7 @@
 
 /* Kaart-achtergrond + randje + schaduw ------------------------------*/
 .plot-card {
-  background: var(--pst-color-surface);
+  background: #FDEDDD !important;   /* zelfde hex als PASTEL in Python */
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,.07);
   padding: 1.2rem;

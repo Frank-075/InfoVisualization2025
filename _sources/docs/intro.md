@@ -31,10 +31,8 @@ De voordelen van EV-adoptie zijn **ongelijk verdeeld** en sterk afhankelijk van 
 | Hoofdstuk | Inhoud |
 |-----------|--------|
 | **[Dataset & Data](dataset.md)** | Beschrijving van de Eurostat-datasets & preprocessing-stappen |
-| **[Hoofdnotebook](notebook.ipynb)** | Volledige data-analyse en visualisaties |
-| **[Perspectief 1: EV-adoptie werkt](perspective1.ipynb)** | Visualisaties & argumenten voor Perspectief 1 |
-| **[Perspectief 2: Beperkte impact](perspective2.ipynb)** | Visualisaties & argumenten voor Perspectief 2 |
-| **[Reflectie](reflection.md)** | Reflectie & werkverdeling |
-| **[Conclusie](conclusion.md)** | Conclusie & Resultaten |
+| **[Het verhaal](verhaal.ipynb)** | Volledige data-analyse en visualisaties |
+| **[Reflectie](reflection.md)** | Reflectie |
+| **[Werkverdeling](werkverdeling.md)** | Werkverdeling |
 
 > Gebruik de links hierboven of de zijbalk om door het project te navigeren.
