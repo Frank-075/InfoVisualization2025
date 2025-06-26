@@ -11,12 +11,12 @@ Hieronder staat wie welke taken heeft uitgevoerd en hoe deze in het geheel paste
 
 ## Tygo Honig
 - **Concept en tekst *Perspectief 1***  
-- **Implementatie Visualisatie 1.1 en 1.2**  
+- **Implementatie Visualisatie perspectief 1**  
 - **Eindredactie** op consistentie en stijl
 
 ## Frank Villano
 - **Concept en tekst *Perspectief 2***  
-- **Implementatie Visualisatie 2.1 en 2.2**  
+- **Implementatie Visualisaties perspectief 2**  
 - **GitHub Pages‑deployment** en CI‑workflow
 
 ## Olivier Brouwer
