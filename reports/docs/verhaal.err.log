@@ -1,0 +1,302 @@
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/leonardbus/Library/Python/3.13/lib/python/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 721, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+iso_map = {
+    'Oostenrijk': 'AUT',
+    'België': 'BEL',
+    'Bulgarije': 'BGR',
+    'Kroatië': 'HRV',
+    'Cyprus': 'CYP',
+    'Tsjechië': 'CZE',
+    'Denemarken': 'DNK',
+    'Estland': 'EST',
+    'Finland': 'FIN',
+    'Frankrijk': 'FRA',
+    'Duitsland': 'DEU',
+    'Griekenland': 'GRC',
+    'Hongarije': 'HUN',
+    'Ierland': 'IRL',
+    'Italië': 'ITA',
+    'Letland': 'LVA',
+    'Litouwen': 'LTU',
+    'Luxemburg': 'LUX',
+    'Malta': 'MLT',
+    'Nederland': 'NLD',
+    'Polen': 'POL',
+    'Portugal': 'PRT',
+    'Roemenië': 'ROU',
+    'Slowakije': 'SVK',
+    'Slovenië': 'SVN',
+    'Spanje': 'ESP',
+    'Zweden': 'SWE',
+    'Noorwegen': 'NOR',
+    'IJsland': 'ISL',
+    'Zwitserland': 'CHE',
+    'Verenigd Koninkrijk': 'GBR'
+}
+
+
+df['iso3'] = df.geo.map(iso_map)
+rows = df.dropna(subset=['iso3'])
+
+years = sorted(rows.year.unique())
+zmax = rows.evShare.quantile(0.98)
+
+# Blauwe kleurschaal met veel meer detail voor betere zichtbaarheid van alle EV-percentages
+custom_colorscale = [
+    [0.0, '#f8f9fa'],      # Heel lichtgrijs voor 0%
+    [0.002, '#e3f2fd'],    # Zeer lichtblauw voor 0.1%
+    [0.005, '#bbdefb'],    # Lichtblauw voor 0.3%
+    [0.01, '#90caf9'],     # Blauw voor 0.5%
+    [0.02, '#64b5f6'],     # Middenblauw voor 1%
+    [0.03, '#42a5f5'],     # Blauw voor 1.5%
+    [0.05, '#2196f3'],     # Levendig blauw voor 2.5%
+    [0.07, '#1e88e5'],     # Donker blauw voor 3.5%
+    [0.1, '#1976d2'],      # Donkerblauw voor 5%
+    [0.15, '#1565c0'],     # Zeer donkerblauw voor 7.5%
+    [0.2, '#0d47a1'],      # Heel donkerblauw voor 10%
+    [0.3, '#0a3d91'],      # Donker navy voor 15%
+    [0.4, '#083381'],      # Navy voor 20%
+    [0.5, '#062971'],      # Donker navy voor 25%
+    [0.6, '#041f61'],      # Zeer donker navy voor 30%
+    [0.7, '#031551'],      # Bijna zwart navy voor 35%
+    [0.8, '#020b41'],      # Heel donker navy voor 40%
+    [0.9, '#010531'],      # Bijna zwart voor 45%
+    [1.0, '#000021']       # Zwart-navy voor 50%+
+]
+
+frames = []
+for yr in years:
+    sub = rows[rows.year == yr]
+    frames.append(go.Frame(
+        name=str(yr),
+        data=[go.Choropleth(
+            locations=sub.iso3,
+            z=sub.evShare,
+            text=sub.geo,
+            colorscale=custom_colorscale,
+            zmin=0, 
+            zmax=zmax,
+            hovertemplate='<b>%{text}</b><br>EV-aandeel: %{z:.2f}%<br>Jaar: ' + str(yr) + '<extra></extra>',
+            colorbar=dict(
+                title=dict(text="EV-aandeel (%)", font=dict(size=16, color='rgb(42, 63, 95)')),
+                tickfont=dict(size=14, color='rgb(42, 63, 95)'),
+                len=0.85,
+                thickness=25,
+                x=1.01,
+                tickmode='linear',
+                tick0=0,
+                dtick=5,
+                ticksuffix='%'
+            )
+        )],
+        layout=dict(title=dict(text=f'EV‑aandeel per Europees land ({yr})'))
+    ))
+
+fig_map = go.Figure(
+    data=frames[0].data,
+    frames=frames,
+    layout=go.Layout(
+        title=dict(
+            text=f'EV‑aandeel per Europees land ({years[0]})',
+            font=dict(size=22, color='rgb(42, 63, 95)', family='Arial, sans-serif'),
+            x=0.5,
+            xanchor='center',
+            y=0.95,
+            yanchor='top'
+        ),
+        geo=dict(
+            scope='europe', 
+            projection_type='natural earth',
+            showframe=False, 
+            showcountries=True,
+            countrycolor='#7fb3d3',
+            countrywidth=0.8,
+            bgcolor='rgba(0,0,0,0)',
+            landcolor='#f0f8ff',
+            oceancolor='#cce7ff',
+            showocean=True,
+            showlakes=True,
+            lakecolor='#cce7ff'
+        ),
+        paper_bgcolor='#f8fbff',
+        plot_bgcolor='#f8fbff',
+        font=dict(family='Arial, sans-serif', color='#2c3e50'),
+        sliders=[dict(
+            steps=[dict(
+                method='animate', 
+                label=str(y),
+                args=[[str(y)], dict(
+                    mode='immediate',
+                    frame=dict(duration=300, redraw=True),
+                    transition=dict(duration=200, easing='cubic-in-out')
+                )]
+            ) for y in years],
+            currentvalue=dict(
+                prefix='Jaar: ',
+                font=dict(size=18, color='rgb(42, 63, 95)', weight='bold')
+            ),
+            pad=dict(t=60, b=20, l=40, r=40),
+            len=0.85,
+            x=0.075,
+            xanchor='left',
+            bgcolor='rgba(255,255,255,0.95)',
+            bordercolor='#2196f3',
+            borderwidth=2,
+            font=dict(color='rgb(42, 63, 95)', size=14)
+        )],
+        updatemenus=[dict(
+            type='buttons',
+            showactive=False,
+            x=0.075,
+            y=0.02,
+            xanchor='left',
+            yanchor='bottom',
+            buttons=[
+                dict(
+                    label='▶',
+                    method='animate',
+                    args=[None, dict(
+                        frame=dict(duration=1000, redraw=True),
+                        transition=dict(duration=400),
+                        fromcurrent=True,
+                        mode='immediate'
+                    )]
+                )
+            ],
+            bgcolor='rgba(255,255,255,0.95)',
+            bordercolor='rgb(42, 63, 95)',
+            borderwidth=2,
+            font=dict(color='rgb(42, 63, 95)', size=13, weight='bold')
+        )],
+        margin=dict(l=40, r=40, t=80, b=80),
+        # Voeg border toe om de hele visualisatie
+    )
+)
+
+# Convert to HTML and display
+fig_map.show()  # toont de figuur in Jupyter Notebook
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mIndexError[39m                                Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[7][39m[32m, line 94[39m
+[32m     67[39m     sub = rows[rows.year == yr]
+[32m     68[39m     frames.append(go.Frame(
+[32m     69[39m         name=[38;5;28mstr[39m(yr),
+[32m     70[39m         data=[go.Choropleth(
+[32m   (...)[39m[32m     90[39m         layout=[38;5;28mdict[39m(title=[38;5;28mdict[39m(text=[33mf[39m[33m'[39m[33mEV‑aandeel per Europees land ([39m[38;5;132;01m{[39;00myr[38;5;132;01m}[39;00m[33m)[39m[33m'[39m))
+[32m     91[39m     ))
+[32m     93[39m fig_map = go.Figure(
+[32m---> [39m[32m94[39m     data=[43mframes[49m[43m[[49m[32;43m0[39;49m[43m][49m.data,
+[32m     95[39m     frames=frames,
+[32m     96[39m     layout=go.Layout(
+[32m     97[39m         title=[38;5;28mdict[39m(
+[32m     98[39m             text=[33mf[39m[33m'[39m[33mEV‑aandeel per Europees land ([39m[38;5;132;01m{[39;00myears[[32m0[39m][38;5;132;01m}[39;00m[33m)[39m[33m'[39m,
+[32m     99[39m             font=[38;5;28mdict[39m(size=[32m22[39m, color=[33m'[39m[33mrgb(42, 63, 95)[39m[33m'[39m, family=[33m'[39m[33mArial, sans-serif[39m[33m'[39m),
+[32m    100[39m             x=[32m0.5[39m,
+[32m    101[39m             xanchor=[33m'[39m[33mcenter[39m[33m'[39m,
+[32m    102[39m             y=[32m0.95[39m,
+[32m    103[39m             yanchor=[33m'[39m[33mtop[39m[33m'[39m
+[32m    104[39m         ),
+[32m    105[39m         geo=[38;5;28mdict[39m(
+[32m    106[39m             scope=[33m'[39m[33meurope[39m[33m'[39m, 
+[32m    107[39m             projection_type=[33m'[39m[33mnatural earth[39m[33m'[39m,
+[32m    108[39m             showframe=[38;5;28;01mFalse[39;00m, 
+[32m    109[39m             showcountries=[38;5;28;01mTrue[39;00m,
+[32m    110[39m             countrycolor=[33m'[39m[33m#7fb3d3[39m[33m'[39m,
+[32m    111[39m             countrywidth=[32m0.8[39m,
+[32m    112[39m             bgcolor=[33m'[39m[33mrgba(0,0,0,0)[39m[33m'[39m,
+[32m    113[39m             landcolor=[33m'[39m[33m#f0f8ff[39m[33m'[39m,
+[32m    114[39m             oceancolor=[33m'[39m[33m#cce7ff[39m[33m'[39m,
+[32m    115[39m             showocean=[38;5;28;01mTrue[39;00m,
+[32m    116[39m             showlakes=[38;5;28;01mTrue[39;00m,
+[32m    117[39m             lakecolor=[33m'[39m[33m#cce7ff[39m[33m'[39m
+[32m    118[39m         ),
+[32m    119[39m         paper_bgcolor=[33m'[39m[33m#f8fbff[39m[33m'[39m,
+[32m    120[39m         plot_bgcolor=[33m'[39m[33m#f8fbff[39m[33m'[39m,
+[32m    121[39m         font=[38;5;28mdict[39m(family=[33m'[39m[33mArial, sans-serif[39m[33m'[39m, color=[33m'[39m[33m#2c3e50[39m[33m'[39m),
+[32m    122[39m         sliders=[[38;5;28mdict[39m(
+[32m    123[39m             steps=[[38;5;28mdict[39m(
+[32m    124[39m                 method=[33m'[39m[33manimate[39m[33m'[39m, 
+[32m    125[39m                 label=[38;5;28mstr[39m(y),
+[32m    126[39m                 args=[[[38;5;28mstr[39m(y)], [38;5;28mdict[39m(
+[32m    127[39m                     mode=[33m'[39m[33mimmediate[39m[33m'[39m,
+[32m    128[39m                     frame=[38;5;28mdict[39m(duration=[32m300[39m, redraw=[38;5;28;01mTrue[39;00m),
+[32m    129[39m                     transition=[38;5;28mdict[39m(duration=[32m200[39m, easing=[33m'[39m[33mcubic-in-out[39m[33m'[39m)
+[32m    130[39m                 )]
+[32m    131[39m             ) [38;5;28;01mfor[39;00m y [38;5;129;01min[39;00m years],
+[32m    132[39m             currentvalue=[38;5;28mdict[39m(
+[32m    133[39m                 prefix=[33m'[39m[33mJaar: [39m[33m'[39m,
+[32m    134[39m                 font=[38;5;28mdict[39m(size=[32m18[39m, color=[33m'[39m[33mrgb(42, 63, 95)[39m[33m'[39m, weight=[33m'[39m[33mbold[39m[33m'[39m)
+[32m    135[39m             ),
+[32m    136[39m             pad=[38;5;28mdict[39m(t=[32m60[39m, b=[32m20[39m, l=[32m40[39m, r=[32m40[39m),
+[32m    137[39m             [38;5;28mlen[39m=[32m0.85[39m,
+[32m    138[39m             x=[32m0.075[39m,
+[32m    139[39m             xanchor=[33m'[39m[33mleft[39m[33m'[39m,
+[32m    140[39m             bgcolor=[33m'[39m[33mrgba(255,255,255,0.95)[39m[33m'[39m,
+[32m    141[39m             bordercolor=[33m'[39m[33m#2196f3[39m[33m'[39m,
+[32m    142[39m             borderwidth=[32m2[39m,
+[32m    143[39m             font=[38;5;28mdict[39m(color=[33m'[39m[33mrgb(42, 63, 95)[39m[33m'[39m, size=[32m14[39m)
+[32m    144[39m         )],
+[32m    145[39m         updatemenus=[[38;5;28mdict[39m(
+[32m    146[39m             [38;5;28mtype[39m=[33m'[39m[33mbuttons[39m[33m'[39m,
+[32m    147[39m             showactive=[38;5;28;01mFalse[39;00m,
+[32m    148[39m             x=[32m0.075[39m,
+[32m    149[39m             y=[32m0.02[39m,
+[32m    150[39m             xanchor=[33m'[39m[33mleft[39m[33m'[39m,
+[32m    151[39m             yanchor=[33m'[39m[33mbottom[39m[33m'[39m,
+[32m    152[39m             buttons=[
+[32m    153[39m                 [38;5;28mdict[39m(
+[32m    154[39m                     label=[33m'[39m[33m▶[39m[33m'[39m,
+[32m    155[39m                     method=[33m'[39m[33manimate[39m[33m'[39m,
+[32m    156[39m                     args=[[38;5;28;01mNone[39;00m, [38;5;28mdict[39m(
+[32m    157[39m                         frame=[38;5;28mdict[39m(duration=[32m1000[39m, redraw=[38;5;28;01mTrue[39;00m),
+[32m    158[39m                         transition=[38;5;28mdict[39m(duration=[32m400[39m),
+[32m    159[39m                         fromcurrent=[38;5;28;01mTrue[39;00m,
+[32m    160[39m                         mode=[33m'[39m[33mimmediate[39m[33m'[39m
+[32m    161[39m                     )]
+[32m    162[39m                 )
+[32m    163[39m             ],
+[32m    164[39m             bgcolor=[33m'[39m[33mrgba(255,255,255,0.95)[39m[33m'[39m,
+[32m    165[39m             bordercolor=[33m'[39m[33mrgb(42, 63, 95)[39m[33m'[39m,
+[32m    166[39m             borderwidth=[32m2[39m,
+[32m    167[39m             font=[38;5;28mdict[39m(color=[33m'[39m[33mrgb(42, 63, 95)[39m[33m'[39m, size=[32m13[39m, weight=[33m'[39m[33mbold[39m[33m'[39m)
+[32m    168[39m         )],
+[32m    169[39m         margin=[38;5;28mdict[39m(l=[32m40[39m, r=[32m40[39m, t=[32m80[39m, b=[32m80[39m),
+[32m    170[39m         [38;5;66;03m# Voeg border toe om de hele visualisatie[39;00m
+[32m    171[39m     )
+[32m    172[39m )
+[32m    174[39m [38;5;66;03m# Convert to HTML and display[39;00m
+[32m    175[39m fig_map.show()  [38;5;66;03m# toont de figuur in Jupyter Notebook[39;00m
+
+[31mIndexError[39m: list index out of range
+
