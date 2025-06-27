@@ -1,55 +1,63 @@
 Traceback (most recent call last):
-  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "C:\Users\tygoh\anaconda3\envs\jupyterbook\lib\site-packages\jupyter_core\utils\__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tygoh\anaconda3\envs\jupyterbook\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
-    ~~~~~~~~~^
-        nb,
-        ^^^
-    ...<4 lines>...
-        **kwargs,
-        ^^^^^^^^^
-    )
-    ^
-  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 1319, in execute
+  File "C:\Users\tygoh\anaconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 1319, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "/Users/leonardbus/Library/Python/3.13/lib/python/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+  File "C:\Users\tygoh\anaconda3\envs\jupyterbook\lib\site-packages\jupyter_core\utils\__init__.py", line 158, in wrapped
     return loop.run_until_complete(inner)
-           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 721, in run_until_complete
+  File "C:\Users\tygoh\anaconda3\envs\jupyterbook\lib\asyncio\base_events.py", line 649, in run_until_complete
     return future.result()
-           ~~~~~~~~~~~~~^^
-  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 709, in async_execute
+  File "C:\Users\tygoh\anaconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 709, in async_execute
     await self.async_execute_cell(
-        cell, index, execution_count=self.code_cells_executed + 1
-    )
-  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+  File "C:\Users\tygoh\anaconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+  File "C:\Users\tygoh\anaconda3\envs\jupyterbook\lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-focus = focus.copy()
-focus['landnaam'] = focus['geo'].map(country_names)
+# ----- EV-aandeel lijnplot -----------------------------------------
+fig_line = px.line(
+    line_df,
+    x="year", y="evShare", color="Land",
+    title="EV-aandeel in geselecteerde landen",
+    labels=dict(year="Jaar", evShare="EV-aandeel (%)")
+)
+fig_line.update_traces(mode="lines+markers")
+fig_line.update_yaxes(ticksuffix="%")
 
-fig_line = px.line(focus, x='year', y='co2', color='landnaam',
-                   title='Gem. CO₂‑uitstoot nieuwe auto’s (2013‑2023)',
-                   labels=dict(year='Jaar', co2='CO₂ (g/km)', landnaam='Land'))
-fig_line.update_traces(mode='lines+markers')
-# Convert to HTML and display
-fig_line.show()
+# extra hoogte + pastelachtergrond
+fig_line.update_layout(
+    autosize=True,          # responsieve breedte blijft
+    height=600,             # ← maak 'm hoger (bijv. 600 px)
+    margin=dict(l=60, r=40, t=70, b=60),
+    paper_bgcolor=PASTEL,
+    plot_bgcolor =PASTEL
+)
+
+fig_line.show()             # kaart-patch doet de rest
 
 ------------------
 
 
-[31m---------------------------------------------------------------------------[39m
-[31mNameError[39m                                 Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[6][39m[32m, line 2[39m
-[32m      1[39m focus = focus.copy()
-[32m----> [39m[32m2[39m focus[[33m'[39m[33mlandnaam[39m[33m'[39m] = focus[[33m'[39m[33mgeo[39m[33m'[39m].map([43mcountry_names[49m)
-[32m      4[39m fig_line = px.line(focus, x=[33m'[39m[33myear[39m[33m'[39m, y=[33m'[39m[33mco2[39m[33m'[39m, color=[33m'[39m[33mlandnaam[39m[33m'[39m,
-[32m      5[39m                    title=[33m'[39m[33mGem. CO₂‑uitstoot nieuwe auto’s (2013‑2023)[39m[33m'[39m,
-[32m      6[39m                    labels=[38;5;28mdict[39m(year=[33m'[39m[33mJaar[39m[33m'[39m, co2=[33m'[39m[33mCO₂ (g/km)[39m[33m'[39m, landnaam=[33m'[39m[33mLand[39m[33m'[39m))
-[32m      7[39m fig_line.update_traces(mode=[33m'[39m[33mlines+markers[39m[33m'[39m)
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[3], line 3[0m
+[0;32m      1[0m [38;5;66;03m# ----- EV-aandeel lijnplot -----------------------------------------[39;00m
+[0;32m      2[0m fig_line [38;5;241m=[39m px[38;5;241m.[39mline(
+[1;32m----> 3[0m     [43mline_df[49m,
+[0;32m      4[0m     x[38;5;241m=[39m[38;5;124m"[39m[38;5;124myear[39m[38;5;124m"[39m, y[38;5;241m=[39m[38;5;124m"[39m[38;5;124mevShare[39m[38;5;124m"[39m, color[38;5;241m=[39m[38;5;124m"[39m[38;5;124mLand[39m[38;5;124m"[39m,
+[0;32m      5[0m     title[38;5;241m=[39m[38;5;124m"[39m[38;5;124mEV-aandeel in geselecteerde landen[39m[38;5;124m"[39m,
+[0;32m      6[0m     labels[38;5;241m=[39m[38;5;28mdict[39m(year[38;5;241m=[39m[38;5;124m"[39m[38;5;124mJaar[39m[38;5;124m"[39m, evShare[38;5;241m=[39m[38;5;124m"[39m[38;5;124mEV-aandeel ([39m[38;5;124m%[39m[38;5;124m)[39m[38;5;124m"[39m)
+[0;32m      7[0m )
+[0;32m      8[0m fig_line[38;5;241m.[39mupdate_traces(mode[38;5;241m=[39m[38;5;124m"[39m[38;5;124mlines+markers[39m[38;5;124m"[39m)
+[0;32m      9[0m fig_line[38;5;241m.[39mupdate_yaxes(ticksuffix[38;5;241m=[39m[38;5;124m"[39m[38;5;124m%[39m[38;5;124m"[39m)
 
-[31mNameError[39m: name 'country_names' is not defined
+[1;31mNameError[0m: name 'line_df' is not defined
 
