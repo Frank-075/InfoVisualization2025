@@ -28,6 +28,8 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
+focus = focus.copy()
+focus['landnaam'] = focus['geo'].map(country_names)
 
 fig_line = px.line(focus, x='year', y='co2', color='landnaam',
                    title='Gem. CO₂‑uitstoot nieuwe auto’s (2013‑2023)',
@@ -40,59 +42,14 @@ fig_line.show()
 
 
 [31m---------------------------------------------------------------------------[39m
-[31mValueError[39m                                Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[6][39m[32m, line 1[39m
-[32m----> [39m[32m1[39m fig_line = [43mpx[49m[43m.[49m[43mline[49m[43m([49m[43mfocus[49m[43m,[49m[43m [49m[43mx[49m[43m=[49m[33;43m'[39;49m[33;43myear[39;49m[33;43m'[39;49m[43m,[49m[43m [49m[43my[49m[43m=[49m[33;43m'[39;49m[33;43mco2[39;49m[33;43m'[39;49m[43m,[49m[43m [49m[43mcolor[49m[43m=[49m[33;43m'[39;49m[33;43mlandnaam[39;49m[33;43m'[39;49m[43m,[49m
-[32m      2[39m [43m                   [49m[43mtitle[49m[43m=[49m[33;43m'[39;49m[33;43mGem. CO₂‑uitstoot nieuwe auto’s (2013‑2023)[39;49m[33;43m'[39;49m[43m,[49m
-[32m      3[39m [43m                   [49m[43mlabels[49m[43m=[49m[38;5;28;43mdict[39;49m[43m([49m[43myear[49m[43m=[49m[33;43m'[39;49m[33;43mJaar[39;49m[33;43m'[39;49m[43m,[49m[43m [49m[43mco2[49m[43m=[49m[33;43m'[39;49m[33;43mCO₂ (g/km)[39;49m[33;43m'[39;49m[43m,[49m[43m [49m[43mlandnaam[49m[43m=[49m[33;43m'[39;49m[33;43mLand[39;49m[33;43m'[39;49m[43m)[49m[43m)[49m
-[32m      4[39m fig_line.update_traces(mode=[33m'[39m[33mlines+markers[39m[33m'[39m)
-[32m      5[39m [38;5;66;03m# Convert to HTML and display[39;00m
+[31mNameError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[6][39m[32m, line 2[39m
+[32m      1[39m focus = focus.copy()
+[32m----> [39m[32m2[39m focus[[33m'[39m[33mlandnaam[39m[33m'[39m] = focus[[33m'[39m[33mgeo[39m[33m'[39m].map([43mcountry_names[49m)
+[32m      4[39m fig_line = px.line(focus, x=[33m'[39m[33myear[39m[33m'[39m, y=[33m'[39m[33mco2[39m[33m'[39m, color=[33m'[39m[33mlandnaam[39m[33m'[39m,
+[32m      5[39m                    title=[33m'[39m[33mGem. CO₂‑uitstoot nieuwe auto’s (2013‑2023)[39m[33m'[39m,
+[32m      6[39m                    labels=[38;5;28mdict[39m(year=[33m'[39m[33mJaar[39m[33m'[39m, co2=[33m'[39m[33mCO₂ (g/km)[39m[33m'[39m, landnaam=[33m'[39m[33mLand[39m[33m'[39m))
+[32m      7[39m fig_line.update_traces(mode=[33m'[39m[33mlines+markers[39m[33m'[39m)
 
-[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/plotly/express/_chart_types.py:270[39m, in [36mline[39m[34m(data_frame, x, y, line_group, color, line_dash, symbol, hover_name, hover_data, custom_data, text, facet_row, facet_col, facet_col_wrap, facet_row_spacing, facet_col_spacing, error_x, error_x_minus, error_y, error_y_minus, animation_frame, animation_group, category_orders, labels, orientation, color_discrete_sequence, color_discrete_map, line_dash_sequence, line_dash_map, symbol_sequence, symbol_map, markers, log_x, log_y, range_x, range_y, line_shape, render_mode, title, subtitle, template, width, height)[39m
-[32m    221[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mline[39m(
-[32m    222[39m     data_frame=[38;5;28;01mNone[39;00m,
-[32m    223[39m     x=[38;5;28;01mNone[39;00m,
-[32m   (...)[39m[32m    264[39m     height=[38;5;28;01mNone[39;00m,
-[32m    265[39m ) -> go.Figure:
-[32m    266[39m [38;5;250m    [39m[33;03m"""[39;00m
-[32m    267[39m [33;03m    In a 2D line plot, each row of `data_frame` is represented as a vertex of[39;00m
-[32m    268[39m [33;03m    a polyline mark in 2D space.[39;00m
-[32m    269[39m [33;03m    """[39;00m
-[32m--> [39m[32m270[39m     [38;5;28;01mreturn[39;00m [43mmake_figure[49m[43m([49m[43margs[49m[43m=[49m[38;5;28;43mlocals[39;49m[43m([49m[43m)[49m[43m,[49m[43m [49m[43mconstructor[49m[43m=[49m[43mgo[49m[43m.[49m[43mScatter[49m[43m)[49m
-
-[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/plotly/express/_core.py:2483[39m, in [36mmake_figure[39m[34m(args, constructor, trace_patch, layout_patch)[39m
-[32m   2480[39m layout_patch = layout_patch [38;5;129;01mor[39;00m {}
-[32m   2481[39m apply_default_cascade(args)
-[32m-> [39m[32m2483[39m args = [43mbuild_dataframe[49m[43m([49m[43margs[49m[43m,[49m[43m [49m[43mconstructor[49m[43m)[49m
-[32m   2484[39m [38;5;28;01mif[39;00m constructor [38;5;129;01min[39;00m [go.Treemap, go.Sunburst, go.Icicle] [38;5;129;01mand[39;00m args[[33m"[39m[33mpath[39m[33m"[39m] [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
-[32m   2485[39m     args = process_dataframe_hierarchy(args)
-
-[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/plotly/express/_core.py:1729[39m, in [36mbuild_dataframe[39m[34m(args, constructor)[39m
-[32m   1726[39m     args[[33m"[39m[33mcolor[39m[33m"[39m] = [38;5;28;01mNone[39;00m
-[32m   1727[39m [38;5;66;03m# now that things have been prepped, we do the systematic rewriting of `args`[39;00m
-[32m-> [39m[32m1729[39m df_output, wide_id_vars = [43mprocess_args_into_dataframe[49m[43m([49m
-[32m   1730[39m [43m    [49m[43margs[49m[43m,[49m
-[32m   1731[39m [43m    [49m[43mwide_mode[49m[43m,[49m
-[32m   1732[39m [43m    [49m[43mvar_name[49m[43m,[49m
-[32m   1733[39m [43m    [49m[43mvalue_name[49m[43m,[49m
-[32m   1734[39m [43m    [49m[43mis_pd_like[49m[43m,[49m
-[32m   1735[39m [43m    [49m[43mnative_namespace[49m[43m,[49m
-[32m   1736[39m [43m[49m[43m)[49m
-[32m   1737[39m df_output: nw.DataFrame
-[32m   1738[39m [38;5;66;03m# now that `df_output` exists and `args` contains only references, we complete[39;00m
-[32m   1739[39m [38;5;66;03m# the special-case and wide-mode handling by further rewriting args and/or mutating[39;00m
-[32m   1740[39m [38;5;66;03m# df_output[39;00m
-
-[36mFile [39m[32m/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/plotly/express/_core.py:1330[39m, in [36mprocess_args_into_dataframe[39m[34m(args, wide_mode, var_name, value_name, is_pd_like, native_namespace)[39m
-[32m   1328[39m         [38;5;28;01mif[39;00m argument == [33m"[39m[33mindex[39m[33m"[39m:
-[32m   1329[39m             err_msg += [33m"[39m[38;5;130;01m\n[39;00m[33m To use the index, pass it in directly as `df.index`.[39m[33m"[39m
-[32m-> [39m[32m1330[39m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(err_msg)
-[32m   1331[39m [38;5;28;01melif[39;00m length [38;5;129;01mand[39;00m (actual_len := [38;5;28mlen[39m(df_input)) != length:
-[32m   1332[39m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
-[32m   1333[39m         [33m"[39m[33mAll arguments should have the same length. [39m[33m"[39m
-[32m   1334[39m         [33m"[39m[33mThe length of column argument `df[[39m[38;5;132;01m%s[39;00m[33m]` is [39m[38;5;132;01m%d[39;00m[33m, whereas the [39m[33m"[39m
-[32m   (...)[39m[32m   1341[39m         )
-[32m   1342[39m     )
-
-[31mValueError[39m: Value of 'color' is not the name of a column in 'data_frame'. Expected one of ['geo', 'year', 'elc', 'total', 'evShare', 'co2'] but received: landnaam
+[31mNameError[39m: name 'country_names' is not defined
 
