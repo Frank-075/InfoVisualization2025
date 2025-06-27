@@ -80,7 +80,7 @@ for yr in years:
         data=[go.Choropleth(
             locations=sub.iso3,
             z=sub.evShare,
-            text=sub.country_name,
+            text=sub.country_names,
             colorscale=custom_colorscale,
             zmin=0, 
             zmax=zmax,
@@ -188,12 +188,12 @@ fig_map.show()  # toont de figuur in Jupyter Notebook
 
 [31m---------------------------------------------------------------------------[39m
 [31mAttributeError[39m                            Traceback (most recent call last)
-[32m/var/folders/94/p3hvjht162sd783wvh0jgktr0000gn/T/ipykernel_86303/3623441901.py[39m in [36m?[39m[34m()[39m
+[32m/var/folders/94/p3hvjht162sd783wvh0jgktr0000gn/T/ipykernel_86408/534470432.py[39m in [36m?[39m[34m()[39m
 [32m     49[39m         name=str(yr),
 [32m     50[39m         data=[go.Choropleth(
 [32m     51[39m             locations=sub.iso3,
 [32m     52[39m             z=sub.evShare,
-[32m---> [39m[32m53[39m             text=sub.country_name,
+[32m---> [39m[32m53[39m             text=sub.country_names,
 [32m     54[39m             colorscale=custom_colorscale,
 [32m     55[39m             zmin=[32m0[39m,
 [32m     56[39m             zmax=zmax,
@@ -205,5 +205,5 @@ fig_map.show()  # toont de figuur in Jupyter Notebook
 [32m   6298[39m             [38;5;28;01mreturn[39;00m self[name]
 [32m-> [39m[32m6299[39m         [38;5;28;01mreturn[39;00m object.__getattribute__(self, name)
 
-[31mAttributeError[39m: 'DataFrame' object has no attribute 'country_name'
+[31mAttributeError[39m: 'DataFrame' object has no attribute 'country_names'
 
