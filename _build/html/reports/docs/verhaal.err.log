@@ -1,0 +1,121 @@
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/leonardbus/Library/Python/3.13/lib/python/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 721, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+iso_map = {'AT':'AUT','BE':'BEL','BG':'BGR','HR':'HRV','CY':'CYP','CZ':'CZE','DK':'DNK','EE':'EST',
+           'FI':'FIN','FR':'FRA','DE':'DEU','EL':'GRC','HU':'HUN','IE':'IRL','IT':'ITA','LV':'LVA',
+           'LT':'LTU','LU':'LUX','MT':'MLT','NL':'NLD','PL':'POL','PT':'PRT','RO':'ROU','SK':'SVK',
+           'SI':'SVN','ES':'ESP','SE':'SWE','NO':'NOR','IS':'ISL','CH':'CHE','UK':'GBR'}
+country_names = {
+    'AT': 'Oostenrijk', 'BE': 'België', 'BG': 'Bulgarije', 'HR': 'Kroatië', 'CY': 'Cyprus',
+    'CZ': 'Tsjechië', 'DK': 'Denemarken', 'EE': 'Estland', 'FI': 'Finland', 'FR': 'Frankrijk',
+    'DE': 'Duitsland', 'EL': 'Griekenland', 'HU': 'Hongarije', 'IE': 'Ierland', 'IT': 'Italië',
+    'LV': 'Letland', 'LT': 'Litouwen', 'LU': 'Luxemburg', 'MT': 'Malta', 'NL': 'Nederland',
+    'PL': 'Polen', 'PT': 'Portugal', 'RO': 'Roemenië', 'SK': 'Slowakije', 'SI': 'Slovenië',
+    'ES': 'Spanje', 'SE': 'Zweden', 'NO': 'Noorwegen', 'IS': 'IJsland', 'CH': 'Zwitserland',
+    'UK': 'Verenigd Koninkrijk'
+}
+df['country_name'] = df['geo'].map(country_names)
+df['iso3'] = df.geo.map(iso_map)
+rows = df.dropna(subset=['iso3'])
+
+years = sorted(rows.year.unique())
+zmax = rows.evShare.quantile(0.98)
+
+# Blauwe kleurschaal met veel meer detail voor betere zichtbaarheid van alle EV-percentages
+custom_colorscale = [
+    [0.0, '#f8f9fa'],      # Heel lichtgrijs voor 0%
+    [0.002, '#e3f2fd'],    # Zeer lichtblauw voor 0.1%
+    [0.005, '#bbdefb'],    # Lichtblauw voor 0.3%
+    [0.01, '#90caf9'],     # Blauw voor 0.5%
+    [0.02, '#64b5f6'],     # Middenblauw voor 1%
+    [0.03, '#42a5f5'],     # Blauw voor 1.5%
+    [0.05, '#2196f3'],     # Levendig blauw voor 2.5%
+    [0.07, '#1e88e5'],     # Donker blauw voor 3.5%
+    [0.1, '#1976d2'],      # Donkerblauw voor 5%
+    [0.15, '#1565c0'],     # Zeer donkerblauw voor 7.5%
+    [0.2, '#0d47a1'],      # Heel donkerblauw voor 10%
+    [0.3, '#0a3d91'],      # Donker navy voor 15%
+    [0.4, '#083381'],      # Navy voor 20%
+    [0.5, '#062971'],      # Donker navy voor 25%
+    [0.6, '#041f61'],      # Zeer donker navy voor 30%
+    [0.7, '#031551'],      # Bijna zwart navy voor 35%
+    [0.8, '#020b41'],      # Heel donker navy voor 40%
+    [0.9, '#010531'],      # Bijna zwart voor 45%
+    [1.0, '#000021']       # Zwart-navy voor 50%+
+]
+
+frames = []
+for yr in years:
+    sub = rows[rows.year == yr]
+    frames.append(go.Frame(
+        name=str(yr),
+        data=[go.Choropleth(
+            locations=sub.iso3,
+            z=sub.evShare,
+            text=sub.country_name,
+            colorscale=custom_colorscale,
+            zmin=0, 
+            zmax=zmax,
+            hovertemplate='<b>%{text}</b><br>EV-aandeel: %{z:.2f}%<br>Jaar: ' + str(yr) + '<extra></extra>',
+            colorbar=dict(
+                title=dict(text="EV-aandeel (%)", font=dict(size=16, color='rgb(42, 63, 95)')),
+                tickfont=dict(size=14, color='rgb(42, 63, 95)'),
+                len=0.85,
+                thickness=25,
+                x=1.01,
+                tickmode='linear',
+                tick0=0,
+                dtick=5,
+                ticksuffix='%'
+            )
+        )],
+        layout=dict(title=dict(text=f'EV‑aandeel per Europees land ({yr})'))
+    ))
+
+
+
+# Convert to HTML and display
+fig_map.show()  # toont de figuur in Jupyter Notebook
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mNameError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[7][39m[32m, line 75[39m
+[32m     47[39m     frames.append(go.Frame(
+[32m     48[39m         name=[38;5;28mstr[39m(yr),
+[32m     49[39m         data=[go.Choropleth(
+[32m   (...)[39m[32m     69[39m         layout=[38;5;28mdict[39m(title=[38;5;28mdict[39m(text=[33mf[39m[33m'[39m[33mEV‑aandeel per Europees land ([39m[38;5;132;01m{[39;00myr[38;5;132;01m}[39;00m[33m)[39m[33m'[39m))
+[32m     70[39m     ))
+[32m     74[39m [38;5;66;03m# Convert to HTML and display[39;00m
+[32m---> [39m[32m75[39m [43mfig_map[49m.show()  [38;5;66;03m# toont de figuur in Jupyter Notebook[39;00m
+
+[31mNameError[39m: name 'fig_map' is not defined
+
