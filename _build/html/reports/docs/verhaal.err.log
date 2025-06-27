@@ -28,182 +28,28 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-iso_map = {'AT':'AUT','BE':'BEL','BG':'BGR','HR':'HRV','CY':'CYP','CZ':'CZE','DK':'DNK','EE':'EST',
-           'FI':'FIN','FR':'FRA','DE':'DEU','EL':'GRC','HU':'HUN','IE':'IRL','IT':'ITA','LV':'LVA',
-           'LT':'LTU','LU':'LUX','MT':'MLT','NL':'NLD','PL':'POL','PT':'PRT','RO':'ROU','SK':'SVK',
-           'SI':'SVN','ES':'ESP','SE':'SWE','NO':'NOR','IS':'ISL','CH':'CHE','UK':'GBR'}
-country_names = {
-    'AT': 'Oostenrijk', 'BE': 'België', 'BG': 'Bulgarije', 'HR': 'Kroatië', 'CY': 'Cyprus',
-    'CZ': 'Tsjechië', 'DK': 'Denemarken', 'EE': 'Estland', 'FI': 'Finland', 'FR': 'Frankrijk',
-    'DE': 'Duitsland', 'EL': 'Griekenland', 'HU': 'Hongarije', 'IE': 'Ierland', 'IT': 'Italië',
-    'LV': 'Letland', 'LT': 'Litouwen', 'LU': 'Luxemburg', 'MT': 'Malta', 'NL': 'Nederland',
-    'PL': 'Polen', 'PT': 'Portugal', 'RO': 'Roemenië', 'SK': 'Slowakije', 'SI': 'Slovenië',
-    'ES': 'Spanje', 'SE': 'Zweden', 'NO': 'Noorwegen', 'IS': 'IJsland', 'CH': 'Zwitserland',
-    'UK': 'Verenigd Koninkrijk'
-}
+focus = focus.copy()
+focus['landnaam'] = focus['geo'].map(country_names)
 
-
-df['iso3'] = df.geo.map(iso_map)
-rows = df.dropna(subset=['iso3'])
-
-years = sorted(rows.year.unique())
-zmax = rows.evShare.quantile(0.98)
-
-# Blauwe kleurschaal met veel meer detail voor betere zichtbaarheid van alle EV-percentages
-custom_colorscale = [
-    [0.0, '#f8f9fa'],      # Heel lichtgrijs voor 0%
-    [0.002, '#e3f2fd'],    # Zeer lichtblauw voor 0.1%
-    [0.005, '#bbdefb'],    # Lichtblauw voor 0.3%
-    [0.01, '#90caf9'],     # Blauw voor 0.5%
-    [0.02, '#64b5f6'],     # Middenblauw voor 1%
-    [0.03, '#42a5f5'],     # Blauw voor 1.5%
-    [0.05, '#2196f3'],     # Levendig blauw voor 2.5%
-    [0.07, '#1e88e5'],     # Donker blauw voor 3.5%
-    [0.1, '#1976d2'],      # Donkerblauw voor 5%
-    [0.15, '#1565c0'],     # Zeer donkerblauw voor 7.5%
-    [0.2, '#0d47a1'],      # Heel donkerblauw voor 10%
-    [0.3, '#0a3d91'],      # Donker navy voor 15%
-    [0.4, '#083381'],      # Navy voor 20%
-    [0.5, '#062971'],      # Donker navy voor 25%
-    [0.6, '#041f61'],      # Zeer donker navy voor 30%
-    [0.7, '#031551'],      # Bijna zwart navy voor 35%
-    [0.8, '#020b41'],      # Heel donker navy voor 40%
-    [0.9, '#010531'],      # Bijna zwart voor 45%
-    [1.0, '#000021']       # Zwart-navy voor 50%+
-]
-
-frames = []
-for yr in years:
-    sub = rows[rows.year == yr]
-    frames.append(go.Frame(
-        name=str(yr),
-        data=[go.Choropleth(
-            locations=sub.iso3,
-            z=sub.evShare,
-            text=sub.country_names,
-            colorscale=custom_colorscale,
-            zmin=0, 
-            zmax=zmax,
-            hovertemplate='<b>%{text}</b><br>EV-aandeel: %{z:.2f}%<br>Jaar: ' + str(yr) + '<extra></extra>',
-            colorbar=dict(
-                title=dict(text="EV-aandeel (%)", font=dict(size=16, color='rgb(42, 63, 95)')),
-                tickfont=dict(size=14, color='rgb(42, 63, 95)'),
-                len=0.85,
-                thickness=25,
-                x=1.01,
-                tickmode='linear',
-                tick0=0,
-                dtick=5,
-                ticksuffix='%'
-            )
-        )],
-        layout=dict(title=dict(text=f'EV‑aandeel per Europees land ({yr})'))
-    ))
-
-fig_map = go.Figure(
-    data=frames[0].data,
-    frames=frames,
-    layout=go.Layout(
-        title=dict(
-            text=f'EV‑aandeel per Europees land ({years[0]})',
-            font=dict(size=22, color='rgb(42, 63, 95)', family='Arial, sans-serif'),
-            x=0.5,
-            xanchor='center',
-            y=0.95,
-            yanchor='top'
-        ),
-        geo=dict(
-            scope='europe', 
-            projection_type='natural earth',
-            showframe=False, 
-            showcountries=True,
-            countrycolor='#7fb3d3',
-            countrywidth=0.8,
-            bgcolor='rgba(0,0,0,0)',
-            landcolor='#f0f8ff',
-            oceancolor='#cce7ff',
-            showocean=True,
-            showlakes=True,
-            lakecolor='#cce7ff'
-        ),
-        paper_bgcolor='#f8fbff',
-        plot_bgcolor='#f8fbff',
-        font=dict(family='Arial, sans-serif', color='#2c3e50'),
-        sliders=[dict(
-            steps=[dict(
-                method='animate', 
-                label=str(y),
-                args=[[str(y)], dict(
-                    mode='immediate',
-                    frame=dict(duration=300, redraw=True),
-                    transition=dict(duration=200, easing='cubic-in-out')
-                )]
-            ) for y in years],
-            currentvalue=dict(
-                prefix='Jaar: ',
-                font=dict(size=18, color='rgb(42, 63, 95)', weight='bold')
-            ),
-            pad=dict(t=60, b=20, l=40, r=40),
-            len=0.85,
-            x=0.075,
-            xanchor='left',
-            bgcolor='rgba(255,255,255,0.95)',
-            bordercolor='#2196f3',
-            borderwidth=2,
-            font=dict(color='rgb(42, 63, 95)', size=14)
-        )],
-        updatemenus=[dict(
-            type='buttons',
-            showactive=False,
-            x=0.075,
-            y=0.02,
-            xanchor='left',
-            yanchor='bottom',
-            buttons=[
-                dict(
-                    label='▶',
-                    method='animate',
-                    args=[None, dict(
-                        frame=dict(duration=1000, redraw=True),
-                        transition=dict(duration=400),
-                        fromcurrent=True,
-                        mode='immediate'
-                    )]
-                )
-            ],
-            bgcolor='rgba(255,255,255,0.95)',
-            bordercolor='rgb(42, 63, 95)',
-            borderwidth=2,
-            font=dict(color='rgb(42, 63, 95)', size=13, weight='bold')
-        )],
-        margin=dict(l=40, r=40, t=80, b=80),
-        # Voeg border toe om de hele visualisatie
-    )
-)
-
+fig_line = px.line(focus, x='year', y='co2', color='landnaam',
+                   title='Gem. CO₂‑uitstoot nieuwe auto’s (2013‑2023)',
+                   labels=dict(year='Jaar', co2='CO₂ (g/km)', landnaam='Land'))
+fig_line.update_traces(mode='lines+markers')
 # Convert to HTML and display
-fig_map.show()  # toont de figuur in Jupyter Notebook
+fig_line.show()
+
 ------------------
 
 
 [31m---------------------------------------------------------------------------[39m
-[31mAttributeError[39m                            Traceback (most recent call last)
-[32m/var/folders/94/p3hvjht162sd783wvh0jgktr0000gn/T/ipykernel_86408/534470432.py[39m in [36m?[39m[34m()[39m
-[32m     49[39m         name=str(yr),
-[32m     50[39m         data=[go.Choropleth(
-[32m     51[39m             locations=sub.iso3,
-[32m     52[39m             z=sub.evShare,
-[32m---> [39m[32m53[39m             text=sub.country_names,
-[32m     54[39m             colorscale=custom_colorscale,
-[32m     55[39m             zmin=[32m0[39m,
-[32m     56[39m             zmax=zmax,
+[31mNameError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[6][39m[32m, line 2[39m
+[32m      1[39m focus = focus.copy()
+[32m----> [39m[32m2[39m focus[[33m'[39m[33mlandnaam[39m[33m'[39m] = focus[[33m'[39m[33mgeo[39m[33m'[39m].map([43mcountry_names[49m)
+[32m      4[39m fig_line = px.line(focus, x=[33m'[39m[33myear[39m[33m'[39m, y=[33m'[39m[33mco2[39m[33m'[39m, color=[33m'[39m[33mlandnaam[39m[33m'[39m,
+[32m      5[39m                    title=[33m'[39m[33mGem. CO₂‑uitstoot nieuwe auto’s (2013‑2023)[39m[33m'[39m,
+[32m      6[39m                    labels=[38;5;28mdict[39m(year=[33m'[39m[33mJaar[39m[33m'[39m, co2=[33m'[39m[33mCO₂ (g/km)[39m[33m'[39m, landnaam=[33m'[39m[33mLand[39m[33m'[39m))
+[32m      7[39m fig_line.update_traces(mode=[33m'[39m[33mlines+markers[39m[33m'[39m)
 
-[32m/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/generic.py[39m in [36m?[39m[34m(self, name)[39m
-[32m   6295[39m             [38;5;28;01mand[39;00m name [38;5;28;01mnot[39;00m [38;5;28;01min[39;00m self._accessors
-[32m   6296[39m             [38;5;28;01mand[39;00m self._info_axis._can_hold_identifiers_and_holds_name(name)
-[32m   6297[39m         ):
-[32m   6298[39m             [38;5;28;01mreturn[39;00m self[name]
-[32m-> [39m[32m6299[39m         [38;5;28;01mreturn[39;00m object.__getattribute__(self, name)
-
-[31mAttributeError[39m: 'DataFrame' object has no attribute 'country_names'
+[31mNameError[39m: name 'country_names' is not defined
 
