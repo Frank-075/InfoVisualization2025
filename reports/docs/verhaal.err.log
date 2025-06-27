@@ -41,7 +41,8 @@ country_names = {
     'ES': 'Spanje', 'SE': 'Zweden', 'NO': 'Noorwegen', 'IS': 'IJsland', 'CH': 'Zwitserland',
     'UK': 'Verenigd Koninkrijk'
 }
-df['country_name'] = df['geo'].map(country_names)
+
+
 df['iso3'] = df.geo.map(iso_map)
 rows = df.dropna(subset=['iso3'])
 
@@ -99,7 +100,86 @@ for yr in years:
         layout=dict(title=dict(text=f'EV‑aandeel per Europees land ({yr})'))
     ))
 
-
+fig_map = go.Figure(
+    data=frames[0].data,
+    frames=frames,
+    layout=go.Layout(
+        title=dict(
+            text=f'EV‑aandeel per Europees land ({years[0]})',
+            font=dict(size=22, color='rgb(42, 63, 95)', family='Arial, sans-serif'),
+            x=0.5,
+            xanchor='center',
+            y=0.95,
+            yanchor='top'
+        ),
+        geo=dict(
+            scope='europe', 
+            projection_type='natural earth',
+            showframe=False, 
+            showcountries=True,
+            countrycolor='#7fb3d3',
+            countrywidth=0.8,
+            bgcolor='rgba(0,0,0,0)',
+            landcolor='#f0f8ff',
+            oceancolor='#cce7ff',
+            showocean=True,
+            showlakes=True,
+            lakecolor='#cce7ff'
+        ),
+        paper_bgcolor='#f8fbff',
+        plot_bgcolor='#f8fbff',
+        font=dict(family='Arial, sans-serif', color='#2c3e50'),
+        sliders=[dict(
+            steps=[dict(
+                method='animate', 
+                label=str(y),
+                args=[[str(y)], dict(
+                    mode='immediate',
+                    frame=dict(duration=300, redraw=True),
+                    transition=dict(duration=200, easing='cubic-in-out')
+                )]
+            ) for y in years],
+            currentvalue=dict(
+                prefix='Jaar: ',
+                font=dict(size=18, color='rgb(42, 63, 95)', weight='bold')
+            ),
+            pad=dict(t=60, b=20, l=40, r=40),
+            len=0.85,
+            x=0.075,
+            xanchor='left',
+            bgcolor='rgba(255,255,255,0.95)',
+            bordercolor='#2196f3',
+            borderwidth=2,
+            font=dict(color='rgb(42, 63, 95)', size=14)
+        )],
+        updatemenus=[dict(
+            type='buttons',
+            showactive=False,
+            x=0.075,
+            y=0.02,
+            xanchor='left',
+            yanchor='bottom',
+            buttons=[
+                dict(
+                    label='▶',
+                    method='animate',
+                    args=[None, dict(
+                        frame=dict(duration=1000, redraw=True),
+                        transition=dict(duration=400),
+                        fromcurrent=True,
+                        mode='immediate'
+                    )]
+                )
+            ],
+            bgcolor='rgba(255,255,255,0.95)',
+            bordercolor='rgb(42, 63, 95)',
+            borderwidth=2,
+            font=dict(color='rgb(42, 63, 95)', size=13, weight='bold')
+        )],
+        margin=dict(l=40, r=40, t=80, b=80),
+        # Voeg border toe om de hele visualisatie
+    )
+)
 
 # Convert to HTML and display
 fig_map.show()  # toont de figuur in Jupyter Notebook
@@ -107,15 +187,23 @@ fig_map.show()  # toont de figuur in Jupyter Notebook
 
 
 [31m---------------------------------------------------------------------------[39m
-[31mNameError[39m                                 Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[7][39m[32m, line 75[39m
-[32m     47[39m     frames.append(go.Frame(
-[32m     48[39m         name=[38;5;28mstr[39m(yr),
-[32m     49[39m         data=[go.Choropleth(
-[32m   (...)[39m[32m     69[39m         layout=[38;5;28mdict[39m(title=[38;5;28mdict[39m(text=[33mf[39m[33m'[39m[33mEV‑aandeel per Europees land ([39m[38;5;132;01m{[39;00myr[38;5;132;01m}[39;00m[33m)[39m[33m'[39m))
-[32m     70[39m     ))
-[32m     74[39m [38;5;66;03m# Convert to HTML and display[39;00m
-[32m---> [39m[32m75[39m [43mfig_map[49m.show()  [38;5;66;03m# toont de figuur in Jupyter Notebook[39;00m
+[31mAttributeError[39m                            Traceback (most recent call last)
+[32m/var/folders/94/p3hvjht162sd783wvh0jgktr0000gn/T/ipykernel_86303/3623441901.py[39m in [36m?[39m[34m()[39m
+[32m     49[39m         name=str(yr),
+[32m     50[39m         data=[go.Choropleth(
+[32m     51[39m             locations=sub.iso3,
+[32m     52[39m             z=sub.evShare,
+[32m---> [39m[32m53[39m             text=sub.country_name,
+[32m     54[39m             colorscale=custom_colorscale,
+[32m     55[39m             zmin=[32m0[39m,
+[32m     56[39m             zmax=zmax,
 
-[31mNameError[39m: name 'fig_map' is not defined
+[32m/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/generic.py[39m in [36m?[39m[34m(self, name)[39m
+[32m   6295[39m             [38;5;28;01mand[39;00m name [38;5;28;01mnot[39;00m [38;5;28;01min[39;00m self._accessors
+[32m   6296[39m             [38;5;28;01mand[39;00m self._info_axis._can_hold_identifiers_and_holds_name(name)
+[32m   6297[39m         ):
+[32m   6298[39m             [38;5;28;01mreturn[39;00m self[name]
+[32m-> [39m[32m6299[39m         [38;5;28;01mreturn[39;00m object.__getattribute__(self, name)
+
+[31mAttributeError[39m: 'DataFrame' object has no attribute 'country_name'
 
