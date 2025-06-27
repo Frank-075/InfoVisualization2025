@@ -22,8 +22,11 @@ De voordelen van EV‑adoptie zijn **ongelijk verdeeld** en sterk afhankelijk va
 ```
 
 ## Referenties
-*(referentielijst ongewijzigd)*
-
+- Keuken, M., Kingham, S., Willers, S., Kuenzli, N., Morton, K., Bi, J., Mudu, P., Depledge, M., Jantunen, M., Niittynen, M., Pérez, L., Martuzzi, M., Van Den Elshout, S., Tobollik, M., Kontoroupis, P., Hurley, F., Liu, M., Tuomisto, J., Huang, G., Stahl-Timmins, W., Karakitsios, S., Sabel, C., Asikainen, A., Hiscock, R., Friedrich, R., & Sarigiannis, D. (2016). Public health impacts of city policies to reduce climate change: Findings from the URGENCHE EU-China project. Environmental Health, 15, Article 97. https://doi.org/10.1186/s12940-016-0097-0
+- Koengkan, M., Dehdar, F., Auza, A., Fuinhas, J., Teixeira, M., Osmani, F., & Kazemzadeh, E. (2022). The capacity of battery-electric and plug-in hybrid electric vehicles to mitigate CO2 emissions: Macroeconomic evidence from European Union countries. World Electric Vehicle Journal, 13(4), Article 58. https://doi.org/10.3390/wevj13040058
+- Leroutier, M., & Quirion, P. (2023). Tackling car emissions in urban areas: Shift, avoid, improve. Ecological Economics, 210, Article 107951. https://doi.org/10.1016/j.ecolecon.2023.107951
+- Ruggieri, R., Ruggeri, M., Vinci, G., & Poponi, S. (2021). Electric mobility in a smart city: European overview. Energies, 14(2), Article 315. https://doi.org/10.3390/en14020315
+- Woodward, H., Mehlig, D., ApSimon, H., Oxley, T., & Holland, M. (2021). Electrification of road transport and the impacts on air quality and health in the UK. Atmosphere, 12(11), Article 1491. https://doi.org/10.3390/atmos12111491
 ---
 
 ## Navigatie
